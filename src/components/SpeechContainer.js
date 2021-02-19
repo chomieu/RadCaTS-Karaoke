@@ -59,7 +59,6 @@ export default function SpeechContainer() {
         if (startTime === '') {
             setStartTime(new Date())
         }
-
     };
 
 
