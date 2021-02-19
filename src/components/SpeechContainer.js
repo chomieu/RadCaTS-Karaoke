@@ -3,22 +3,29 @@ import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognitio
 
 
 
-const Dictaphone1 = () => {
+export default function SpeechContainer() {
+
     const [message, setMessage] = useState('');
+    const [startTime, setStartTime] = useState('')
+    const [userInput, setUserInput] = useState([])
+
     const commands = [
+        { command: 'fire emoji', callback: () => setMessage('🔥') },
+        { command: 'Hello', callback: () => setMessage('Hi there!') },
+        { command: 'reset', callback: () => resetTranscript() },
         {
-            command: 'fire emoji',
-            callback: () => setMessage('🔥')
+            command: 'The weather is :condition today',
+            callback: (condition) => setMessage(`You said it's ${condition} today`)
         },
         {
-            command: 'Hello',
-            callback: () => setMessage('Hi there!')
+            command: 'Beijing',
+            callback: (command, spokenPhrase, similarityRatio) => setMessage(`${command} and ${spokenPhrase} are ${similarityRatio * 100}% similar`),
+            // If the spokenPhrase is "Benji", the message would be "Beijing and Benji are 40% similar"
+            isFuzzyMatch: true,
+            fuzzyMatchingThreshold: 0.2
         },
-        {
-            command: 'reset',
-            callback: () => resetTranscript()
-        }
     ]
+
     const {
         transcript,
         interimTranscript,
@@ -27,46 +34,82 @@ const Dictaphone1 = () => {
         listening,
     } = useSpeechRecognition({ commands });
 
+
+    useEffect(() => {
+        if (startTime === '') {
+
+        }
+    }, [listening]);
+
+
+
     useEffect(() => {
         if (finalTranscript !== '') {
-            console.log('Got final result:', finalTranscript);
+            console.log('final:', finalTranscript);
         }
-    }, [interimTranscript, finalTranscript]);
-    if (!SpeechRecognition.browserSupportsSpeechRecognition()) {
-        return null;
-    }
+    }, [finalTranscript]);
 
-    if (!SpeechRecognition.browserSupportsSpeechRecognition()) {
-        console.log('Your browser does not support speech recognition software! Try Chrome desktop, maybe?');
-    }
-    const listenContinuously = () => {
+
+
+    const handleStartClick = () => {
         SpeechRecognition.startListening({
             continuous: true,
             language: 'en-GB',
         });
-    };
-    return (
-        <div>
-            <div>
-                <span>
-                    listening:
-         {' '}
-                    {listening ? 'on' : 'off'}
-                </span>
-                <div>
-                    <button type="button" onClick={resetTranscript}>Reset</button>
-                    <button type="button" onClick={listenContinuously}>Listen</button>
-                    <button type="button" onClick={SpeechRecognition.stopListening}>Stop</button>
-                </div>
-            </div>
-            <div>
-                {message}
-            </div>
-            <div>
-                <span>{transcript}</span>
-            </div>
-        </div>
-    );
-};
+        if (startTime === '') {
+            setStartTime(new Date())
+        }
 
-export default Dictaphone1;
+    };
+
+
+    const mockTimeStamps = () => {
+        let x = new Date()
+        let y = Math.floor((startTime - x) / 1000) * -1
+        setUserInput([...userInput, { time: y }])
+        console.log(userInput)
+    }
+
+    if (!SpeechRecognition.browserSupportsSpeechRecognition()) {
+        return (<h3>Your browser does not support speech recognition software! Try Chrome desktop.</h3>);
+    } else {
+
+        return (
+            <div>
+                <div>
+                    <h5>Mic: {listening ? 'on' : 'off'}</h5>
+
+                    <div>
+                        <button type="button" onClick={handleStartClick}>Start</button>
+                        <button type="button" onClick={mockTimeStamps}>Mock time Stamp</button>
+                        <button type="button" onClick={SpeechRecognition.stopListening}>Stop</button>
+                    </div>
+                </div>
+                <br />
+                <hr />
+                <div>
+                    <h4>command</h4>
+                    {message}
+                </div>
+                <hr />
+                <div>
+                    <h4>transcript</h4>
+                    <span>{transcript}</span>
+                </div>
+                <hr />
+                <div>
+                    <h4>interimTranscript</h4>
+                    <span>{interimTranscript}</span>
+                </div>
+                <hr />
+                <div>
+                    <h4>finalTranscript</h4>
+                    <span>{finalTranscript}</span>
+                </div>
+                <br />
+                <hr />
+                <button type="button" onClick={resetTranscript}>Reset</button>
+            </div>
+        );
+    }
+};
