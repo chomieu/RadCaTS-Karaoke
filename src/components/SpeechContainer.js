@@ -2,23 +2,22 @@ import React, { useEffect, useState } from 'react';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 
 
-// full example pulled from https://www.loginradius.com/blog/async/quick-look-at-react-speech-recognition/
 
 const Dictaphone1 = () => {
     const [message, setMessage] = useState('');
     const commands = [
         {
-            command: 'reset',
-            callback: () => resetTranscript()
-        },
-        {
-            command: 'shut up',
-            callback: () => setMessage('I wasn\'t talking.')
+            command: 'fire emoji',
+            callback: () => setMessage('🔥')
         },
         {
             command: 'Hello',
             callback: () => setMessage('Hi there!')
         },
+        {
+            command: 'reset',
+            callback: () => resetTranscript()
+        }
     ]
     const {
         transcript,
