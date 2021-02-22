@@ -9,8 +9,8 @@ export default function SpeechContainer() {
     const [startTime, setStartTime] = useState('')
     const [userInput, setUserInput] = useState([{ time: 0 }])
 
-
     // // example of current workflow 
+
     // // each object has 2 key value pairs, time & vocals
     // let example = [{
 
@@ -34,25 +34,13 @@ export default function SpeechContainer() {
     // }]
 
 
-
-    const commands = [
-        { command: 'fire emoji', callback: () => setMessage('🔥') },
-        { command: 'Hello', callback: () => setMessage('Hi there!') },
-        { command: 'reset', callback: () => resetTranscript() },
-        {
-            command: 'The weather is :condition today',
-            callback: (condition) => setMessage(`You said it's ${condition} today`)
-        },
-        {
-            command: 'Beijing',
-            callback: (command, spokenPhrase, similarityRatio) => setMessage(`${command} and ${spokenPhrase} are ${similarityRatio * 100}% similar`),
-            // If the spokenPhrase is "Benji", the message would be "Beijing and Benji are 40% similar"
-            isFuzzyMatch: true,
-            fuzzyMatchingThreshold: 0.2
-        },
-    ]
-
-
+    // commands need to be an object in an array
+    const commands = [{
+        command: 'stop karaoke', callback: ({ command }) => {
+            SpeechRecognition.stopListening()
+            setMessage(command)
+        }
+    }]
 
     const {
         transcript,
@@ -72,37 +60,18 @@ export default function SpeechContainer() {
             var thisInput = {}
             // date right now - date at start (gives seconds after start)
             let secondsAfterStart = Math.floor((startTime - new Date()) / 1000) * -1
-
             // add this phrase to the previous index position as 'vocals'.
             copy[copy.length - 1].vocals = finalTranscript
             // save the seconds in the object cointainer
             thisInput.time = secondsAfterStart
-
             // add object to the copy
             copy.push(thisInput)
-
             // update userInput state with the new copy.
             setUserInput(copy)
-
             // empty the finalTranscript' container.
             resetTranscript()
         }
     }, [finalTranscript]);
-
-
-
-    useEffect(() => {
-        SpeechRecognition.onaudiostart = function () {
-            console.log('Audio capturing started');
-        }
-
-
-
-
-        SpeechRecognition.onstart = () => {
-            console.log('Speech has been detected');
-        }
-    }, [])
 
 
     const handleStartClick = () => {
@@ -115,9 +84,6 @@ export default function SpeechContainer() {
         }
     };
 
-
-
-
     if (!SpeechRecognition.browserSupportsSpeechRecognition()) {
         return (<h3>Your browser does not support speech recognition software! Sorry for the trouble, try Chrome desktop :)</h3>);
     } else {
@@ -129,7 +95,6 @@ export default function SpeechContainer() {
 
                     <div>
                         <button type="button" onClick={handleStartClick}>Start</button>
-                        {/* <button type="button" onClick={mockTimeStamps}>Mock time Stamp</button> */}
                         <button type="button" onClick={SpeechRecognition.stopListening}>Stop</button>
                     </div>
                 </div>
