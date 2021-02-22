@@ -70,7 +70,7 @@ export default function SpeechContainer() {
     }
 
     if (!SpeechRecognition.browserSupportsSpeechRecognition()) {
-        return (<h3>Your browser does not support speech recognition software! Try Chrome desktop.</h3>);
+        return (<h3>Your browser does not support speech recognition software! Sorry for the trouble, try Chrome desktop :)</h3>);
     } else {
 
         return (
