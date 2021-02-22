@@ -7,7 +7,33 @@ export default function SpeechContainer() {
 
     const [message, setMessage] = useState('');
     const [startTime, setStartTime] = useState('')
-    const [userInput, setUserInput] = useState([])
+    const [userInput, setUserInput] = useState([{ time: 0 }])
+
+
+    // // example of current workflow 
+    // // each object has 2 key value pairs, time & vocals
+    // let example = [{
+
+    //     // start time preset to 0.
+    //     time: 0, //seconds
+
+    //     // created when first phrase is saved to 'finalTranscript' container. Then container is emptied for next phrase.
+    //     // time of printing - time of 'startTime' is set as 'time' (seconds after start) for next index
+    //     vocals: "phrase1"
+    // },
+    // {
+    //     // Printed when phrase1 is saved to 'finalTranscript'.
+    //     time: 10, //seconds
+
+    //     // Printed when second phrase is saved to 'finalTranscript' container. Then container is emptied for next phrase.
+    //     vocals: 'phrase2'
+    // },
+    // {
+    //     // Printed when phrase2 is saved to 'finalTranscript'.
+    //     time: 15, // 
+    // }]
+
+
 
     const commands = [
         { command: 'fire emoji', callback: () => setMessage('🔥') },
@@ -26,7 +52,6 @@ export default function SpeechContainer() {
         },
     ]
 
-    // const recognition = new SpeechRecognition()
 
 
     const {
@@ -38,20 +63,46 @@ export default function SpeechContainer() {
     } = useSpeechRecognition({ commands });
 
 
-    useEffect(() => {
-        if (startTime === '') {
-
-        }
-    }, [listening]);
-
-
-
+    // logs all of the vocal recordings with time checkpoints
     useEffect(() => {
         if (finalTranscript !== '') {
-            console.log('final:', finalTranscript);
+            // copy current state
+            let copy = [...userInput]
+            // temporary container
+            var thisInput = {}
+            // date right now - date at start (gives seconds after start)
+            let secondsAfterStart = Math.floor((startTime - new Date()) / 1000) * -1
+
+            // add this phrase to the previous index position as 'vocals'.
+            copy[copy.length - 1].vocals = finalTranscript
+            // save the seconds in the object cointainer
+            thisInput.time = secondsAfterStart
+
+            // add object to the copy
+            copy.push(thisInput)
+
+            // update userInput state with the new copy.
+            setUserInput(copy)
+
+            // empty the finalTranscript' container.
+            resetTranscript()
         }
     }, [finalTranscript]);
 
+
+
+    useEffect(() => {
+        SpeechRecognition.onaudiostart = function () {
+            console.log('Audio capturing started');
+        }
+
+
+
+
+        SpeechRecognition.onstart = () => {
+            console.log('Speech has been detected');
+        }
+    }, [])
 
 
     const handleStartClick = () => {
@@ -65,17 +116,7 @@ export default function SpeechContainer() {
     };
 
 
-    const mockTimeStamps = () => {
-        let x = new Date()
-        let y = Math.floor((startTime - x) / 1000) * -1
-        setUserInput([...userInput, { time: y }])
-        console.log(userInput)
-    }
 
-
-    SpeechRecognition.onspeechstart = () => {
-        console.log('Speech has been detected');
-    }
 
     if (!SpeechRecognition.browserSupportsSpeechRecognition()) {
         return (<h3>Your browser does not support speech recognition software! Sorry for the trouble, try Chrome desktop :)</h3>);
@@ -88,7 +129,7 @@ export default function SpeechContainer() {
 
                     <div>
                         <button type="button" onClick={handleStartClick}>Start</button>
-                        <button type="button" onClick={mockTimeStamps}>Mock time Stamp</button>
+                        {/* <button type="button" onClick={mockTimeStamps}>Mock time Stamp</button> */}
                         <button type="button" onClick={SpeechRecognition.stopListening}>Stop</button>
                     </div>
                 </div>
