@@ -1,3 +1,5 @@
+import jDataView from "jdataview";
+
 (function () {
   console.log( "linked" );
   'use strict';

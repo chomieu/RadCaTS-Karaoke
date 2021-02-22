@@ -1,19 +1,20 @@
 import React, { useState, useEffect } from "react";
 import "./style.css";
-import Test from "./js/test";
-import jDataView from "./js/jDataView";
+import jDataView from "jdataview";
+// import Main from "./js/main";
 
 function FileDrag() {
 
-    // useEffect(() => {
-    //     const script = document.createElement('script');
-    //     script.src = Test;
-    //     script.async = true;
-    //     document.body.appendChild(script);
-    //     return () => {
-    //         document.body.removeChild(script);
-    //     }
-    // }, []);
+    useEffect(() => {
+
+        const script = document.createElement('script');
+        // script.src = Main;
+        script.async = true;
+        document.body.appendChild(script);
+        return () => {
+            document.body.removeChild(script);
+        }
+    }, []);
 
     return (
         <div className="main">
