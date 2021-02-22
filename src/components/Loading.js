@@ -5,6 +5,6 @@ import Materialize from "materialize-css"
 
 export default function loading() {
     return (
-        <h1>Radcats 😎</h1>
+        <h1>Radcats Karaoke</h1>
     )
 }

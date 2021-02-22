@@ -1,13 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
+import MatchVocals from "./MatchVocals"
 
-
+const songLyrics = [
+    {
+        time: 0,
+        lyrics: 'just a small town girl'
+    },
+    {
+        time: 5,
+        lyrics: 'living in a lonely world'
+    }
+]
 
 export default function SpeechContainer() {
 
     const [message, setMessage] = useState('');
     const [startTime, setStartTime] = useState('')
     const [userInput, setUserInput] = useState([{ time: 0 }])
+    const [lyrics, setLyrics] = useState(songLyrics)
 
 
     // commands need to be an object in an array
@@ -25,6 +36,8 @@ export default function SpeechContainer() {
         resetTranscript,
         listening
     } = useSpeechRecognition({ commands });
+
+
 
 
     useEffect(() => {
@@ -64,40 +77,42 @@ export default function SpeechContainer() {
     } else {
 
         return (
-            <div>
-                <div>
-                    <h5>Mic: {listening ? 'on' : 'off'}</h5>
+            <div className="container">
 
-                    <div>
-                        <button type="button" onClick={handleStartClick}>Start</button>
-                        <button type="button" onClick={SpeechRecognition.stopListening}>Stop</button>
+                <div className="row">
+                    <div className="col s12">
+                        <div className="card">
+                            <div className="card-content">
+                                <span>Lyrics</span>
+                                <div class="divider"></div>
+                                <br />
+                                <MatchVocals
+                                    vocals={'test'}
+                                />
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <br />
-                <hr />
-                <div>
-                    <h4>command</h4>
-                    {message}
+
+                <div className="row">
+                    <div className="col s12">
+
+                        <h5>Mic: {listening ? 'on' : 'off'}</h5>
+                        <button
+                            className="btn green"
+                            type="button"
+                            onClick={handleStartClick}>Start
+                        </button>
+
+                        <button
+                            className="btn red"
+                            type="button"
+                            onClick={SpeechRecognition.stopListening}>Stop
+                        </button>
+
+                    </div>
                 </div>
-                <hr />
-                <div>
-                    <h4>transcript</h4>
-                    <span>{transcript}</span>
-                </div>
-                <hr />
-                <div>
-                    <h4>interimTranscript</h4>
-                    <span>{interimTranscript}</span>
-                </div>
-                <hr />
-                <div>
-                    <h4>finalTranscript</h4>
-                    <span>{finalTranscript}</span>
-                </div>
-                <br />
-                <hr />
-                <button type="button" onClick={resetTranscript}>Reset</button>
             </div>
-        );
-    }
+        )
+    };
 };
