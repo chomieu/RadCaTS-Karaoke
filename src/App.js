@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from 'react';
 import Loading from "./components/Loading"
 import TestModal from "./components/TestModal"
 import SpeechContainer from "./components/SpeechContainer"
@@ -6,11 +6,21 @@ import SpeechContainer from "./components/SpeechContainer"
 
 
 function App() {
-  return <div className="App center-align">
-    <Loading />
-    <SpeechContainer />
+  const [timer, setTimer] = useState(0)
 
-  </div>;
+  const handleStartTimer = () => {
+    console.log('start timer')
+  }
+
+  return (
+    <div className=" container center-align">
+      <Loading />
+      <div className="divider"></div>
+      <SpeechContainer
+        handleStartTimer={handleStartTimer}
+      />
+    </div>
+  )
 }
 
 export default App;
