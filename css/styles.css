@@ -10,13 +10,6 @@ h1, h2 {
   font-weight: normal;
 }
 
-header {
-  background-color: #1abc9c;
-  font-size: 2em;
-  color: #fff;
-  padding: .5em;
-}
-
 #filedrag {
   display: none;
   font-weight: bold;

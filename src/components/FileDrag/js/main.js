@@ -1,4 +1,5 @@
 (function () {
+  console.log( "linked" );
   'use strict';
 
   function init() {
