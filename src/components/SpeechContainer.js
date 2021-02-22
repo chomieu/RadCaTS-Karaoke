@@ -26,12 +26,15 @@ export default function SpeechContainer() {
         },
     ]
 
+    // const recognition = new SpeechRecognition()
+
+
     const {
         transcript,
         interimTranscript,
         finalTranscript,
         resetTranscript,
-        listening,
+        listening
     } = useSpeechRecognition({ commands });
 
 
@@ -67,6 +70,11 @@ export default function SpeechContainer() {
         let y = Math.floor((startTime - x) / 1000) * -1
         setUserInput([...userInput, { time: y }])
         console.log(userInput)
+    }
+
+
+    SpeechRecognition.onspeechstart = () => {
+        console.log('Speech has been detected');
     }
 
     if (!SpeechRecognition.browserSupportsSpeechRecognition()) {
