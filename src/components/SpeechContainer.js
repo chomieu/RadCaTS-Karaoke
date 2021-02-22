@@ -13,7 +13,7 @@ const songLyrics = [
     }
 ]
 
-export default function SpeechContainer() {
+export default function SpeechContainer({ handleStartTimer }) {
 
     const [message, setMessage] = useState('');
     const [startTime, setStartTime] = useState('')
@@ -70,6 +70,7 @@ export default function SpeechContainer() {
         if (startTime === '') {
             setStartTime(new Date())
         }
+        handleStartTimer()
     };
 
     if (!SpeechRecognition.browserSupportsSpeechRecognition()) {
@@ -84,7 +85,7 @@ export default function SpeechContainer() {
                         <div className="card">
                             <div className="card-content">
                                 <span>Lyrics</span>
-                                <div class="divider"></div>
+                                <div className="divider"></div>
                                 <br />
                                 <MatchVocals
                                     vocals={'test'}
