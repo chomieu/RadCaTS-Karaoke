@@ -9,7 +9,7 @@ body {
 }
 
 .muted {
-    opacity: .5;
+    opacity: .6;
 }
 
 
@@ -34,5 +34,5 @@ body {
 }
 
 .card-content {
-    padding-bottom: 0 !important ;
+    padding: .5rem 0 0 0 !important ;
 }

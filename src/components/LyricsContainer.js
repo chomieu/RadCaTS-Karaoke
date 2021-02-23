@@ -78,13 +78,13 @@ export default function LyricsContainer({ timer, isActive, setIsActive, userInpu
     return (
         <div className="center-align">
 
-            <div className="row">
+            <div className="row muted">
                 {isActive ? <h6 className="underline">{track[0].artist} - {track[0].title}</h6> : '-'}
             </div>
 
             <div className="row">
                 <div className="divider"></div>
-                <h4>{isActive ? lrcObj1.lyrics : '-'}</h4>
+                <h4>{isActive ? lrcObj1.lyrics : '<press start>'}</h4>
                 <div className="divider"></div>
             </div>
 
