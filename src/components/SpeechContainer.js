@@ -7,114 +7,118 @@ import Timer from "./Timer"
 
 export default function SpeechContainer({ timer, isActive, setIsActive }) {
 
-    const [message, setMessage] = useState('');
+    // store user mic inputs here with timestamp
+    // Note: time is at time of printing, not time of recording start
     const [userInput, setUserInput] = useState([{ time: 0 }])
 
 
-    // commands need to be an object in an array
-    const commands = [{
-        command: 'stop karaoke', callback: ({ command }) => {
-            SpeechRecognition.stopListening()
-            setMessage(command)
-        }
-    }]
-
+    // deconstructed properties needed from the WebSpeechAPI / react-speech-recognition on page
     const {
         finalTranscript,
         resetTranscript,
         listening
-    } = useSpeechRecognition({ commands });
+    } = useSpeechRecognition()
 
 
     useEffect(() => {
         if (finalTranscript !== '') {
-            // copy current state
-            let copy = [...userInput]
-            // temporary container
+
+            // make copy of 'userInput', collect new data object and add to copy.
+            var copy = [...userInput]
             var thisInput = {}
-            // add this phrase to the previous index position as 'vocals'.
             copy[copy.length - 1].vocals = finalTranscript
-            // save the seconds in the object cointainer
             thisInput.time = timer
-            // add object to the copy
+            thisInput.vocals = null
             copy.push(thisInput)
-            // update userInput state with the new copy.
+
+            // set updated copy as new state
             setUserInput(copy)
-            // empty the finalTranscript' container.
+
+            // empty the 'finalTranscript' container.
             resetTranscript()
         }
-    }, [finalTranscript]);
+    }, [finalTranscript])
 
 
-    // turn mic off when song ends
+    // turn mic off when 'isAvctive' is set to false
     useEffect(() => {
-        if (!isActive) { handleStopClick() }
+        if (!isActive) { handleStopKaraoke() }
     }, [isActive])
 
 
-    const handleStartClick = () => {
+    // when start button is clicked
+    const handleStartKaraoke = () => {
+
+        // turn  mic on, listen continuously, listen for english
         SpeechRecognition.startListening({
             continuous: true,
-            language: 'en-GB',
-        });
+            language: 'en-GB'
+        })
+
+        // set 'isActive' to true to trigger the start of other events.
         setIsActive(true)
     };
 
-    const handleStopClick = () => {
+    // when stop button is clicked
+    const handleStopKaraoke = () => {
         SpeechRecognition.stopListening()
         setIsActive(false)
     }
 
+    // Note: Browser support is limited with WebSpeechAPI.
+    // if the browser is not supported, alert user.
     if (!SpeechRecognition.browserSupportsSpeechRecognition()) {
-        return (<h3>Your browser does not support speech recognition software! Sorry for the trouble, try Chrome desktop :)</h3>);
-    } else {
+        return (<h3>Your browser does not support speech recognition software! Sorry for the trouble, try Chrome desktop.</h3>)
 
+
+        // content to load if browser is supported
+    } else {
         return (
             <div>
                 <div className="row left-align">
-                    <div className="col s12">
-                        <div className="card z-depth-5">
-                            <div className="card-content">
-                                <LyricsContainer
-                                    timer={timer}
-                                    isActive={isActive}
-                                    setIsActive={setIsActive}
-                                    userInput={userInput}
-                                />
-                                <div className="row">
-                                    <div className="col s5">
-                                        <p className="left-align"><Timer timer={timer} /></p>
-                                    </div>
-                                    <div className="col s5 right-align">
-                                        <p className="right-align">pts: 0</p>
-                                    </div>
+                    <div className="card z-depth-5">
+                        <div className="card-content">
+
+                            <LyricsContainer
+                                timer={timer}
+                                isActive={isActive}
+                                setIsActive={setIsActive}
+                                userInput={userInput}
+                            />
+
+                            <div className="row">
+                                <div className="col s5">
+                                    <p className="left-align"><Timer timer={timer} /></p>
+                                </div>
+                                <div className="col s5 right-align">
+                                    <p className="right-align">pts: 0</p>
                                 </div>
                             </div>
+
                         </div>
                     </div>
                 </div>
 
                 <div className="row">
-                    <div className="col s12">
 
-                        <h5>Mic: {listening ? 'on' : 'off'}</h5>
-                        <button
-                            className="btn start z-depth-5"
-                            // disabled={isActive}
-                            type="button"
-                            onClick={handleStartClick}>Start
-                        </button>
+                    <h5>Mic: {listening ? 'on' : 'off'}</h5>
 
-                        <button
-                            className="btn stop z-depth-5"
-                            // disabled={!isActive}
-                            type="button"
-                            onClick={handleStopClick}>Stop
-                        </button>
+                    <button
+                        className="btn start z-depth-5"
+                        // disabled={isActive}
+                        type="button"
+                        onClick={handleStartKaraoke}>Start
+                    </button>
 
-                    </div>
+                    <button
+                        className="btn stop z-depth-5"
+                        // disabled={!isActive}
+                        type="button"
+                        onClick={handleStopKaraoke}>Stop
+                    </button>
+
                 </div>
             </div>
         )
-    };
-};
+    }
+}

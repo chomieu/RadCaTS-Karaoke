@@ -45,21 +45,26 @@ export default function LyricsContainer({ timer, isActive, setIsActive, userInpu
 
     return (
         <div className="center-align">
+
             <div className="row">
-                {isActive ? <h6 className="underline">{track[0].artist} - {track[0].title}</h6> : '< >'}
+                {isActive ? <h6 className="underline">{track[0].artist} - {track[0].title}</h6> : '-'}
             </div>
+
             <div className="row">
+                <div className="divider"></div>
                 <h4>{isActive ? lrcObj1.lyrics : '<select a song>'}</h4>
                 <div className="divider"></div>
             </div>
+
             <div className="row">
-                <h6 className="muted">{isActive ? lrcObj2.lyrics : '< >'}</h6>
+                <h6 className="muted">{isActive ? lrcObj2.lyrics : '-'}</h6>
             </div>
-            <br />
+
             <div className="row">
-                <h6 className="userInput">user input for demo puropse</h6>
+                <h6 className="userInput">mic transcription</h6>
                 <h6 className="userInput">{'<input>'}</h6>
             </div>
+
         </div>
     )
 }
