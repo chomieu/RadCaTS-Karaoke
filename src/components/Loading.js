@@ -8,7 +8,7 @@ export default function loading() {
         <div className="row">
             <div className="col s12">
                 <div className="card z-depth-5">
-                    <h1>RadCats <br /> k a r a 👌</h1>
+                    <h1>RadCats <br /> ka-ra-👌</h1>
                 </div>
             </div>
         </div>

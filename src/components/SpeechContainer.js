@@ -46,6 +46,12 @@ export default function SpeechContainer({ timer, isActive, setIsActive }) {
     }, [finalTranscript]);
 
 
+    // turn mic off when song ends
+    useEffect(() => {
+        if (!isActive) { handleStopClick() }
+    }, [isActive])
+
+
     const handleStartClick = () => {
         SpeechRecognition.startListening({
             continuous: true,
@@ -73,6 +79,7 @@ export default function SpeechContainer({ timer, isActive, setIsActive }) {
                                     timer={timer}
                                     isActive={isActive}
                                     setIsActive={setIsActive}
+                                    userInput={userInput}
                                 />
                                 <div className="row">
                                     <div className="col s5">

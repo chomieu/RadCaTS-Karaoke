@@ -5,9 +5,10 @@ body {
 
 .card {
     background-color: rgba(255, 127, 80, 0.247);
+    border-radius: .5rem;
 }
 
-.mute {
+.muted {
     opacity: .5;
 }
 
@@ -26,4 +27,8 @@ button:active {
 
 .stop {
     background-color: rgba(165, 42, 42, 0.534);
+}
+
+.underline {
+    text-decoration: underline;
 }
