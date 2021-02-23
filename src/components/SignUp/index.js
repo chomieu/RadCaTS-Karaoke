@@ -6,7 +6,7 @@ const trigger = <Button>Open SignUp</Button>;
 
 function SignUp() {
 
-    const [ formInputs, setFormInputs ] = useState({
+    const [formInputs, setFormInputs] = useState({
         email: "",
         password: ""
     })
@@ -14,13 +14,13 @@ function SignUp() {
     const handleInputChange = event => {
         setFormInputs({
             ...formInputs,
-            [ event.target.name ] : event.target.value
+            [event.target.name]: event.target.value
         })
     }
 
     const handleInputSubmit = event => {
         event.preventDefault();
-        alert( `Thank you, ${ formInputs.name }! Your message has been sent!`);
+        alert(`Thank you, ${formInputs.name}! Your message has been sent!`);
         setFormInputs({
             email: "",
             password: ""
@@ -32,11 +32,11 @@ function SignUp() {
             <form>
                 <div className="form-group">
                     <label htmlFor="email">Email address</label>
-                    <input type="email" name="email" onChange={ handleInputChange } />
+                    <input type="email" name="email" onChange={handleInputChange} />
                 </div>
                 <div className="form-group">
                     <label htmlFor="password">Password</label>
-                    <input type="password" name="password" onChange={ handleInputChange } />
+                    <input type="password" name="password" onChange={handleInputChange} />
                 </div>
             </form>
         </Modal>
