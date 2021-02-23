@@ -1,10 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 
-
 // example used from https://dev.to/abdulbasit313/how-to-develop-a-stopwatch-in-react-js-with-custom-hook-561b
-
-
 export default function Timer({ startTimer }) {
+
     const [timer, setTimer] = useState(0)
     const increment = useRef(null)
 
