@@ -8,7 +8,7 @@ import Timer from "./Timer"
 export default function SpeechContainer({ timer, setTimer, setIsActive }) {
 
     const [message, setMessage] = useState('');
-    const [timeAtStart, setTimeAtStart] = useState('')
+    // const [timeAtStart, setTimeAtStart] = useState('')
     // const [startTimer, setIsActive] = useState(false)
     const [userInput, setUserInput] = useState([{ time: 0 }])
 
@@ -36,12 +36,10 @@ export default function SpeechContainer({ timer, setTimer, setIsActive }) {
             let copy = [...userInput]
             // temporary container
             var thisInput = {}
-            // date right now - date at start (gives seconds after start)
-            let secondsAfterStart = Math.floor((timeAtStart - new Date()) / 1000) * -1
             // add this phrase to the previous index position as 'vocals'.
             copy[copy.length - 1].vocals = finalTranscript
             // save the seconds in the object cointainer
-            thisInput.time = secondsAfterStart
+            thisInput.time = timer
             // add object to the copy
             copy.push(thisInput)
             // update userInput state with the new copy.
@@ -57,9 +55,6 @@ export default function SpeechContainer({ timer, setTimer, setIsActive }) {
             continuous: true,
             language: 'en-GB',
         });
-        if (timeAtStart === '') {
-            setTimeAtStart(new Date())
-        }
         setIsActive(true)
     };
 
@@ -75,7 +70,7 @@ export default function SpeechContainer({ timer, setTimer, setIsActive }) {
         return (
             <div className="container">
 
-                <div className="row">
+                <div className="row left-align">
                     <div className="col s12">
                         <div className="card">
                             <div className="card-content">
