@@ -12,7 +12,7 @@ export default function SpeechContainer({ timer, isActive, setIsActive }) {
     const [userInput, setUserInput] = useState([{ time: 0 }])
 
 
-    // deconstructed properties needed from the WebSpeechAPI / react-speech-recognition on page
+    // deconstructed properties needed from the WebSpeechAPI / react-speech-recognition
     const {
         finalTranscript,
         resetTranscript,
@@ -82,8 +82,8 @@ export default function SpeechContainer({ timer, isActive, setIsActive }) {
                             <LyricsContainer
                                 timer={timer}
                                 isActive={isActive}
-                                setIsActive={setIsActive}
                                 userInput={userInput}
+                                setIsActive={setIsActive}
                             />
 
                             <div className="row">

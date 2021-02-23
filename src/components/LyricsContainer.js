@@ -6,6 +6,8 @@ export default function LyricsContainer({ timer, isActive, setIsActive, userInpu
 
     // track the index location of the current lyrics object
     const [lrcIdx, setLrcIdx] = useState()
+    // container for the last lyric object to check for points
+    const [lrcObj0, setLrcObj0] = useState()
     // container for the current index lyric object
     const [lrcObj1, setLrcObj1] = useState()
     // container for the next index lyric object 
@@ -26,6 +28,8 @@ export default function LyricsContainer({ timer, isActive, setIsActive, userInpu
             if (lrcObj2.lyrics) {
 
                 let x = lrcIdx.idx + 1
+
+                setLrcObj0(track[x - 1])
                 setLrcObj1(track[x])
                 setLrcObj2(track[x + 1])
                 setLrcIdx({ idx: x })
