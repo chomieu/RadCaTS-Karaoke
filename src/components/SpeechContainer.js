@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 import MatchVocals from "./MatchVocals"
+import Timer from "./Timer"
 
 const songLyrics = [
     {
@@ -13,10 +14,11 @@ const songLyrics = [
     }
 ]
 
-export default function SpeechContainer({ handleStartTimer }) {
+export default function SpeechContainer() {
 
     const [message, setMessage] = useState('');
     const [startTime, setStartTime] = useState('')
+    const [timer, setTimer] = useState(false)
     const [userInput, setUserInput] = useState([{ time: 0 }])
     const [lyrics, setLyrics] = useState(songLyrics)
 
@@ -70,8 +72,13 @@ export default function SpeechContainer({ handleStartTimer }) {
         if (startTime === '') {
             setStartTime(new Date())
         }
-        handleStartTimer()
+        setTimer(true)
     };
+
+    const handleStopClick = () => {
+        SpeechRecognition.stopListening()
+        setTimer(false)
+    }
 
     if (!SpeechRecognition.browserSupportsSpeechRecognition()) {
         return (<h3>Your browser does not support speech recognition software! Sorry for the trouble, try Chrome desktop :)</h3>);
@@ -90,6 +97,9 @@ export default function SpeechContainer({ handleStartTimer }) {
                                 <MatchVocals
                                     vocals={'test'}
                                 />
+                                <div className="divider"></div>
+                                <br />
+                                <p>Time: <Timer startTimer={timer} /></p>
                             </div>
                         </div>
                     </div>
@@ -108,7 +118,7 @@ export default function SpeechContainer({ handleStartTimer }) {
                         <button
                             className="btn red"
                             type="button"
-                            onClick={SpeechRecognition.stopListening}>Stop
+                            onClick={handleStopClick}>Stop
                         </button>
 
                     </div>
