@@ -6,7 +6,6 @@ import React, { useState, useEffect, useRef } from 'react';
 
 export default function Timer({ startTimer }) {
     const [timer, setTimer] = useState(0)
-    const [isActive, setIsActive] = useState(false)
     const increment = useRef(null)
 
     useEffect(() => {
@@ -18,7 +17,6 @@ export default function Timer({ startTimer }) {
     }, [startTimer])
 
     const handleStart = () => {
-        setIsActive(true)
         increment.current = setInterval(() => {
             setTimer((timer) => timer + 1)
         }, 1000)
@@ -26,7 +24,6 @@ export default function Timer({ startTimer }) {
 
     const handleReset = () => {
         clearInterval(increment.current)
-        setIsActive(false)
         setTimer(0)
     }
 
@@ -38,6 +35,6 @@ export default function Timer({ startTimer }) {
     }
 
     return (
-        <p>{formatTime()}</p>
+        formatTime()
     );
 }

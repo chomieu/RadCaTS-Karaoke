@@ -17,8 +17,8 @@ const songLyrics = [
 export default function SpeechContainer() {
 
     const [message, setMessage] = useState('');
-    const [startTime, setStartTime] = useState('')
-    const [timer, setTimer] = useState(false)
+    const [timeAtStart, setTimeAtStart] = useState('')
+    const [startTimer, setStartTimer] = useState(false)
     const [userInput, setUserInput] = useState([{ time: 0 }])
     const [lyrics, setLyrics] = useState(songLyrics)
 
@@ -32,8 +32,8 @@ export default function SpeechContainer() {
     }]
 
     const {
-        transcript,
-        interimTranscript,
+        // transcript,
+        // interimTranscript,
         finalTranscript,
         resetTranscript,
         listening
@@ -49,7 +49,7 @@ export default function SpeechContainer() {
             // temporary container
             var thisInput = {}
             // date right now - date at start (gives seconds after start)
-            let secondsAfterStart = Math.floor((startTime - new Date()) / 1000) * -1
+            let secondsAfterStart = Math.floor((timeAtStart - new Date()) / 1000) * -1
             // add this phrase to the previous index position as 'vocals'.
             copy[copy.length - 1].vocals = finalTranscript
             // save the seconds in the object cointainer
@@ -69,15 +69,15 @@ export default function SpeechContainer() {
             continuous: true,
             language: 'en-GB',
         });
-        if (startTime === '') {
-            setStartTime(new Date())
+        if (timeAtStart === '') {
+            setTimeAtStart(new Date())
         }
-        setTimer(true)
+        setStartTimer(true)
     };
 
     const handleStopClick = () => {
         SpeechRecognition.stopListening()
-        setTimer(false)
+        setStartTimer(false)
     }
 
     if (!SpeechRecognition.browserSupportsSpeechRecognition()) {
@@ -99,7 +99,7 @@ export default function SpeechContainer() {
                                 />
                                 <div className="divider"></div>
                                 <br />
-                                <p>Time: <Timer startTimer={timer} /></p>
+                                <p>Time: <Timer startTimer={startTimer} /></p>
                             </div>
                         </div>
                     </div>
