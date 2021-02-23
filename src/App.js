@@ -9,6 +9,8 @@ function App() {
   return <div className="App center-align">
     <Loading />
     <TestModal />
+    <SignIn/>
+    <SignUp/>
   </div>;
 }
 
