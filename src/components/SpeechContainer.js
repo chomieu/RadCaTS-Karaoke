@@ -1,26 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
-import MatchVocals from "./MatchVocals"
+import LyricsContainer from "./LyricsContainer"
 import Timer from "./Timer"
 
-const songLyrics = [
-    {
-        time: 0,
-        lyrics: 'just a small town girl'
-    },
-    {
-        time: 5,
-        lyrics: 'living in a lonely world'
-    }
-]
 
-export default function SpeechContainer() {
+
+export default function SpeechContainer({ timer, setTimer, setIsActive }) {
 
     const [message, setMessage] = useState('');
     const [timeAtStart, setTimeAtStart] = useState('')
-    const [startTimer, setStartTimer] = useState(false)
+    // const [startTimer, setIsActive] = useState(false)
     const [userInput, setUserInput] = useState([{ time: 0 }])
-    const [lyrics, setLyrics] = useState(songLyrics)
 
 
     // commands need to be an object in an array
@@ -38,8 +28,6 @@ export default function SpeechContainer() {
         resetTranscript,
         listening
     } = useSpeechRecognition({ commands });
-
-
 
 
     useEffect(() => {
@@ -72,12 +60,12 @@ export default function SpeechContainer() {
         if (timeAtStart === '') {
             setTimeAtStart(new Date())
         }
-        setStartTimer(true)
+        setIsActive(true)
     };
 
     const handleStopClick = () => {
         SpeechRecognition.stopListening()
-        setStartTimer(false)
+        setIsActive(false)
     }
 
     if (!SpeechRecognition.browserSupportsSpeechRecognition()) {
@@ -94,12 +82,12 @@ export default function SpeechContainer() {
                                 <span>Lyrics</span>
                                 <div className="divider"></div>
                                 <br />
-                                <MatchVocals
-                                    vocals={'test'}
+                                <LyricsContainer
+                                    timer={timer}
                                 />
                                 <div className="divider"></div>
                                 <br />
-                                <p>Time: <Timer startTimer={startTimer} /></p>
+                                <p>Time: <Timer timer={timer} /></p>
                             </div>
                         </div>
                     </div>
