@@ -5,11 +5,9 @@ import Timer from "./Timer"
 
 
 
-export default function SpeechContainer({ timer, setTimer, setIsActive }) {
+export default function SpeechContainer({ timer, isActive, setIsActive }) {
 
     const [message, setMessage] = useState('');
-    // const [timeAtStart, setTimeAtStart] = useState('')
-    // const [startTimer, setIsActive] = useState(false)
     const [userInput, setUserInput] = useState([{ time: 0 }])
 
 
@@ -22,8 +20,6 @@ export default function SpeechContainer({ timer, setTimer, setIsActive }) {
     }]
 
     const {
-        // transcript,
-        // interimTranscript,
         finalTranscript,
         resetTranscript,
         listening
@@ -68,21 +64,24 @@ export default function SpeechContainer({ timer, setTimer, setIsActive }) {
     } else {
 
         return (
-            <div className="container">
-
+            <div>
                 <div className="row left-align">
                     <div className="col s12">
-                        <div className="card">
+                        <div className="card z-depth-5">
                             <div className="card-content">
-                                <span>Lyrics</span>
-                                <div className="divider"></div>
-                                <br />
                                 <LyricsContainer
                                     timer={timer}
+                                    isActive={isActive}
+                                    setIsActive={setIsActive}
                                 />
-                                <div className="divider"></div>
-                                <br />
-                                <p>Time: <Timer timer={timer} /></p>
+                                <div className="row">
+                                    <div className="col s5">
+                                        <p className="left-align"><Timer timer={timer} /></p>
+                                    </div>
+                                    <div className="col s5 right-align">
+                                        <p className="right-align">pts: 0</p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -93,13 +92,15 @@ export default function SpeechContainer({ timer, setTimer, setIsActive }) {
 
                         <h5>Mic: {listening ? 'on' : 'off'}</h5>
                         <button
-                            className="btn green"
+                            className="btn start z-depth-5"
+                            // disabled={isActive}
                             type="button"
                             onClick={handleStartClick}>Start
                         </button>
 
                         <button
-                            className="btn red"
+                            className="btn stop z-depth-5"
+                            // disabled={!isActive}
                             type="button"
                             onClick={handleStopClick}>Stop
                         </button>
