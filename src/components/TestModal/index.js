@@ -1,5 +1,6 @@
 import React from 'react'
 import { Modal, Button } from 'react-materialize';
+import "./style.css"
 
 const trigger = <Button>Open Modal</Button>;
 

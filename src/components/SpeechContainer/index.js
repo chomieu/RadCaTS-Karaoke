@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
-import LyricsContainer from "./LyricsContainer"
-import Timer from "./Timer"
+import LyricsContainer from "../LyricsContainer/"
+import Timer from "../Timer/"
+import "./style.css"
+
 
 
 

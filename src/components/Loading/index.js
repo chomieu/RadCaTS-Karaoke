@@ -1,5 +1,6 @@
 import React from "react"
 import Materialize from "materialize-css"
+import "./style.css"
 
 
 

@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react"
-import track from "../utils/lyrics.json"
+import track from "../../utils/lyrics.json"
+import "./style.css"
+
 
 
 export default function LyricsContainer({ timer, isActive, setIsActive, userInput, pts, setPts }) {
