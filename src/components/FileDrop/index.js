@@ -2,7 +2,6 @@ import React from 'react';
 import jDataView from 'jdataview';
 // import Main from './js/main';
 
-
 function FileDrop() {
 
     // TODO: Play song.

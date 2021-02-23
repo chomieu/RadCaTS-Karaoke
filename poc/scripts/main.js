@@ -3,25 +3,25 @@
 
   function init() {
 
-    var // filedrag = document.getElementById('filedrag'),
+    var filedrag = document.getElementById('filedrag'),
         fileselect = document.getElementById('fileselect'),
         disableFilter = document.getElementById('disable-filter'),
-        options = document.getElementById('options');
-        // demoAudio = document.getElementById('demo-audio');
+        options = document.getElementById('options'),
+        demoAudio = document.getElementById('demo-audio');
 
     // file select
     fileselect.addEventListener('change', fileSelectHandler, false);
 
-    // var xhr = new XMLHttpRequest();
-    // if (xhr.upload) {
-    //   // file drop
-    //   filedrag.addEventListener('dragover', fileDragHover, false);
-    //   filedrag.addEventListener('dragleave', fileDragHover, false);
-    //   filedrag.addEventListener('drop', fileSelectHandler, false);
-    //   filedrag.style.display = 'block';
-    // } else {
-    //   filedrag.style.display = 'none';
-    // }
+    var xhr = new XMLHttpRequest();
+    if (xhr.upload) {
+      // file drop
+      filedrag.addEventListener('dragover', fileDragHover, false);
+      filedrag.addEventListener('dragleave', fileDragHover, false);
+      filedrag.addEventListener('drop', fileSelectHandler, false);
+      filedrag.style.display = 'block';
+    } else {
+      filedrag.style.display = 'none';
+    }
 
     var karaokeEnabled = true;
 
@@ -37,50 +37,48 @@
       }
     });
 
-    // demoAudio.addEventListener('click', function() {
-    //   playSound('audio/mmo-happy.mp3')
-    // }, false);
+    demoAudio.addEventListener('click', function() {
+      playSound('audio/mmo-happy.mp3')
+    }, false);
   }
 
-  // // plays a file
-  // function playSound(url) {
-  //   var request = new XMLHttpRequest();
+  // plays a file
+  function playSound(url) {
+    var request = new XMLHttpRequest();
 
-  //   request.open('GET', url, true);
-  //   request.responseType = 'arraybuffer';
+    request.open('GET', url, true);
+    request.responseType = 'arraybuffer';
 
-  //   // Our asynchronous callback
-  //   request.onload = function() {
-  //     var data = request.response;
-  //     initAudio(data);
-  //     showData(data);
-  //   };
+    // Our asynchronous callback
+    request.onload = function() {
+      var data = request.response;
+      initAudio(data);
+      showData(data);
+    };
 
-  //   request.send();
-  // }
+    request.send();
+  }
 
-  // // file drag hover
-  // function fileDragHover(e) {
-  //   e.stopPropagation();
-  //   e.preventDefault();
-  //   e.target.className = (e.type === 'dragover' ? 'hover' : '');
-  // }
+  // file drag hover
+  function fileDragHover(e) {
+    e.stopPropagation();
+    e.preventDefault();
+    e.target.className = (e.type === 'dragover' ? 'hover' : '');
+  }
 
   // file selection
   function fileSelectHandler(e) {
     // cancel event and hover styling
-    // fileDragHover(e);
+    fileDragHover(e);
 
     var droppedFiles = e.target.files || e.dataTransfer.files;
-    console.log( "droppedFiles", droppedFiles );
 
     var reader = new FileReader();
 
     reader.onload = function(fileEvent) {
       var data = fileEvent.target.result;
-      console.log( "data", data );
       initAudio(data);
-      // showData(this.result);
+      showData(this.result);
     };
 
     // http://ericbidelman.tumblr.com/post/8343485440/reading-mp3-id3-tags-in-javascript
@@ -212,14 +210,14 @@
     }
   }
 
-  // function disableKaraoke() {
-  //   mix2.gain.value = 1;
-  //   mix.gain.value = 0;
-  // }
+  function disableKaraoke() {
+    mix2.gain.value = 1;
+    mix.gain.value = 0;
+  }
 
-  // function enableKaraoke() {
-  //   mix.gain.value = 1;
-  //   mix2.gain.value = 0;
-  // }
+  function enableKaraoke() {
+    mix.gain.value = 1;
+    mix2.gain.value = 0;
+  }
 
 })();
