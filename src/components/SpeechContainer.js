@@ -11,6 +11,9 @@ export default function SpeechContainer({ timer, isActive, setIsActive }) {
     // Note: time is at time of printing, not time of recording start
     const [userInput, setUserInput] = useState([{ time: 0 }])
 
+    const [pts, setPts] = useState({ pts: 0 })
+
+
 
     // deconstructed properties needed from the WebSpeechAPI / react-speech-recognition
     const {
@@ -57,6 +60,7 @@ export default function SpeechContainer({ timer, isActive, setIsActive }) {
 
         // set 'isActive' to true to trigger the start of other events.
         setIsActive(true)
+        setPts({ pts: 0 })
     };
 
     // when stop button is clicked
@@ -80,18 +84,22 @@ export default function SpeechContainer({ timer, isActive, setIsActive }) {
                         <div className="card-content">
 
                             <LyricsContainer
+                                pts={pts.pts}
+                                setPts={setPts}
+
                                 timer={timer}
-                                isActive={isActive}
                                 userInput={userInput}
+
+                                isActive={isActive}
                                 setIsActive={setIsActive}
                             />
 
                             <div className="row">
-                                <div className="col s5">
-                                    <p className="left-align"><Timer timer={timer} /></p>
+                                <div className="col s8">
+                                    <p className="left-align pts"><Timer timer={timer} /></p>
                                 </div>
-                                <div className="col s5 right-align">
-                                    <p className="right-align">pts: 0</p>
+                                <div className="col s4 right-align">
+                                    <p className="right-align">pts: <span className="pts">{pts.pts}</span></p>
                                 </div>
                             </div>
 
@@ -122,3 +130,8 @@ export default function SpeechContainer({ timer, isActive, setIsActive }) {
         )
     }
 }
+
+
+        // make sure there are entries from user to avoid errors
+        // create array of words from user input
+        // concatinate the current lyrics with the last lyrics, check if any user input matches any words

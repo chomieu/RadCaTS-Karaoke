@@ -17,10 +17,6 @@ body {
     margin: 2rem;
 }
 
-button:active {
-    color: crimson !important;
-}
-
 .start {
     background-color: rgba(29, 122, 44, 0.685);
 }
@@ -31,4 +27,12 @@ button:active {
 
 .underline {
     text-decoration: underline;
+}
+
+.pts {
+    font-size: 3rem;
+}
+
+.card-content {
+    padding-bottom: 0 !important ;
 }
