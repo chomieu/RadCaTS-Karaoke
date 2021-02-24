@@ -1,10 +1,9 @@
 import React from "react"
-import Materialize from "materialize-css"
 import "./style.css"
 
 
 
-export default function loading() {
+function Loading() {
     return (
         <div className="row">
             <div className="col s12">
@@ -15,3 +14,5 @@ export default function loading() {
         </div>
     )
 }
+
+export default Loading;

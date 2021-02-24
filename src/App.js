@@ -1,22 +1,24 @@
 import React from "react";
 import './App.css';
 import Header from "./components/Header";
-import FileDrop from "./components/FileDrop";
-import Loading from "./components/Loading";
-import TestModal from "./components/TestModal";
-import SignIn from "./components/SignIn";
-import SignUp from "./components/SignUp";
+// import Loading from "./components/Loading";
+// import SignIn from "./components/SignIn";
+// import SignUp from "./components/SignUp";
+// import FileDrop from "./components/FileDrop";
 // import Karaoke from "./components/Karaoke"
-// import { Modal, Button } from 'react-materialize';
+import AudioPlayer from "./components/AudioPlayer/index"
+
 
 function App() {
   return <div className="App center-align">
     <Header />
-    <Loading />
-    <TestModal />
-    <SignIn />
-    <SignUp />
-    <FileDrop />
+    {/* <Loading /> */}
+    {/* <TestModal /> */}
+    {/* <SignIn /> */}
+    {/* <SignUp /> */}
+    <AudioPlayer />
+
+    {/* <FileDrop /> */}
     {/* <Karaoke /> */}
   </div>;
 }

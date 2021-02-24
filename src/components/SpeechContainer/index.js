@@ -7,7 +7,7 @@ import "./style.css"
 
 
 
-export default function SpeechContainer({ timer, isActive, setIsActive }) {
+function SpeechContainer({ timer, isActive, setIsActive }) {
 
     // store user mic inputs here with timestamp
     // Note: time is at time of printing, not time of recording start
@@ -133,7 +133,4 @@ export default function SpeechContainer({ timer, isActive, setIsActive }) {
     }
 }
 
-
-        // make sure there are entries from user to avoid errors
-        // create array of words from user input
-        // concatinate the current lyrics with the last lyrics, check if any user input matches any words
+export default SpeechContainer;

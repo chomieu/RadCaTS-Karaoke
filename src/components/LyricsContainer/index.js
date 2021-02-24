@@ -4,7 +4,7 @@ import "./style.css"
 
 
 
-export default function LyricsContainer({ timer, isActive, setIsActive, userInput, pts, setPts }) {
+function LyricsContainer({ timer, isActive, setIsActive, userInput, pts, setPts }) {
 
     // track the index location of the current lyrics object
     const [lrcIdx, setLrcIdx] = useState()
@@ -97,3 +97,5 @@ export default function LyricsContainer({ timer, isActive, setIsActive, userInpu
         </div>
     )
 }
+
+export default LyricsContainer;

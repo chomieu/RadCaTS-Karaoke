@@ -1,4 +1,7 @@
-export default function Timer({ timer }) {
+// example used from https://dev.to/abdulbasit313/how-to-develop-a-stopwatch-in-react-js-with-custom-hook-561b
+
+
+function Timer({ timer }) {
 
 
     const formatTime = () => {
@@ -14,5 +17,4 @@ export default function Timer({ timer }) {
         formatTime()
     );
 }
-
-// example used from https://dev.to/abdulbasit313/how-to-develop-a-stopwatch-in-react-js-with-custom-hook-561b
+export default Timer;

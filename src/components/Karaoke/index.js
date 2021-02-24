@@ -4,7 +4,6 @@ import "./style.css"
 import SpeechContainer from "../SpeechContainer/"
 
 
-
 function KaraokePage() {
 
     const [timer, setTimer] = useState(0)
