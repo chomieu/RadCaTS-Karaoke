@@ -5,8 +5,7 @@ import momentDurationFormatSetup from "moment-duration-format";
 
 export default function Bar({ duration, curTime, onTimeUpdate }) {
 
-    // const barProgressColor = "rgb(232, 211, 162)"
-    const barProgressColor = "rgb(145, 123, 76)"
+    const barProgressColor = "rgb(52, 0, 111)"
 
     const curPercentage = (curTime / duration) * 100;
 

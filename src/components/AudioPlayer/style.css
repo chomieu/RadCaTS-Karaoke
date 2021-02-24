@@ -11,15 +11,13 @@
   border: 1px solid rgba(211, 206, 194, 0.5);
   border-radius: .5rem;
 }
+
 .top{
     padding: 1rem 0 0 0;
     border-top-left-radius: 3rem;
     color: rgba(255, 255, 255, 0);
 }
 
-.middle {
-    /* progress bar container */
-}
 
 .bottom {
   padding: 1rem 0 0 0;
@@ -106,7 +104,7 @@
 
 .bar__progress {
   flex: 1;
-  border: 1px solid rgb(211, 206, 194);
+  border: 1px solid rgba(211, 206, 194, 0.5);
   border-radius: 5px;
   margin: 0 20px;
   height: 10px;
@@ -120,9 +118,10 @@
   position:relative;
   height: 40px;
   width: 15px;
-  /* border: 1.5px solid rgba(255, 255, 255, 0.76); */
+  border: 2px solid rgb(52, 0, 111);
   border-radius: 10%;
-  background-color: rgba(52, 0, 111, 0.753);
+  background-color: rgb(145, 123, 76);
+  /* background-color: rgba(52, 0, 111, 0.753); */
 }
 
 .mb0 {
