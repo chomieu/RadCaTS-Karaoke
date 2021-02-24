@@ -6,7 +6,7 @@ import Header from "./components/Header";
 // import SignUp from "./components/SignUp";
 // import FileDrop from "./components/FileDrop";
 // import Karaoke from "./components/Karaoke"
-import AudioPlayer from "./components/AudioPlayer/index"
+import AudioPlayer from "./components/AudioPlayer"
 
 
 function App() {

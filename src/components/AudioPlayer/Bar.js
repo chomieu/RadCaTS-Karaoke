@@ -10,12 +10,6 @@ export default function Bar({ duration, curTime, onTimeUpdate }) {
 
     const curPercentage = (curTime / duration) * 100;
 
-    function formatDuration(duration) {
-        return moment
-            .duration(duration, "seconds")
-            .format("mm:ss", { trim: false });
-    }
-
     function calcClickedTime(e) {
         const clickPositionInPage = e.pageX;
         const bar = document.querySelector(".bar__progress");
@@ -41,13 +35,11 @@ export default function Bar({ duration, curTime, onTimeUpdate }) {
     }
 
     return (
-        <div className="bar">
-            {/* <span className="bar__time">{formatDuration(curTime)}</span> */}
+        <div className="row bar">
+
             <div
                 className="bar__progress"
-                style={{
-                    background: `linear-gradient(to right, ${barProgressColor} ${curPercentage}%, rgba(255, 255, 255, 0) 0)`
-                }}
+                style={{ background: `linear-gradient(to right, ${barProgressColor} ${curPercentage}%, rgba(255, 255, 255, 0) 0)` }}
                 onMouseDown={e => handleTimeDrag(e)}
             >
                 <span
@@ -55,7 +47,7 @@ export default function Bar({ duration, curTime, onTimeUpdate }) {
                     style={{ left: `${curPercentage - 1}%` }}
                 />
             </div>
-            {/* <span className="bar__time">{formatDuration(duration)}</span> */}
+
         </div>
     );
 }
