@@ -80,7 +80,7 @@ function SpeechContainer({ timer, isActive, setIsActive }) {
         // content to load if browser is supported
     } else {
         return (
-            <div>
+            <div className="container center-align">
                 <div className="row left-align">
                     <div className="card z-depth-5">
                         <div className="card-content">

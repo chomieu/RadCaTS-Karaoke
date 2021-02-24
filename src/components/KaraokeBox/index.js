@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
-import Loading from "../Loading"
 import "./style.css"
-import SpeechContainer from "../SpeechContainer/"
+import SpeechContainer from "../SpeechContainer"
 
 
 function KaraokePage() {
@@ -33,15 +32,11 @@ function KaraokePage() {
 
 
     return (
-        <div className=" container center-align">
-            <Loading />
-            <br />
-            <SpeechContainer
-                timer={timer}
-                isActive={isActive}
-                setIsActive={setIsActive}
-            />
-        </div>
+        <SpeechContainer
+            timer={timer}
+            isActive={isActive}
+            setIsActive={setIsActive}
+        />
     )
 }
 

@@ -1,22 +1,22 @@
 // source: https://codesandbox.io/s/5wwj02qy7k?file=/src/useAudioPlayer.js:0-1246
 import React from "react";
-import useAudioPlayer from './useAudioPlayer';
 import moment from "moment";
 import momentDurationFormatSetup from "moment-duration-format";
+import useAudioPlayer from './useAudioPlayer';
+import "./style.css"
+
+import Bar from "./Bar";
 import AudioTop from "./AudioTop"
 import AudioBottom from "./AudioBottom"
-import Song from "./Song";
-import Play from "./Play";
-import Pause from "./Pause";
-import Bar from "./Bar";
-import songTest from "../../utils/song/song.mp3"
-import "./style.css"
+import KaraokeBox from "../KaraokeBox"
+
+import songFile from "../../utils/song/song.mp3"
 
 
 const song = {
     artist: 'Mark Ronson ft. Bruno Mars',
     track: 'Uptown Funk',
-    file: songTest
+    file: songFile
 }
 
 
@@ -40,6 +40,7 @@ function AudioPlayer() {
     return (
         <div className="container">
             <AudioTop song={song} />
+            <KaraokeBox />
             <Bar curTime={curTime} duration={duration} onTimeUpdate={(time) => setClickedTime(time)} />
             <AudioBottom
                 curTime={curTime}
