@@ -3,8 +3,10 @@ import React from "react";
 import moment from "moment";
 import momentDurationFormatSetup from "moment-duration-format";
 
-export default function Bar(props) {
-    const { duration, curTime, onTimeUpdate } = props;
+export default function Bar({ duration, curTime, onTimeUpdate }) {
+
+    // const barProgressColor = "rgb(232, 211, 162)"
+    const barProgressColor = "rgb(145, 123, 76)"
 
     const curPercentage = (curTime / duration) * 100;
 
@@ -44,7 +46,7 @@ export default function Bar(props) {
             <div
                 className="bar__progress"
                 style={{
-                    background: `linear-gradient(to right, greenyellow ${curPercentage}%, #212527a1 0)`
+                    background: `linear-gradient(to right, ${barProgressColor} ${curPercentage}%, rgba(255, 255, 255, 0) 0)`
                 }}
                 onMouseDown={e => handleTimeDrag(e)}
             >

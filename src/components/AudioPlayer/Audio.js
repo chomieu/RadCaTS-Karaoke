@@ -48,12 +48,17 @@ function Audio() {
                 </div>
             </div>
 
-            <div className="row player middle">
+            <div className="row">
                 <Bar curTime={curTime} duration={duration} onTimeUpdate={(time) => setClickedTime(time)} />
             </div>
 
             <div className="row player bottom">
-                <div className="col s6 right-align">
+                <div className="col s4 m3 l2 left-align points__container">
+                    <h1 className="points">100</h1>
+                    <div className="divider"></div>
+                    <h3 className="points__label">score</h3>
+                </div>
+                <div className="col s8 m9 l10 right-align">
                     <span className="bar__time">{formatDuration(curTime)} / {formatDuration(duration)}</span>
 
                     <div className="right-align">

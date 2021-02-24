@@ -5,15 +5,16 @@
 
 .player {
   display: flex;
-  /* justify-content: space-between; */
+  justify-content: space-between;
   align-items: center;
-  background-color: #212527a1;
+  background-color: rgba(52, 0, 111, 0.753);
+  border: 1px solid rgba(211, 206, 194, 0.5);
   border-radius: .5rem;
 }
-
 .top{
     padding: 1rem 0 0 0;
     border-top-left-radius: 3rem;
+    color: rgba(255, 255, 255, 0);
 }
 
 .middle {
@@ -31,27 +32,31 @@
 }
 
 .song__title {
-  margin: 1rem 0 ;
-  color: white;
+  margin: 0 0 ;
+  color: rgb(145, 123, 76);
   font-family: "Permanent Marker", cursive;
   font-weight: normal;
-  font-size: 3.5em;
+  font-size: 3em;
 }
 
 .song__title:hover {
-  color: greenyellow;
+    color: rgba(172, 255, 47, 0.5);
+}
+
+.divider {
+    background-color: rgba(211, 206, 194, 0.5);
 }
 
 .song__artist {
   margin: 1rem 0;
-  color: white;
+  color: rgb(145, 123, 76);
   font-family: "Rock Salt", cursive;
   font-weight: normal;
-  font-size: 2rem;
+  font-size: 1.5rem;
 }
 
 .song__artist:hover {
-  color: greenyellow;
+  color: rgba(172, 255, 47, 0.5);
   cursor: pointer;
 }
 
@@ -69,7 +74,7 @@
     margin: 0 0 15px 0;
     background-color: transparent;
     border: none;
-    color: rgb(255, 255, 255);
+    color: rgba(232, 211, 162, 0.75);
 }
 
 .player__button:focus {
@@ -78,11 +83,12 @@
 
 .player__button:hover {
   cursor: pointer;
+  color: rgb(145, 123, 76)
+  
 }
 
 .button__pause {
-    color: greenyellow;
-
+    color: rgb(145, 123, 76);
 }
 
 .bar {
@@ -93,12 +99,14 @@
 }
 
 .bar__time {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   color: rgba(255, 255, 255, 0.753);
   font-size: 16px;
 }
 
 .bar__progress {
   flex: 1;
+  border: 1px solid rgb(211, 206, 194);
   border-radius: 5px;
   margin: 0 20px;
   height: 10px;
@@ -112,9 +120,9 @@
   position:relative;
   height: 40px;
   width: 15px;
-  border: 1.5px solid rgb(255, 255, 255);
+  /* border: 1.5px solid rgba(255, 255, 255, 0.76); */
   border-radius: 10%;
-  background-color: rgba(255, 166, 0, 0.555);
+  background-color: rgba(52, 0, 111, 0.753);
 }
 
 .mb0 {
@@ -122,6 +130,19 @@
 }
 .mb1 {
     margin-bottom: .5rem;
+}
+
+.points__container {
+    padding-left: 2rem !important ;
+}
+
+.points {
+ margin: 2rem 0 0 0;
+}
+
+.points__label {
+    margin: 0 0 0 0 !important ;
+    font-size: 1.75rem;
 }
 
 /* @media screen and (max-width: 800px) {
