@@ -5,7 +5,6 @@ import Header from "./components/Header";
 // import SignIn from "./components/SignIn";
 // import SignUp from "./components/SignUp";
 // import FileDrop from "./components/FileDrop";
-// import Karaoke from "./components/Karaoke"
 import AudioPlayer from "./components/AudioPlayer"
 
 
@@ -19,7 +18,6 @@ function App() {
     <AudioPlayer />
 
     {/* <FileDrop /> */}
-    {/* <Karaoke /> */}
   </div>;
 }
 

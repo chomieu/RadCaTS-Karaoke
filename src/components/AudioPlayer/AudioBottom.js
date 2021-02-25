@@ -14,7 +14,7 @@ function AudioBottom({ pts, curTime, duration, playing, handlePause, handlePlay,
                 <h3 className="points__label">score</h3>
             </div>
             <div className="col s8 m9 l10 right-align">
-                <span className="bar__time">{formatDuration(curTime)} / {formatDuration(duration)}</span>
+                {/* <span className="bar__time">{formatDuration(curTime)} / {formatDuration(duration)}</span> */}
 
                 <div className="right-align">
                     {playing

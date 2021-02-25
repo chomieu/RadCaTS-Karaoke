@@ -59,7 +59,7 @@ function AudioPlayer() {
                 language={language}
             />
 
-            <Bar curTime={curTime} duration={duration} onTimeUpdate={(time) => setClickedTime(time)} />
+            {/* <Bar curTime={curTime} duration={duration} onTimeUpdate={(time) => setClickedTime(time)} /> */}
             <AudioBottom
                 pts={pts}
                 curTime={curTime}
