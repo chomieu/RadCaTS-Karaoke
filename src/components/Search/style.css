@@ -1,0 +1,13 @@
+.search__container {
+    margin: 1rem;
+}
+
+.search__title {
+    margin:3rem !important ;
+    line-height: 3rem;
+    letter-spacing: 0rem;
+}
+
+.underline {
+    text-decoration: underline;
+}

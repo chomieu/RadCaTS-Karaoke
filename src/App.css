@@ -1,8 +1,11 @@
 body {
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  /* font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; */
+  font-family: "Rock Salt", cursive;
+
   margin: 0;
-  color: #333;
-  background-color: #fff;
+  /* color: #333; */
+  color: rgba(232, 211, 162, 0.75);
+  background-color: rgb(88, 79, 110);
 }
 
 h1, h2 {
@@ -11,10 +14,11 @@ h1, h2 {
 }
 
 header {
-  background-color: #1abc9c;
-  font-size: 2em;
-  color: #fff;
-  padding: .5em;
+  background-color: #1abc9cd0;
+  font-family: "Rock Salt", cursive;
+  color: rgba(255, 255, 255, 0.815);
+  font-weight: normal;
+  font-size: 2rem;
 }
 
 #filedrag {

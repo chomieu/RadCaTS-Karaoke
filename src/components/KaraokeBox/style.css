@@ -1,0 +1,29 @@
+body {
+    background-color: rgb(89, 41, 167);
+    color: rgb(235, 115, 72);
+}
+
+.btn {
+    margin: 2rem;
+}
+
+.start {
+    background-color: rgba(29, 122, 44, 0.685);
+}
+
+.stop {
+    background-color: rgba(165, 42, 42, 0.534);
+}
+
+.card-content {
+    padding: .5rem 0 0 0 !important ;
+}
+
+.card {
+    background-color: rgba(255, 127, 80, 0.247);
+    border-radius: .5rem;
+}
+
+.pts {
+    font-size: 3rem;
+}
