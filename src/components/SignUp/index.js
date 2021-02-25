@@ -28,15 +28,15 @@ function SignUp() {
     }
 
     return (
-        <Modal className="align-center" header="Modal Header" trigger={trigger}>
+        <Modal className="center-align" header="Sign Up" trigger={trigger}>
             <form>
-                <div className="form-group">
-                    <label htmlFor="email">Email address</label>
+                <div className="form-group left-align">
                     <input type="email" name="email" onChange={handleInputChange} />
+                    <label htmlFor="email">Email address</label>
                 </div>
-                <div className="form-group">
-                    <label htmlFor="password">Password</label>
+                <div className="form-group left-align">
                     <input type="password" name="password" onChange={handleInputChange} />
+                    <label htmlFor="password">Password</label>
                 </div>
 
                 {formInputs.email && formInputs.password ?

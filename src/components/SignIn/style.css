@@ -5,3 +5,6 @@
 .login__btn {
     margin-bottom: 0 !important;
 }
+.btn {
+    border-radius: .5rem !important;
+}

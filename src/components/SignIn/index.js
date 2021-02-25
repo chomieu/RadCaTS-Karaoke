@@ -28,7 +28,7 @@ function SignIn() {
     }
 
     return (
-        <Modal className="center-align" header="Modal Header" trigger={trigger}>
+        <Modal className="center-align" header="Sign In" trigger={trigger}>
 
             <form>
                 <div className="form-group left-align">

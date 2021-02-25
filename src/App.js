@@ -4,7 +4,7 @@ import Header from "./components/Header";
 import Preloader from "./components/Preloader";
 import SignUp from "./components/SignUp"
 import SignIn from "./components/SignIn"
-// import FileDrop from "./components/FileDrop";
+import FileDrop from "./components/FileDrop";
 import AudioPlayer from "./components/AudioPlayer"
 
 
@@ -13,7 +13,11 @@ import AudioPlayer from "./components/AudioPlayer"
 function App() {
   const [userState, setUserState] = useState({ id: "", username: "samFox", token: "", isLoggedIn: false })
   const [formState, setFormState] = useState({ email: '', username: '', password: '', confPassword: '' })
-  const [loading, setLoading] = useState({ status: false })
+  const [display, setDisplay] = useState({
+    audioPlayer: false,
+    fileDrop: false,
+    loading: false
+  })
 
   // on pageload, check for active web token.
   // useEffect(() => {
@@ -44,13 +48,13 @@ function App() {
     {/* when login successful, display name on top of page  */}
     {userState.isLoggedIn ? <h2>{userState.username}</h2> : null}
 
-    {/* display when toggled to true ie waiting for content to load */}
-    {loading.status ? < Preloader /> : null}
+    {/* display when toggled to true */}
+    {display.loading ? < Preloader /> : null}
+    {display.audioPlayer ? <AudioPlayer /> : null}
+    {display.fileDrop ? <FileDrop /> : null}
 
 
 
-    <AudioPlayer />
-    {/* <FileDrop /> */}
   </div>;
 }
 

@@ -21,8 +21,9 @@ function AudioPlayer() {
 
     useEffect(() => {
         let x = {
-            artist: 'Mark Ronson ft. Bruno Mars',
-            track: 'Uptown Funk',
+            artist: '',
+            track: '',
+            // audio cant find
             // file: songFile
         }
         setSong(x)
