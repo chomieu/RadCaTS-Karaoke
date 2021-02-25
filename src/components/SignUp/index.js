@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import "./style.css";
 import { Modal, Button } from 'react-materialize';
 
-const trigger = <Button>Open SignUp</Button>;
+const trigger = <Button>Sign Up</Button>;
 
 function SignUp() {
 
@@ -38,6 +38,12 @@ function SignUp() {
                     <label htmlFor="password">Password</label>
                     <input type="password" name="password" onChange={handleInputChange} />
                 </div>
+
+                {formInputs.email && formInputs.password ?
+                    <Button className="login__btn" type="submit">Submit</Button>
+                    :
+                    <Button disabled className="login__btn" type="submit" >Submit</Button>
+                }
             </form>
         </Modal>
     )
