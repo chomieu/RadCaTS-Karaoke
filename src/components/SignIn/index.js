@@ -5,7 +5,7 @@ import "./style.css";
 
 const trigger = <Button>Sign In</Button>;
 
-function SignIn({ setUserState, setDisplay, display }) {
+function SignIn({ setUserState, display, setDisplay }) {
 
     const [formInputs, setFormInputs] = useState({
         username: "",
@@ -19,6 +19,7 @@ function SignIn({ setUserState, setDisplay, display }) {
 
     const handleInputSubmit = e => {
         e.preventDefault();
+
         API.login(formInputs).then(res => {
             localStorage.setItem("token", res.data.token)
             setUserState({
@@ -38,7 +39,7 @@ function SignIn({ setUserState, setDisplay, display }) {
         setDisplay({ ...display, loading: true })
 
         setTimeout(() => {
-            setDisplay({ ...display, loading: false, audioPlayer: true, logout: true })
+            setDisplay({ ...display, loading: false, search: true, logout: true })
         }, 3000);
 
     }

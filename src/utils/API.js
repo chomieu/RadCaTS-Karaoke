@@ -15,6 +15,9 @@ const API = {
                 authorization: `Bearer: ${token}`
             }
         })
+    },
+    search: query => {
+        return axios.post(`${url}/search`, query)
     }
 }
 

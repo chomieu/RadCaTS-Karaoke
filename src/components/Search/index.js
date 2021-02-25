@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import { Container, Row, Col, TextInput, Button, Icon } from 'react-materialize';
+import API from "../../utils/API"
 import "./style.css"
 
-function Search() {
+function Search({ userState, songData, setSongData, display, setDisplay }) {
 
     const [formInputs, setFormInputs] = useState({ artist: '', song: '' })
 
@@ -14,6 +15,18 @@ function Search() {
     const handleSearch = e => {
         e.preventDefault()
 
+        const search = { token: userState.token, search: formInputs }
+        API.search(search).then(data => {
+            console.log(data)
+            setSongData(data)
+        })
+
+        //mock successful search
+        setDisplay({ ...display, search: false, logout: false, loading: true })
+
+        setTimeout(() => {
+            setDisplay({ ...display, loading: false, search: false, audioPlayer: true, logout: true })
+        }, 3000);
     }
 
     return (

@@ -15,12 +15,13 @@ import Search from "./components/Search"
 
 function App() {
   const [userState, setUserState] = useState({ id: "", username: "samFox", token: "", isLoggedIn: false })
+  const [songData, setSongData] = useState({})
   const [display, setDisplay] = useState({
     audioPlayer: false,
     fileDrop: false,
     loading: false,
     logout: false,
-    search: true
+    search: false
   })
 
   // on pageload, check for active web token.
@@ -54,8 +55,8 @@ function App() {
 
     {/* display when toggled to true */}
     {display.loading ? < Preloader /> : null}
+    {display.search ? <Search userState={userState} songData={songData} setSongData={setSongData} display={display} setDisplay={setDisplay} /> : null}
     {display.audioPlayer ? <AudioPlayer /> : null}
-    {display.search ? <Search /> : null}
     {display.logout ? <Logout userState={userState} setUserState={setUserState} setDisplay={setDisplay} display={display} /> : null}
     {display.fileDrop ? <FileDrop /> : null}
 
