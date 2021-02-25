@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import './App.css';
 import Header from "./components/Header";
-import Loading from "./components/Loading";
+import Preloader from "./components/Preloader";
 import SignUp from "./components/SignUp"
 import SignIn from "./components/SignIn"
 // import FileDrop from "./components/FileDrop";
@@ -11,9 +11,9 @@ import AudioPlayer from "./components/AudioPlayer"
 
 
 function App() {
-  const [userState, setUserState] = useState({ id: "", username: "samFox", token: "", isLoggedIn: true })
+  const [userState, setUserState] = useState({ id: "", username: "samFox", token: "", isLoggedIn: false })
   const [formState, setFormState] = useState({ email: '', username: '', password: '', confPassword: '' })
-  const [pageLoad, setPageLoad] = useState({ status: true })
+  const [loading, setLoading] = useState({ status: false })
 
   // on pageload, check for active web token.
   // useEffect(() => {
@@ -36,17 +36,20 @@ function App() {
 
   return <div className="App center-align">
     <Header />
-    {/* <Loading /> */}
+
+    {/* display when a user is not logged in */}
     {!userState.isLoggedIn ? <SignUp /> : null}
     {!userState.isLoggedIn ? <SignIn /> : null}
-    {userState.isLoggedIn ?
-      <>
-        <h2>{userState.username}</h2>
-        <AudioPlayer />
-      </>
-      : null}
+
+    {/* when login successful, display name on top of page  */}
+    {userState.isLoggedIn ? <h2>{userState.username}</h2> : null}
+
+    {/* display when toggled to true ie waiting for content to load */}
+    {loading.status ? < Preloader /> : null}
 
 
+
+    <AudioPlayer />
     {/* <FileDrop /> */}
   </div>;
 }
