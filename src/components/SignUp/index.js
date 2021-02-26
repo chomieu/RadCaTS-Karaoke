@@ -3,9 +3,8 @@ import { Modal, Button } from 'react-materialize';
 import API from "../../utils/API"
 import "./style.css";
 
-const trigger = <Button>Sign Up</Button>;
 
-function SignUp({ setUserState }) {
+function SignUp({ setUserState, setDisplay, display }) {
 
     const [formInputs, setFormInputs] = useState({
         username: "",
@@ -27,20 +26,28 @@ function SignUp({ setUserState }) {
 
     const handleInputSubmit = e => {
         e.preventDefault();
-        API.signup(formInputs).then(res => {
-            localStorage.setItem("token", res.data.token)
-            setUserState({
-                id: res.data.user.id,
-                username: res.data.user.email,
-                token: res.data.token,
-                isLoggedIn: true
+        setFormInputs({ username: "", password: "", confirm: "", match: false })
+        setDisplay({ ...display, signInBtns: false, loading: true })
+
+        // mimicking a 3 second loading time / waiting for API response
+        setTimeout(() => {
+            API.signup(formInputs).then(res => {
+                console.log(res)
+                localStorage.setItem("token", res.data.token)
+                setDisplay({ ...display, signInBtns: false, loading: false, search: true, logout: true })
+                setUserState({
+                    id: res.data.user.id,
+                    username: res.data.user.username,
+                    token: res.data.token,
+                    isLoggedIn: true
+                })
+            }).catch(err => {
+                console.log(err);
+                localStorage.removeItem("token");
             })
-            setFormInputs({ username: "", password: "", confirm: "", match: false })
-        }).catch(err => {
-            console.log(err);
-            localStorage.removeItem("token");
-        })
+        }, 2000);
     }
+    const trigger = <Button>Sign Up</Button>;
 
     return (
         <Modal className="center-align" header="Sign Up" trigger={trigger}>

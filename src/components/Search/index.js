@@ -10,16 +10,18 @@ function Search({ userState, songData, setSongData, display, setDisplay }) {
     const handleFormInputs = e => {
         const { name, value } = e.target
         setFormInputs({ ...formInputs, [name]: value })
+
+        const search = { token: userState.token, search: formInputs }
+        // API.search(search).then(data => {
+        //     console.log(data)
+        //     setSongData(data)
+        // })
+        console.log(search.search)
     }
 
     const handleSearch = e => {
         e.preventDefault()
 
-        const search = { token: userState.token, search: formInputs }
-        API.search(search).then(data => {
-            console.log(data)
-            setSongData(data)
-        })
 
         //mock successful search
         setDisplay({ ...display, search: false, logout: false, loading: true })
@@ -33,6 +35,17 @@ function Search({ userState, songData, setSongData, display, setDisplay }) {
         <Container className="center-align">
             <h4 className="search__title">What's <span className="underline">your</span> favorite song?</h4>
             <form className="search__container">
+
+                <TextInput
+                    // className="orange"
+                    icon="person"
+                    id="artist"
+                    label="artist"
+                    name="artist"
+                    value={formInputs.artist}
+                    onChange={handleFormInputs}
+                />
+
                 <TextInput
                     icon="album"
                     id="song"
@@ -41,14 +54,10 @@ function Search({ userState, songData, setSongData, display, setDisplay }) {
                     value={formInputs.song}
                     onChange={handleFormInputs}
                 />
-                <TextInput
-                    icon="person"
-                    id="artist"
-                    label="artist"
-                    name="artist"
-                    value={formInputs.artist}
-                    onChange={handleFormInputs}
-                />
+
+                <Row>
+                    <div>{`${formInputs.artist} ${formInputs.song}`}</div>
+                </Row>
 
                 <Button
                     node="button"

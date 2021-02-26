@@ -7,7 +7,7 @@ export default function logout({ userState, setUserState, setDisplay, display })
 
     const logOut = () => {
         localStorage.removeItem("token");
-        setDisplay({ ...display, audioPlayer: false, logout: false, loading: false })
+        setDisplay({ ...display, audioPlayer: false, logout: false, loading: false, search: false, signInBtns: true })
         setUserState({ id: '', email: '', token: '', isLoggedIn: false })
     }
 

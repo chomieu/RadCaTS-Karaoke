@@ -3,13 +3,12 @@ import { Modal, Button } from 'react-materialize';
 import API from "../../utils/API"
 import "./style.css";
 
-const trigger = <Button>Sign In</Button>;
 
 function SignIn({ setUserState, display, setDisplay }) {
 
     const [formInputs, setFormInputs] = useState({
         username: "",
-        password: ""
+        password: "",
     })
 
     const handleInputChange = e => {
@@ -19,31 +18,31 @@ function SignIn({ setUserState, display, setDisplay }) {
 
     const handleInputSubmit = e => {
         e.preventDefault();
+        setFormInputs({ username: "", password: "" })
+        setDisplay({ ...display, signInBtns: false, loading: true })
 
-        API.login(formInputs).then(res => {
-            localStorage.setItem("token", res.data.token)
-            setUserState({
-                id: res.data.user.id,
-                username: res.data.user.email,
-                token: res.data.token,
-                isLoggedIn: true
-            })
-            setFormInputs({ username: "", password: "" })
-        }).catch(err => {
-            console.log(err);
-            localStorage.removeItem("token");
-        })
-
-        //mock successful login
-        setUserState({ username: formInputs.username, isLoggedIn: true })
-        setDisplay({ ...display, loading: true })
-
+        // mimicking a 3 second loading time / waiting for API response
         setTimeout(() => {
-            setDisplay({ ...display, loading: false, search: true, logout: true })
-        }, 3000);
 
+            API.login(formInputs).then(res => {
+                console.log(res.data)
+                localStorage.setItem("token", res.data.token)
+                setDisplay({ ...display, signInBtns: false, loading: false, search: true, logout: true })
+                setUserState({
+                    id: res.data.user.id,
+                    username: res.data.user.username,
+                    token: res.data.token,
+                    isLoggedIn: true
+                })
+            }).catch(err => {
+                console.log(err);
+                localStorage.removeItem("token");
+            })
+        }, 2000);
     }
 
+
+    const trigger = <Button>Sign In</Button>
 
     return (
         <Modal className="center-align" header="Sign In" trigger={trigger}>
@@ -63,10 +62,9 @@ function SignIn({ setUserState, display, setDisplay }) {
                     <label htmlFor="password">Password</label>
                 </div>
 
-                {formInputs.username && formInputs.password ?
-                    <Button className="login__btn" type="submit" modal="close" onClick={handleInputSubmit} >Submit</Button>
-                    :
-                    <Button disabled className="login__btn" type="submit">Submit</Button>
+                {formInputs.username && formInputs.password
+                    ? <Button className="login__btn" type="submit" modal="close" onClick={handleInputSubmit} >Submit</Button>
+                    : <Button disabled className="login__btn" type="submit">Submit</Button>
                 }
             </form>
         </Modal >

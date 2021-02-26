@@ -2,6 +2,15 @@
     margin: 1rem;
 }
 
+
+/* turns the whole input field orange, figure out how to target the form text */
+.orange {
+    
+    /* color: rgb(235, 115, 72) !important; */
+}
+
+
+
 .search__title {
     margin:3rem !important ;
     line-height: 3rem;
