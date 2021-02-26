@@ -47,9 +47,7 @@ function SignIn({ display, setDisplay, loginSuccess, logoutUser }) {
             header="Sign In"
             trigger={trigger}
         >
-
             <form>
-
                 <div className="form-group left-align">
                     <input
                         type="text"
