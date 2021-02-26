@@ -33,11 +33,11 @@ function SignIn({ display, setDisplay, loginSuccess, logoutUser }) {
         })
 
         // mimicking a 3 second loading time / waiting for API response
-        setTimeout(() => {
-            API.login(formInputs)
-                .then(res => { loginSuccess(res) })
-                .catch(err => { logoutUser(err) })
-        }, 2000);
+        // setTimeout(() => {
+        API.login(formInputs)
+            .then(res => { loginSuccess(res) })
+            .catch(err => { logoutUser(err) })
+        // }, 2000);
     }
 
 

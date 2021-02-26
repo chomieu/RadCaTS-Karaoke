@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import './App.css';
 import API from "./utils/API"
-import UserChip from "./components/UserChip"
 import Header from "./components/Header";
 import SignUp from "./components/SignUp"
 import SignIn from "./components/SignIn"
@@ -14,10 +13,16 @@ import AudioPlayer from "./components/AudioPlayer"
 
 function App() {
 
-  const [songData, setSongData] = useState({
-    artist: '',
-    song: '',
-  })
+  const [songData, setSongData] = useState([
+    {
+      name: 'baby shark - pink fong',
+      id: '12234'
+    },
+    {
+      name: 'baby - justin bieber',
+      id: '123yugsdf'
+    }
+  ])
   const [userState, setUserState] = useState({
     id: "",
     token: "",
@@ -39,12 +44,31 @@ function App() {
     console.log(token)
     if (token) {
       API.checkWebToken(token)
-        .then(res => { loginSuccess(res) })
+        .then(res => {
+          loginSuccess(res)
+          // API.getAllSongs()
+          //   .then(data => {
+          //     const formatted = data.map(song => {
+
+          //     })
+          //   })
+          //   .catch(err => { console.log(err) })
+          const data = {}
+          songData.map(song => {
+            data[`"${song.name}"`] = song.id
+          })
+
+          setSongData(data)
+
+        })
         .catch(err => {
           console.log('!!!!!!!!!!!!!!')
           logoutUser(err)
         })
+
+
     } else { userLoginPage() }
+
   }, [])
 
   const userLoginPage = () => {
@@ -75,6 +99,8 @@ function App() {
       username: res.data.user.username,
       profilePicture: res.data.user.profilePicture
     })
+
+
   }
 
   const logoutUser = (err) => {
@@ -112,7 +138,6 @@ function App() {
         : null}
 
       {display.loading ? <Preloader /> : null}
-
 
       {display.search
         ? <Search

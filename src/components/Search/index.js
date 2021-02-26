@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
-import { Container, Row, Col, TextInput, Button, Icon } from 'react-materialize';
-import API from "../../utils/API"
+import React, { useState, useEffect } from 'react'
+import { Container, Row, Col, TextInput, Button, Icon, Autocomplete } from 'react-materialize';
+// import API from "../../utils/API"
 import "./style.css"
 
 function Search({ userState, songData, setSongData, display, setDisplay }) {
@@ -17,13 +17,10 @@ function Search({ userState, songData, setSongData, display, setDisplay }) {
             [name]: value
         })
 
-        const search = { token: userState.token, search: formInputs }
-        // API.search(search).then(data => {
-        //     console.log(data)
-        //     setSongData(data)
-        // })
-        console.log(search.search)
+
     }
+
+
 
     const handleSearch = e => {
         e.preventDefault()
@@ -53,7 +50,7 @@ function Search({ userState, songData, setSongData, display, setDisplay }) {
                 <h4 className="search__title">What's <span className="underline">your</span> favorite song?</h4>
                 <form className="search__container">
 
-                    <TextInput
+                    {/* <TextInput
                         // className="orange"
                         icon="person"
                         id="artist"
@@ -61,20 +58,32 @@ function Search({ userState, songData, setSongData, display, setDisplay }) {
                         name="artist"
                         value={formInputs.artist}
                         onChange={handleFormInputs}
-                    />
+                    /> */}
 
-                    <TextInput
+                    {/* <TextInput
                         icon="album"
                         id="song"
                         label="song"
                         name="song"
                         value={formInputs.song}
                         onChange={handleFormInputs}
+                    /> */}
+
+                    <Autocomplete
+                        // icon="album"
+                        // onChange={handleFormInputs}
+                        id="song"
+                        name="song"
+                        // value={formInputs.song}
+                        options={{
+                            data: songData[0]
+                        }}
+                        placeholder="Insert here"
                     />
 
-                    <Row>
+                    {/* <Row>
                         <div>{`${formInputs.artist} ${formInputs.song}`}</div>
-                    </Row>
+                    </Row> */}
 
                     <Button
                         node="button"

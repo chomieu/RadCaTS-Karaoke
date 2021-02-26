@@ -15,6 +15,8 @@ function LyricsContainer({ curTime, playing, userInput, pts, setPts }) {
     // container for the next index lyric object 
     const [lrcObj2, setLrcObj2] = useState()
 
+
+
     const resetLyrics = () => {
         setLrcIdx({ idx: 1 })
         setLrcObj0({ time: 0, lyrics: '' })

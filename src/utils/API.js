@@ -20,6 +20,9 @@ const API = {
     search: query => {
         return axios.get(`${URL_PREFIX}/api/search`, query)
     },
+    getAllSongs: () => {
+        return axios.get(`${URL_PREFIX}/api/song`)
+    },
 
 
     //TODO: if user selects song return selection for backewnd 
