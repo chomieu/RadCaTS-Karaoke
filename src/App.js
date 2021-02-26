@@ -65,9 +65,8 @@ function App() {
           console.log('!!!!!!!!!!!!!!')
           logoutUser(err)
         })
-
-
     } else { userLoginPage() }
+
 
   }, [])
 
@@ -84,6 +83,8 @@ function App() {
 
   const loginSuccess = (res) => {
     console.log(res)
+
+    console.log(res.data.token)
     localStorage.setItem("token", res.data.token)
     setDisplay({
       ...display,
@@ -99,8 +100,6 @@ function App() {
       username: res.data.user.username,
       profilePicture: res.data.user.profilePicture
     })
-
-
   }
 
   const logoutUser = (err) => {
