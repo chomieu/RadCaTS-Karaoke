@@ -13,21 +13,10 @@ import KaraokeBox from "../KaraokeBox"
 import songFile from "../../utils/song/song.mp3"
 
 
-function AudioPlayer() {
+function AudioPlayer({ songData }) {
 
     const [pts, setPts] = useState({ pts: 0 })
     const [language, setLanguage] = useState('en-Us')
-    const [song, setSong] = useState({})
-
-    useEffect(() => {
-        let x = {
-            artist: '',
-            track: '',
-            // audio cant find
-            // file: songFile
-        }
-        setSong(x)
-    }, [])
 
 
     const { curTime, duration, playing, setPlaying, setClickedTime } = useAudioPlayer();
@@ -48,7 +37,7 @@ function AudioPlayer() {
     return (
         <div className="container">
             <AudioTop
-                song={song}
+                songData={songData}
                 songFile={songFile}
             />
 

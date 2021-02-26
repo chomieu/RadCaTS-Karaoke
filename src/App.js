@@ -14,7 +14,10 @@ import AudioPlayer from "./components/AudioPlayer"
 
 function App() {
 
-  const [songData, setSongData] = useState({})
+  const [songData, setSongData] = useState({
+    artist: '',
+    song: '',
+  })
   const [userState, setUserState] = useState({
     id: "",
     token: "",
@@ -33,10 +36,14 @@ function App() {
 
   useEffect(() => {
     const token = localStorage.getItem("token")
+    console.log(token)
     if (token) {
-      API.checkToken(token)
+      API.checkWebToken(token)
         .then(res => { loginSuccess(res) })
-        .catch(err => { logoutUser(err) })
+        .catch(err => {
+          console.log('!!!!!!!!!!!!!!')
+          logoutUser(err)
+        })
     } else { userLoginPage() }
   }, [])
 
@@ -52,6 +59,7 @@ function App() {
   }
 
   const loginSuccess = (res) => {
+    console.log(res)
     localStorage.setItem("token", res.data.token)
     setDisplay({
       ...display,
@@ -82,55 +90,56 @@ function App() {
   }
 
 
-  return <div className="App center-align">
-    <Header />
+  return (
+    <div className="App center-align">
+      <Header userState={userState} />
 
-    {display.signInBtns
-      ? <>
-        <SignUp
+      {display.signInBtns
+        ? <>
+          <SignUp
+            display={display}
+            setDisplay={setDisplay}
+            loginSuccess={loginSuccess}
+            logoutUser={logoutUser}
+          />
+          <SignIn
+            display={display}
+            setDisplay={setDisplay}
+            loginSuccess={loginSuccess}
+            logoutUser={logoutUser}
+          />
+        </>
+        : null}
+
+      {display.loading ? <Preloader /> : null}
+
+
+      {display.search
+        ? <Search
           display={display}
+          songData={songData}
+          userState={userState}
           setDisplay={setDisplay}
-          loginSuccess={loginSuccess}
+          setSongData={setSongData}
+        />
+        : null
+      }
+
+      {display.audioPlayer ? <AudioPlayer songData={songData} /> : null}
+
+      {display.logout
+        ? <Logout
+          display={display}
+          userState={userState}
+          setDisplay={setDisplay}
           logoutUser={logoutUser}
         />
-        <SignIn
-          display={display}
-          setDisplay={setDisplay}
-          loginSuccess={loginSuccess}
-          logoutUser={logoutUser}
-        />
-      </>
-      : <UserChip userState={userState} />}
+        : null}
 
-    {display.loading ? <Preloader /> : null}
+      {display.fileDrop ? <FileDrop /> : null}
 
-    {userState.isLoggedIn ? <h2>{userState.username}</h2> : null}
-
-    {display.search
-      ? <Search
-        display={display}
-        songData={songData}
-        userState={userState}
-        setDisplay={setDisplay}
-        setSongData={setSongData}
-      />
-      : null
-    }
-
-    {display.audioPlayer ? <AudioPlayer /> : null}
-
-    {display.logout
-      ? <Logout
-        display={display}
-        userState={userState}
-        setDisplay={setDisplay}
-        logoutUser={logoutUser}
-      />
-      : null}
-
-    {display.fileDrop ? <FileDrop /> : null}
-
-  </div>;
+    </div>
+  );
 }
 
 export default App;

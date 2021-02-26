@@ -10,7 +10,7 @@ const API = {
     signup: userData => {
         return axios.post(`${URL_PREFIX}/api/signup`, userData)
     },
-    checkToken: token => {
+    checkWebToken: token => {
         return axios.get(`${URL_PREFIX}/`, {
             headers: {
                 authorization: `Bearer: ${token}`
@@ -18,7 +18,7 @@ const API = {
         })
     },
     search: query => {
-        return axios.post(`${URL_PREFIX}/api/search`, query)
+        return axios.get(`${URL_PREFIX}/api/search`, query)
     },
 
 

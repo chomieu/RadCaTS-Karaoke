@@ -1,9 +1,11 @@
 // source: https://codesandbox.io/s/5wwj02qy7k?file=/src/useAudioPlayer.js:0-1246
 import React from "react";
-import Song from "./Song"
+import SongInfo from "./SongInfo"
+import song from '../../utils/song/song.mp3'
 
 
-function AudioTop({ song, songFile }) {
+
+function AudioTop({ songData }) {
 
     return (
 
@@ -11,11 +13,11 @@ function AudioTop({ song, songFile }) {
             <div className="col s12">
                 <audio id="audio">
                     {/* <source src={song.file} /> */}
-                    <source src={songFile} />
+                    <source src={song} />
                     <p>Your browser does not support the <code>audio</code> element.</p>
                 </audio>
 
-                <Song songName={song.track} songArtist={song.artist} />
+                <SongInfo songName={songData.song} songArtist={songData.artist} />
             </div>
         </div>
 

@@ -14,9 +14,8 @@ export default function logout({ userState, logoutUser }) {
             <Button
                 modal="close"
                 onClick={logoutUser}
-            >
-                Logout
-                </Button>
+            >Logout</Button>
+
         </Modal >
 
     )

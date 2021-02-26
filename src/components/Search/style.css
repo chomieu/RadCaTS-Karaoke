@@ -4,9 +4,8 @@
 
 
 /* turns the whole input field orange, figure out how to target the form text */
-.orange {
-    
-    /* color: rgb(235, 115, 72) !important; */
+#artist, #song {
+    color: rgba(235, 115, 72, 0.658) !important;
 }
 
 
