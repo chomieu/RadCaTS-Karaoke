@@ -4,76 +4,107 @@ import API from "../../utils/API"
 import "./style.css";
 
 
-function SignUp({ setUserState, setDisplay, display }) {
+function SignUp({ setDisplay, display, loginSuccess, logoutUser }) {
 
+    const trigger = <Button>Sign Up</Button>;
     const [formInputs, setFormInputs] = useState({
         username: "",
         password: "",
         confirm: "",
-        match: false
+        valid: false
     })
 
     useEffect(() => {
-        if (formInputs.password.length >= 8 && formInputs.password === formInputs.confirm) {
-            setFormInputs({ ...formInputs, match: true })
-        } else { setFormInputs({ ...formInputs, match: false }) }
+        if (formInputs.password.length >= 8 &&
+            formInputs.password === formInputs.confirm) {
+            setFormInputs({
+                ...formInputs,
+                valid: true
+            })
+        } else {
+            setFormInputs({
+                ...formInputs,
+                valid: false
+            })
+        }
     }, [formInputs.confirm])
 
     const handleInputChange = e => {
         const { name, value } = e.target
-        setFormInputs({ ...formInputs, [name]: value })
+        setFormInputs({
+            ...formInputs,
+            [name]: value
+        })
     }
 
     const handleInputSubmit = e => {
         e.preventDefault();
-        setFormInputs({ username: "", password: "", confirm: "", match: false })
-        setDisplay({ ...display, signInBtns: false, loading: true })
+        setFormInputs({
+            username: "",
+            password: "",
+            confirm: "",
+            valid: false
+        })
+        setDisplay({
+            ...display,
+            signInBtns: false,
+            loading: true
+        })
 
         // mimicking a 3 second loading time / waiting for API response
         setTimeout(() => {
-            API.signup(formInputs).then(res => {
-                console.log(res)
-                localStorage.setItem("token", res.data.token)
-                setDisplay({ ...display, signInBtns: false, loading: false, search: true, logout: true })
-                setUserState({
-                    id: res.data.user.id,
-                    username: res.data.user.username,
-                    token: res.data.token,
-                    isLoggedIn: true
-                })
-            }).catch(err => {
-                console.log(err);
-                localStorage.removeItem("token");
-            })
+            API.signup(formInputs)
+                .then(res => { loginSuccess(res) })
+                .catch(err => { logoutUser(err) })
         }, 2000);
     }
-    const trigger = <Button>Sign Up</Button>;
 
     return (
-        <Modal className="center-align" header="Sign Up" trigger={trigger}>
+        <Modal
+            className="center-align"
+            header="Sign Up"
+            trigger={trigger}
+        >
             <form>
-                {/* <div className="form-group left-align">
-                    <input type="email" name="email" onChange={handleInputChange} />
-                    <label htmlFor="email">Email address</label>
-                </div> */}
-
                 <div className="form-group left-align">
-                    <input type="text" name="username" value={formInputs.username} onChange={handleInputChange} />
+                    <input
+                        type="text"
+                        name="username"
+                        value={formInputs.username}
+                        onChange={handleInputChange}
+                    />
                     <label htmlFor="username">Username</label>
                 </div>
                 <div className="form-group left-align">
-                    <input type="password" name="password" value={formInputs.password} onChange={handleInputChange} />
+                    <input
+                        type="password"
+                        name="password"
+                        value={formInputs.password}
+                        onChange={handleInputChange}
+                    />
                     <label htmlFor="password">Password</label>
                 </div>
                 <div className="form-group left-align">
-                    <input type="password" name="confirm" value={formInputs.confirm} onChange={handleInputChange} />
+                    <input
+                        type="password"
+                        name="confirm"
+                        value={formInputs.confirm}
+                        onChange={handleInputChange}
+                    />
                     <label htmlFor="password">Confirm Password</label>
                 </div>
 
-                {formInputs.match ?
-                    <Button className="login__btn" type="submit" modal="close" onClick={handleInputSubmit}>Submit</Button>
-                    :
-                    <Button disabled className="login__btn">Submit</Button>
+                {formInputs.valid
+                    ? <Button
+                        className="login__btn"
+                        type="submit"
+                        modal="close"
+                        onClick={handleInputSubmit}
+                    >Submit</Button>
+                    : <Button
+                        disabled
+                        className="login__btn"
+                    >Submit</Button>
                 }
             </form>
         </Modal>

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import './App.css';
 import API from "./utils/API"
+import UserChip from "./components/UserChip"
 import Header from "./components/Header";
 import SignUp from "./components/SignUp"
 import SignIn from "./components/SignIn"
@@ -11,11 +12,16 @@ import Preloader from "./components/Preloader"
 import AudioPlayer from "./components/AudioPlayer"
 
 
-
-
 function App() {
-  const [userState, setUserState] = useState({ id: "", username: "", token: "", isLoggedIn: false })
+
   const [songData, setSongData] = useState({})
+  const [userState, setUserState] = useState({
+    id: "",
+    token: "",
+    username: "",
+    isLoggedIn: false,
+    profilePicture: ""
+  })
   const [display, setDisplay] = useState({
     audioPlayer: false,
     fileDrop: false,
@@ -25,49 +31,103 @@ function App() {
     signInBtns: false
   })
 
-  // on pageload, check for active web token.
-  // if theres a valid token, login user and display Search component
-  // if not display SignIn & SignUp buttons
   useEffect(() => {
     const token = localStorage.getItem("token")
-    console.log(token)
     if (token) {
-      API.getSecretClub(token)
-        .then(res => {
-          setUserState({
-            username: res.data.user.username,
-            id: res.data.user.id,
-            token: token,
-            isLoggedIn: true
-          })
-          setDisplay({ ...display, search: true, logout: true })
-        }).catch(err => { localStorage.removeItem('token') })
-    } else {
-      console.log('!!!!!!!')
-      setDisplay({ ...display, signInBtns: true })
-    }
+      API.checkToken(token)
+        .then(res => { loginSuccess(res) })
+        .catch(err => { logoutUser(err) })
+    } else { userLoginPage() }
   }, [])
+
+  const userLoginPage = () => {
+    setDisplay({
+      ...display,
+      audioPlayer: false,
+      signInBtns: true,
+      loading: false,
+      search: false,
+      logout: false
+    })
+  }
+
+  const loginSuccess = (res) => {
+    localStorage.setItem("token", res.data.token)
+    setDisplay({
+      ...display,
+      signInBtns: false,
+      loading: false,
+      search: true,
+      logout: true
+    })
+    setUserState({
+      isLoggedIn: true,
+      id: res.data.user.id,
+      token: res.data.token,
+      username: res.data.user.username,
+      profilePicture: res.data.user.profilePicture
+    })
+  }
+
+  const logoutUser = (err) => {
+    localStorage.removeItem("token");
+    if (err) { console.log(err) };
+    userLoginPage()
+    setUserState({
+      isLoggedIn: false,
+      email: '',
+      token: '',
+      id: ''
+    })
+  }
 
 
   return <div className="App center-align">
     <Header />
 
-    {/* display when a user is not logged in */}
     {display.signInBtns
       ? <>
-        <SignUp setUserState={setUserState} setDisplay={setDisplay} display={display} />
-        <SignIn setUserState={setUserState} setDisplay={setDisplay} display={display} />
-      </> : null}
+        <SignUp
+          display={display}
+          setDisplay={setDisplay}
+          loginSuccess={loginSuccess}
+          logoutUser={logoutUser}
+        />
+        <SignIn
+          display={display}
+          setDisplay={setDisplay}
+          loginSuccess={loginSuccess}
+          logoutUser={logoutUser}
+        />
+      </>
+      : <UserChip userState={userState} />}
 
     {display.loading ? <Preloader /> : null}
 
-    {/* when login successful, display name on top of page  */}
     {userState.isLoggedIn ? <h2>{userState.username}</h2> : null}
 
-    {/* display when toggled to true */}
-    {display.search ? <Search userState={userState} songData={songData} setSongData={setSongData} display={display} setDisplay={setDisplay} /> : null}
+    {display.search
+      ? <Search
+        display={display}
+        songData={songData}
+        userState={userState}
+        setDisplay={setDisplay}
+        setSongData={setSongData}
+      />
+      : null
+    }
+
     {display.audioPlayer ? <AudioPlayer /> : null}
-    {display.logout ? <Logout userState={userState} setUserState={setUserState} setDisplay={setDisplay} display={display} /> : null}
+
+    {display.logout
+      ? <Logout
+        display={display}
+        userState={userState}
+        setDisplay={setDisplay}
+        logoutUser={logoutUser}
+      />
+      : null}
+
     {display.fileDrop ? <FileDrop /> : null}
 
   </div>;

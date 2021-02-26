@@ -10,7 +10,7 @@ const API = {
     signup: userData => {
         return axios.post(`${URL_PREFIX}/api/signup`, userData)
     },
-    getSecretClub: token => {
+    checkToken: token => {
         return axios.get(`${URL_PREFIX}/`, {
             headers: {
                 authorization: `Bearer: ${token}`
