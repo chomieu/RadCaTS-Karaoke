@@ -8,7 +8,16 @@ function KaraokeBox({ curTime, playing, pts, setPts, language }) {
 
     // store user mic inputs here with timestamp
     // Note: time is at time of printing, not time of recording start
-    const [userInput, setUserInput] = useState([{ time: 0 }])
+    const [userInput, setUserInput] = useState([
+        // {
+        //     time: 0,
+        //     vocals: "This hit that ice cold Michelle Pfeiffer that white gold This one for them hood girls Them good girls straight masterpieces Stylin′ whilen livin it up in the city Got Chucks on with Saint Laurent Got kiss myself I am so pretty I am too hot hot damn "
+        // },
+        // {
+        //     time: 34
+        // }
+        { time: 0 }
+    ])
 
     // deconstructed properties needed from the WebSpeechAPI / react-speech-recognition
     const {
@@ -25,6 +34,8 @@ function KaraokeBox({ curTime, playing, pts, setPts, language }) {
 
 
     useEffect(() => {
+
+
         if (finalTranscript !== '') {
 
             // make copy of 'userInput', collect new data object and add to copy.
@@ -34,10 +45,8 @@ function KaraokeBox({ curTime, playing, pts, setPts, language }) {
             thisInput.time = Math.floor(curTime)
             thisInput.vocals = null
             copy.push(thisInput)
-
             // set updated copy as new state
             setUserInput(copy)
-
             // empty the 'finalTranscript' container.
             resetTranscript()
         }
@@ -50,7 +59,6 @@ function KaraokeBox({ curTime, playing, pts, setPts, language }) {
     const activateMic = (x) => {
         SpeechRecognition.startListening({ continuous: true, language: x })
         // set 'playing' to true to trigger the start of other events.
-        setPts({ pts: 0 })
     };
 
 

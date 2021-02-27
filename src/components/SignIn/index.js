@@ -4,6 +4,7 @@ import API from "../../utils/API"
 import "./style.css";
 
 
+
 function SignIn({ display, setDisplay, loginSuccess, logoutUser }) {
 
     const trigger = <Button>Sign In</Button>
