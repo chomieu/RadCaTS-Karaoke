@@ -23,9 +23,12 @@ const API = {
     getAllSongs: () => {
         return axios.get(`${URL_PREFIX}/api/song`)
     },
+    newKaraokeSession: userData => {
+        return axios.post(`${URL_PREFIX}/api/session`, userData)
+    }
 
 
-    //TODO: if user selects song return selection for backewnd 
+    //TODO: if user selects song return selection for backend 
 }
 
 export default API
