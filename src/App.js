@@ -41,7 +41,6 @@ function App() {
 
   useEffect(() => {
     const token = localStorage.getItem("token")
-    console.log(token)
     if (token) {
       API.checkWebToken(token)
         .then(res => {
@@ -62,7 +61,7 @@ function App() {
 
         })
         .catch(err => {
-          console.log('!!!!!!!!!!!!!!')
+          console.warn('Web Token failed')
           logoutUser(err)
         })
     } else { userLoginPage() }
@@ -82,10 +81,8 @@ function App() {
   }
 
   const loginSuccess = (res) => {
-    console.log(res)
-
-    console.log(res.data.token)
-    localStorage.setItem("token", res.data.token)
+    console.log(res.data)
+    // localStorage.setItem("token", res.data.token)
     setDisplay({
       ...display,
       signInBtns: false,
@@ -103,7 +100,7 @@ function App() {
   }
 
   const logoutUser = (err) => {
-    localStorage.removeItem("token");
+    // localStorage.removeItem("token");
     if (err) { console.log(err) };
     userLoginPage()
     setUserState({
