@@ -20,12 +20,19 @@
     text-decoration: underline;
 }
 
-.songSearch, #dropdown-content, .autocomplete {
+.searchInput, #dropdown-content, .autocomplete {
     color: rgba(235, 115, 72, 0.658) !important;
     font-family: Arial, Helvetica, sans-serif;
+
+
 }
 
 .active {
     color: rgba(235, 115, 72, 0.658) !important;
 
 }
+
+.searchSongBtn{
+    z-index: 0;
+}
+

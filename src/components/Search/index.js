@@ -1,28 +1,55 @@
-import { AirlineSeatReclineNormalOutlined } from '@material-ui/icons';
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, Fragment } from 'react'
+import AsyncSelect from 'react-select/async';
+import makeAnimated from 'react-select/animated';
+import Select from 'react-select';
 import { Container, Row, Col, TextInput, Button, Icon, Autocomplete } from 'react-materialize';
-// import API from "../../utils/API"
+import AddSongModal from "../AddSongModal"
 import "./style.css"
 
 function Search({ userState, search, songData, setSongData, display, setDisplay }) {
 
-    const [formInputs, setFormInputs] = useState({ autocomplete: '' })
+    const [formInputs, setFormInputs] = useState({
+        isClearable: true,
+        isDisabled: false,
+        isLoading: false,
+        isRtl: false,
+        isSearchable: true,
+        searchBox: '',
+        label: null,
+        value: null
+    })
 
-    const handleFormInputs = e => {
-        const { name, value } = e.target
+    const handleInputChange = e => {
         setFormInputs({
             ...formInputs,
-            [name]: value
+            searchBox: e
         })
     }
+
+    const handleSelection = e => {
+        if (e) {
+            setFormInputs({
+                ...formInputs,
+                label: e.label,
+                value: e.value
+            })
+            console.log(`selected ${e.label}`)
+        } else {
+            setFormInputs({
+                ...formInputs,
+                label: null,
+                value: null
+            })
+            console.log('cleared')
+        }
+    }
+
 
 
 
     const handleSearch = e => {
         e.preventDefault()
-        //mock successful search
         setSongData(formInputs)
-
         setDisplay({
             ...display,
             search: false,
@@ -40,40 +67,40 @@ function Search({ userState, search, songData, setSongData, display, setDisplay 
         }, 3000);
     }
 
+
+
     return (
-        <>
-            <Container className="center-align">
-                <h4 className="search__title">What's <span className="underline">your</span> favorite song?</h4>
-                <form className="search__container">
 
-                    <span className="songSearch">
+        <Container className="center-align">
+            <h4 className="search__title">What's <span className="underline">your</span> favorite song?</h4>
+            <form className="search__container">
 
-                        <Autocomplete
-                            icon={<Icon className="songSearch">album</Icon>}
-                            value={formInputs.autocomplete}
-                            onChange={handleFormInputs}
-                            placeholder="search here"
-                            name="autocomplete"
-                            options={{
-                                data: search,
-                                limit: 5
-                            }}
-                        />
+                <span className="searchInput">
+                    <p>search for an existing karaoke track</p>
+                    <Select
+                        className="searchInput"
+                        classNamePrefix="select"
+                        defaultValue={search[0]}
+                        isDisabled={formInputs.isDisabled}
+                        // isLoading={formInputs.isLoading}
+                        isClearable={formInputs.isClearable}
+                        // isRtl={formInputs.isRtl}
+                        isSearchable={formInputs.isSearchable}
+                        name="searchBox"
+                        inputValue={formInputs.searchBox}
+                        onInputChange={handleInputChange}
+                        onChange={handleSelection}
+                        options={search}
+                    />
+                </span>
 
-                    </span>
+                <AddSongModal
+                    display={display}
+                    setDisplay={setDisplay}
+                />
 
-                    <Button
-                        node="button"
-                        type="submit"
-                        waves="orange"
-                        onClick={handleSearch}
-                    >
-                        Search
-                    <Icon right>send</Icon>
-                    </Button>
-                </form>
-            </Container>
-        </>
+            </form>
+        </Container>
     )
 }
 

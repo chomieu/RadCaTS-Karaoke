@@ -14,7 +14,7 @@ import AudioPlayer from "./components/AudioPlayer"
 function App() {
 
   const [songData, setSongData] = useState([])
-  const [search, setSearch] = useState({})
+  const [search, setSearch] = useState([])
   const [userState, setUserState] = useState({
     id: "",
     token: "",
@@ -81,7 +81,7 @@ function App() {
 
   const logoutUser = (err) => {
     console.error('!!!!!!!!')
-    localStorage.removeItem("token");
+    // localStorage.removeItem("token");
     if (err) { console.log(err) };
     userLoginPage()
     setUserState({
@@ -93,12 +93,15 @@ function App() {
   }
 
   const formatAutoComplete = (data) => {
-    const formatted = {}
+    const formatted = []
     data.map(song => {
-      formatted[`${song.name} - ${song.artist}`] = null
+      let obj = {
+        label: `${song.name} - ${song.artist}`,
+        value: song._id
+      }
+      formatted.push(obj)
     })
 
-    console.log(formatted)
     setSearch(formatted)
   }
 
