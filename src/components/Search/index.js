@@ -1,14 +1,12 @@
+import { AirlineSeatReclineNormalOutlined } from '@material-ui/icons';
 import React, { useState, useEffect } from 'react'
 import { Container, Row, Col, TextInput, Button, Icon, Autocomplete } from 'react-materialize';
 // import API from "../../utils/API"
 import "./style.css"
 
-function Search({ userState, songData, setSongData, display, setDisplay }) {
+function Search({ userState, search, songData, setSongData, display, setDisplay }) {
 
-    const [formInputs, setFormInputs] = useState({
-        artist: '',
-        song: ''
-    })
+    const [formInputs, setFormInputs] = useState({ autocomplete: '' })
 
     const handleFormInputs = e => {
         const { name, value } = e.target
@@ -16,8 +14,6 @@ function Search({ userState, songData, setSongData, display, setDisplay }) {
             ...formInputs,
             [name]: value
         })
-
-
     }
 
 
@@ -50,40 +46,21 @@ function Search({ userState, songData, setSongData, display, setDisplay }) {
                 <h4 className="search__title">What's <span className="underline">your</span> favorite song?</h4>
                 <form className="search__container">
 
-                    {/* <TextInput
-                        // className="orange"
-                        icon="person"
-                        id="artist"
-                        label="artist"
-                        name="artist"
-                        value={formInputs.artist}
-                        onChange={handleFormInputs}
-                    /> */}
+                    <span className="songSearch">
 
-                    {/* <TextInput
-                        icon="album"
-                        id="song"
-                        label="song"
-                        name="song"
-                        value={formInputs.song}
-                        onChange={handleFormInputs}
-                    /> */}
+                        <Autocomplete
+                            icon={<Icon className="songSearch">album</Icon>}
+                            value={formInputs.autocomplete}
+                            onChange={handleFormInputs}
+                            placeholder="search here"
+                            name="autocomplete"
+                            options={{
+                                data: search,
+                                limit: 5
+                            }}
+                        />
 
-                    <Autocomplete
-                        // icon="album"
-                        // onChange={handleFormInputs}
-                        id="song"
-                        name="song"
-                        // value={formInputs.song}
-                        options={{
-                            data: songData[0]
-                        }}
-                        placeholder="Insert here"
-                    />
-
-                    {/* <Row>
-                        <div>{`${formInputs.artist} ${formInputs.song}`}</div>
-                    </Row> */}
+                    </span>
 
                     <Button
                         node="button"
