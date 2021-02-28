@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import jDataView from 'jdataview';
 import song from '../../utils/song/song.mp3'
 
+// Defined outside the component so they won't be reset to undefined every time the component is loaded.
 var mix;
 var mix2;
 
