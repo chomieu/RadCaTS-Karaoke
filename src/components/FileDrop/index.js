@@ -1,15 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 import jDataView from 'jdataview';
-// import Main from './js/main';
+import song from '../../utils/song/song.mp3'
 
-function FileDrop() {
+function FileDrop( { playing } ) {
+  var mix, mix2;
 
-  // TODO: Play song.
+  const [ isKaraoke, setIsKaraoke ] = useState({ isKaraoke: true });
+
+  if ( playing ) {
+    fileSelectHandler();
+  }
+
   function fileSelectHandler(e) {
     // cancel event and hover styling
     // fileDragHover(e);
 
-    var droppedFiles = e.target.files || e.dataTransfer.files;
+    // e.dataTransferFiles is only for dropping things in. e.target.files is what we need.
+    var droppedFiles = e.target.files; // || e.dataTransfer.files
     console.log("droppedFiles", droppedFiles);
 
     var reader = new FileReader();
@@ -24,7 +31,13 @@ function FileDrop() {
     // http://ericbidelman.tumblr.com/post/8343485440/reading-mp3-id3-tags-in-javascript
     // https://github.com/jDataView/jDataView/blob/master/src/jDataView.js
 
-    reader.readAsArrayBuffer(droppedFiles[0]);
+    // TODO: if it's pulled in through URL
+    // fetch( song )
+    // .then( resp => resp.blob())
+    // .then( blob => reader.readAsArrayBuffer( blob ));
+    // TODO: Else (if it's uploaded by the user)
+    reader.readAsArrayBuffer( droppedFiles[ 0 ] );
+
   }
 
   function initAudio(data) {
@@ -32,10 +45,15 @@ function FileDrop() {
     var context = new (window.AudioContext || window.webkitAudioContext)();
     console.log("context", context);
     var source;
-    if (source) source.stop(0);
+    if (source) { 
+      source.stop(0);
+      console.log( "source, line 48", source );
+    };
 
     source = context.createBufferSource();
 
+    // This if/else is testing whether we're using an AudioContext or webkitAudioContext object.
+    // If we're on an AudioContext object, create a buffer using the decodeAudioData method
     if (context.decodeAudioData) {
       context.decodeAudioData(data, function (buffer) {
         source.buffer = buffer;
@@ -43,18 +61,16 @@ function FileDrop() {
       }, function (e) {
         console.error(e);
       });
+    // Otherwise, if we're on webkitAudioContext, do it with createBuffer.
     } else {
       source.buffer = context.createBuffer(data, false);
       createAudio(source, context);
     }
   }
 
+  // source is buffer, where we're reading data from. context is the actual object.
   function createAudio(source, context) {
-    var processor,
-      filterLowPass,
-      filterHighPass,
-      mix,
-      mix2;
+    var processor, filterLowPass, filterHighPass;
     // create low-pass filter
     filterLowPass = context.createBiquadFilter();
     source.connect(filterLowPass);
@@ -73,6 +89,7 @@ function FileDrop() {
 
     mix2 = context.createGain();
     source.connect(mix2);
+    // Connecting to the browser output of the audio file?
     mix2.connect(context.destination);
 
     mix.gain.value = 1;
@@ -93,7 +110,9 @@ function FileDrop() {
     // playback the sound
     source.start(0);
 
-    // setTimeout(disconnect, source.buffer.duration * 1000 + 1000);
+    // setTimeout(() => {
+    //   source.stop(0);
+    // }, 2000);
   }
 
   function karaoke(evt) {
@@ -106,6 +125,22 @@ function FileDrop() {
       output[i] = inputL[i] - inputR[i];
     }
   }
+
+  function disableKaraoke() {
+    console.log( "disabled!" );
+    setIsKaraoke({ isKaraoke: false });
+    mix2.gain.value = 1;
+    mix.gain.value = 0;
+  }
+
+  function enableKaraoke() {
+    console.log( "enabled!" );
+    setIsKaraoke({ isKaraoke: true });
+    mix.gain.value = 1;
+    mix2.gain.value = 0;
+  }
+
+  console.log( "mix", mix, "mix2", mix2 );
 
   console.log("jDataView", !!jDataView);
   console.log("FileReader", !!FileReader);
@@ -133,7 +168,11 @@ function FileDrop() {
       <div id="current-song"></div>
       <div id="options">
         Options:
-          <button id="disable-filter">Disable karaoke</button>
+          <button 
+            id="disable-filter" 
+            onClick={ isKaraoke.isKaraoke ? disableKaraoke : enableKaraoke }>
+              Toggle vocal filter
+          </button>
       </div>
 
       <p>If you don't have any file at hand, <a id="demo-audio" href="#"><strong>click here for a demo</strong></a> of <a href="http://www.jamendo.com/en/track/1074874/happy">Happy by MMO</a>.</p>

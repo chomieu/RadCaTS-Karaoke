@@ -25,7 +25,19 @@
 
     var karaokeEnabled = true;
 
-    disableFilter.addEventListener('click', function() {
+    // disableFilter.addEventListener('click', function() {
+    //   if (karaokeEnabled) {
+    //     disableKaraoke();
+    //     karaokeEnabled = false;
+    //     disableFilter.innerHTML = 'Enable karaoke';
+    //   } else {
+    //     enableKaraoke();
+    //     karaokeEnabled = true;
+    //     disableFilter.innerHTML = 'Disable karaoke';
+    //   }
+    // });
+
+    function toggleKaraoke() {
       if (karaokeEnabled) {
         disableKaraoke();
         karaokeEnabled = false;
@@ -35,7 +47,7 @@
         karaokeEnabled = true;
         disableFilter.innerHTML = 'Disable karaoke';
       }
-    });
+    };
 
     demoAudio.addEventListener('click', function() {
       playSound('audio/mmo-happy.mp3')

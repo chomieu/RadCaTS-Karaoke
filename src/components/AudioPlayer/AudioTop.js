@@ -13,7 +13,7 @@ function AudioTop({ songData }) {
             <div className="col s12">
                 <audio id="audio">
                     {/* <source src={song.file} /> */}
-                    <source src={song} />
+                    {/* <source src={song} /> */}
                     <p>Your browser does not support the <code>audio</code> element.</p>
                 </audio>
 

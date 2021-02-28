@@ -4,6 +4,7 @@ import moment from "moment";
 import momentDurationFormatSetup from "moment-duration-format";
 import useAudioPlayer from './useAudioPlayer';
 import "./style.css"
+import FileDrop from "../FileDrop";
 
 import Bar from "./Bar";
 import AudioTop from "./AudioTop"
@@ -40,6 +41,8 @@ function AudioPlayer({ songData }) {
                 songData={songData}
                 songFile={songFile}
             />
+
+            <FileDrop playing={ playing } />
 
             <KaraokeBox
                 pts={pts}
