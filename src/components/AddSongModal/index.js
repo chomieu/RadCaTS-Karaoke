@@ -48,6 +48,8 @@ export default function AddSongModal({ display, setDisplay }) {
                         console.log(x.errorMessage)
                         setInputs({
                             ...inputs,
+                            title: '',
+                            artist: '',
                             message: `${x.title} by ${x.artist} is already in the database.`
                         })
                     } else {

@@ -3,11 +3,11 @@ import { Container, Row, Col, TextInput, Button, Icon } from 'react-materialize'
 import UserChip from '../UserChip'
 import "./style.css"
 
-function Header({ userState }) {
+function Header({ userData }) {
   return (
     <>
       <Row className="mb0">
-        <UserChip userState={userState} />
+        <UserChip userData={userData} />
       </Row>
       <Row>
 

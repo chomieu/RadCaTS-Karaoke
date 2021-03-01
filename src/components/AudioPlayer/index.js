@@ -6,7 +6,6 @@ import useAudioPlayer from './useAudioPlayer';
 import "./style.css"
 import FileDrop from "../FileDrop";
 
-import Bar from "./Bar";
 import AudioTop from "./AudioTop"
 import AudioBottom from "./AudioBottom"
 import KaraokeBox from "../KaraokeBox"
@@ -14,7 +13,7 @@ import KaraokeBox from "../KaraokeBox"
 import songFile from "../../utils/song/song.mp3"
 
 
-function AudioPlayer({ display, setDisplay, userState, setUserState, sessionData }) {
+function AudioPlayer({ display, setDisplay, userData, setUserData, sessionData }) {
 
     const [pts, setPts] = useState({ pts: 0 })
     const [language, setLanguage] = useState('en-Us')
@@ -59,6 +58,7 @@ function AudioPlayer({ display, setDisplay, userState, setUserState, sessionData
                 curTime={curTime}
                 playing={playing}
                 duration={duration}
+                sessionData={sessionData}
                 setClickedTime={setClickedTime}
                 formatDuration={formatDuration}
                 handlePause={handlePause}

@@ -8,7 +8,7 @@ import "./style.css"
 import API from '../../utils/API';
 import LyricsContainer from '../LyricsContainer';
 
-function Search({ userState, search, sessionData, setSessionData, display, setDisplay }) {
+function Search({ userData, search, sessionData, setSessionData, display, setDisplay }) {
 
     const [formInputs, setFormInputs] = useState({
         isClearable: true,
@@ -50,7 +50,7 @@ function Search({ userState, search, sessionData, setSessionData, display, setDi
         // prepard data object for api call.
         // call API to create session
         const data = {
-            host: userState.id,
+            host: userData.id,
             karaokeSong: formInputs.value
         }
         API.createSession(data)
@@ -60,21 +60,23 @@ function Search({ userState, search, sessionData, setSessionData, display, setDi
                 API.startSession(id)
                     .then(data => {
 
-                        // parse strigified lyrics to an object array
-                        // format the data we need to start our session.
+                        // parse stringified lyrics to an object array.
                         let x = data.data
                         let parsed = JSON.parse(x.lyrics)
                         let lyricsArr = parsed.lines
-                        let formatted = {
+                        // build data object we need to start our session.
+                        let obj = {
+                            artist: x.artist,
+                            lyrics: lyricsArr,
+                            mixed: x.mixed,
                             sessionId: id,
                             songId: x._id,
-                            artist: x.artist,
-                            name: x.name,
-                            lyrics: lyricsArr
+                            name: x.name
                         }
 
-                        // save the formatted data to sessionData
-                        setSessionData(formatted)
+                        console.log(obj)
+                        // save the obj data to sessionData
+                        setSessionData(obj)
                         // hide loading screen
                         // mount audio player now that sessionData is available in state
                         setDisplay({

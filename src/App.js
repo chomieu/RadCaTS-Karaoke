@@ -15,7 +15,7 @@ function App() {
 
   const [sessionData, setSessionData] = useState([])
   const [search, setSearch] = useState([])
-  const [userState, setUserState] = useState({
+  const [userData, setUserData] = useState({
     id: "",
     token: "",
     username: "",
@@ -63,7 +63,7 @@ function App() {
       search: true,
       logout: true
     })
-    setUserState({
+    setUserData({
       isLoggedIn: true,
       id: res.data.user._id,
       token: res.data.token,
@@ -80,11 +80,11 @@ function App() {
   }
 
   const logoutUser = (err) => {
-    console.error('!!!!!!!!')
+    console.error('Logged out')
     // localStorage.removeItem("token");
     if (err) { console.log(err) };
     userLoginPage()
-    setUserState({
+    setUserData({
       isLoggedIn: false,
       email: '',
       token: '',
@@ -109,7 +109,7 @@ function App() {
   return (
 
     <div className="App center-align">
-      <Header userState={userState} />
+      <Header userData={userData} />
 
       {display.signInBtns
         ? <>
@@ -134,8 +134,8 @@ function App() {
         ? <Search
           search={search}
           display={display}
+          userData={userData}
           sessionData={sessionData}
-          userState={userState}
           setDisplay={setDisplay}
           setSessionData={setSessionData}
         />
@@ -145,9 +145,9 @@ function App() {
       {display.audioPlayer
         ? <AudioPlayer
           display={display}
+          userData={userData}
           sessionData={sessionData}
           setDisplay={setDisplay}
-          userState={userState}
         />
         : null
       }
@@ -155,7 +155,7 @@ function App() {
       {display.logout
         ? <Logout
           display={display}
-          userState={userState}
+          userData={userData}
           setDisplay={setDisplay}
           logoutUser={logoutUser}
         />
