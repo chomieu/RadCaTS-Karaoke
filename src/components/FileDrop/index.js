@@ -114,11 +114,7 @@ function FileDrop( { playing } ) {
     processor.onaudioprocess = karaoke;
 
     // playback the sound
-    source.start(0);
-
-    // setTimeout(() => {
-    //   source.stop(0);
-    // }, 2000);
+    source.start( 0 );
   }
 
   function karaoke(evt) {
