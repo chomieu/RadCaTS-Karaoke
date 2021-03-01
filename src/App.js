@@ -13,16 +13,8 @@ import AudioPlayer from "./components/AudioPlayer"
 
 function App() {
 
-  const [songData, setSongData] = useState([
-    {
-      name: 'baby shark - pink fong',
-      id: '12234'
-    },
-    {
-      name: 'baby - justin bieber',
-      id: '123yugsdf'
-    }
-  ])
+  const [songData, setSongData] = useState([])
+  const [search, setSearch] = useState([])
   const [userState, setUserState] = useState({
     id: "",
     token: "",
@@ -41,30 +33,10 @@ function App() {
 
   useEffect(() => {
     const token = localStorage.getItem("token")
-    console.log(token)
     if (token) {
       API.checkWebToken(token)
-        .then(res => {
-          loginSuccess(res)
-          // API.getAllSongs()
-          //   .then(data => {
-          //     const formatted = data.map(song => {
-
-          //     })
-          //   })
-          //   .catch(err => { console.log(err) })
-          const data = {}
-          songData.map(song => {
-            data[`"${song.name}"`] = song.id
-          })
-
-          setSongData(data)
-
-        })
-        .catch(err => {
-          console.log('!!!!!!!!!!!!!!')
-          logoutUser(err)
-        })
+        .then(res => { loginSuccess(res) })
+        .catch(err => { logoutUser(err) })
     } else { userLoginPage() }
 
 
@@ -83,8 +55,6 @@ function App() {
 
   const loginSuccess = (res) => {
     console.log(res)
-
-    console.log(res.data.token)
     localStorage.setItem("token", res.data.token)
     setDisplay({
       ...display,
@@ -95,15 +65,23 @@ function App() {
     })
     setUserState({
       isLoggedIn: true,
-      id: res.data.user.id,
+      id: res.data.user._id,
       token: res.data.token,
       username: res.data.user.username,
       profilePicture: res.data.user.profilePicture
     })
+
+    API.getAllSongs()
+      .then(data => {
+        setSongData(data.data)
+        formatAutoComplete(data.data)
+      })
+      .catch(err => { console.error(err) })
   }
 
   const logoutUser = (err) => {
-    localStorage.removeItem("token");
+    console.error('!!!!!!!!')
+    // localStorage.removeItem("token");
     if (err) { console.log(err) };
     userLoginPage()
     setUserState({
@@ -114,8 +92,22 @@ function App() {
     })
   }
 
+  const formatAutoComplete = (data) => {
+    const formatted = []
+    data.map(song => {
+      let obj = {
+        label: `${song.name} - ${song.artist}`,
+        value: song._id
+      }
+      formatted.push(obj)
+    })
+
+    setSearch(formatted)
+  }
+
 
   return (
+
     <div className="App center-align">
       <Header userState={userState} />
 
@@ -140,6 +132,7 @@ function App() {
 
       {display.search
         ? <Search
+          search={search}
           display={display}
           songData={songData}
           userState={userState}
@@ -166,4 +159,15 @@ function App() {
   );
 }
 
+
 export default App;
+
+
+// <Router>
+//   <Switch>
+//     <Route path={"/api/session/:id"}/>
+//     <Route exact path={"/api/session"}/>
+
+//   </Switch>
+
+// </Router>

@@ -1,102 +1,125 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, Fragment } from 'react'
+import AsyncSelect from 'react-select/async';
+import makeAnimated from 'react-select/animated';
+import Select from 'react-select';
 import { Container, Row, Col, TextInput, Button, Icon, Autocomplete } from 'react-materialize';
-// import API from "../../utils/API"
+import AddSongModal from "../AddSongModal"
 import "./style.css"
+import API from '../../utils/API';
+import LyricsContainer from '../LyricsContainer';
 
-function Search({ userState, songData, setSongData, display, setDisplay }) {
+function Search({ userState, search, songData, setSongData, display, setDisplay }) {
 
     const [formInputs, setFormInputs] = useState({
-        artist: '',
-        song: ''
+        isClearable: true,
+        isSearchable: true,
+        label: '',
+        value: '',
     })
 
-    const handleFormInputs = e => {
-        const { name, value } = e.target
-        setFormInputs({
-            ...formInputs,
-            [name]: value
-        })
+    const handleInputChange = e => {
+        console.log(e)
 
-
+        if (e) {
+            setFormInputs({
+                ...formInputs,
+                label: e.label,
+                value: e.value,
+            })
+        } else {
+            setFormInputs({
+                ...formInputs,
+                label: null,
+                value: null,
+            })
+        }
     }
-
 
 
     const handleSearch = e => {
         e.preventDefault()
-        //mock successful search
-        setSongData(formInputs)
 
-        setDisplay({
-            ...display,
-            search: false,
-            logout: false,
-            loading: true
-        })
-        setTimeout(() => {
-            setDisplay({
-                ...display,
-                loading: false,
-                search: false,
-                audioPlayer: true,
-                logout: true
+        const data = {
+            host: userState.id,
+            karaokeSong: formInputs.value
+        }
+
+        API.createSession(data)
+            .then(data => {
+                const id = data.data
+
+                console.log(data)
+                API.startSession(id)
+                    .then(data => {
+
+                        data.data.lyrics = JSON.parse(data.data.lyrics)
+
+                        console.log(data.data)
+                    })
+                    .catch(err => { console.log(err) })
             })
-        }, 3000);
+            .catch(err => { console.log(err) })
+
+
+        // setDisplay({
+        //     ...display,
+        //     search: false,
+        //     logout: false,
+        //     loading: true
+        // })
+
+
+
+        // setTimeout(() => {
+        //     setDisplay({
+        //         ...display,
+        //         loading: false,
+        //         search: false,
+        //         audioPlayer: true,
+        //         logout: true
+        //     })
+        // }, 2000);
+
+
     }
 
+
+
     return (
-        <>
-            <Container className="center-align">
-                <h4 className="search__title">What's <span className="underline">your</span> favorite song?</h4>
-                <form className="search__container">
 
-                    {/* <TextInput
-                        // className="orange"
-                        icon="person"
-                        id="artist"
-                        label="artist"
-                        name="artist"
-                        value={formInputs.artist}
-                        onChange={handleFormInputs}
-                    /> */}
+        <Container className="center-align">
+            <h4 className="search__title">What's <span className="underline">your</span> favorite song?</h4>
+            <form className="search__container">
 
-                    {/* <TextInput
-                        icon="album"
-                        id="song"
-                        label="song"
-                        name="song"
-                        value={formInputs.song}
-                        onChange={handleFormInputs}
-                    /> */}
-
-                    <Autocomplete
-                        // icon="album"
-                        // onChange={handleFormInputs}
-                        id="song"
-                        name="song"
-                        // value={formInputs.song}
-                        options={{
-                            data: songData[0]
-                        }}
-                        placeholder="Insert here"
+                <span className="searchInput">
+                    <p>search for an existing karaoke track</p>
+                    <Select
+                        isSearchable={formInputs.isSearchable}
+                        isClearable={formInputs.isClearable}
+                        onChange={handleInputChange}
+                        classNamePrefix="select"
+                        className="searchInput"
+                        options={search}
+                        name="searchBox"
                     />
+                </span>
 
-                    {/* <Row>
-                        <div>{`${formInputs.artist} ${formInputs.song}`}</div>
-                    </Row> */}
+                <AddSongModal
+                    display={display}
+                    setDisplay={setDisplay}
+                />
 
-                    <Button
-                        node="button"
-                        type="submit"
-                        waves="orange"
+                {formInputs.value
+                    ? <Button
                         onClick={handleSearch}
-                    >
-                        Search
-                    <Icon right>send</Icon>
-                    </Button>
-                </form>
-            </Container>
-        </>
+                    >start session
+                </Button>
+
+                    : <Button disabled>...</Button>
+                }
+
+            </form>
+        </Container>
     )
 }
 
