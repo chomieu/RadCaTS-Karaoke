@@ -6,8 +6,7 @@ import API from "../../utils/API"
 import "./style.css";
 
 
-
-function AddSong({ display, setDisplay }) {
+export default function AddSongModal({ display, setDisplay }) {
 
     const trigger = <Button>can't find your song?</Button>
     const [inputs, setInputs] = useState({
@@ -17,61 +16,54 @@ function AddSong({ display, setDisplay }) {
         artist: '',
         loading: false,
         tryAgain: false,
-
     })
+
+    // control form inputs for search
     const handleInputChange = e => {
         const { name, value } = e.target
-        setInputs({
-            ...inputs,
-            [name]: value
-        })
+        setInputs({ ...inputs, [name]: value })
     }
 
+    // control form submit for search
+    // activate loading visual to await api response
     const handleInputSubmit = e => {
         e.preventDefault();
-        setInputs({
-            ...inputs,
-            title: "",
-            artist: "",
-            loading: true
-        })
+        setInputs({ ...inputs, loading: true })
 
+        // send title and artist search as one string with the key of name
         let data = { name: `${inputs.title} ${inputs.artist}` }
         API.searchNewSong(data)
             .then(data => {
-                console.log(data)
                 let x = data.data
+                console.log(x)
+                // clear form inputs, 
+                setInputs({ ...inputs, artist: "", title: "" })
 
-                if (x.errorMessage === "this song already existed!") {
-                    setInputs({
-                        ...inputs,
-                        header: 'oops..',
-                        message: `${x.title} by ${x.artist} is already in the database.`,
-                        title: "",
-                        artist: "",
-                        tryAgain: true
-                    })
-                } else if (x.errorMessage) {
-                    setInputs({
-                        ...inputs,
-                        header: 'oops..',
-                        message: `${x.title} by ${x.artist} is not available for karaoke yet.`,
-                        title: "",
-                        artist: "",
-                        tryAgain: true
-                    })
+                //  if theres an error, set the message and display to user.
+                if (x.errorMessage) {
+                    console.log('!!!!!')
+
+                    setInputs({ ...inputs, header: 'oops..', tryAgain: true })
+                    if (x.errorMessage === "this song already existed!") {
+                        console.log(x.errorMessage)
+                        setInputs({
+                            ...inputs,
+                            message: `${x.title} by ${x.artist} is already in the database.`
+                        })
+                    } else {
+                        setInputs({
+                            ...inputs,
+                            message: `${x.title} by ${x.artist} is not available for karaoke yet.`,
+                        })
+                    }
                 }
             })
             .catch(err => { console.log(err) })
     }
 
+    // if the previous search failed and user clicks button to search again
     const handleTryAgain = () => {
-        setInputs({
-            ...inputs,
-            header: 'Lets try again',
-            tryAgain: false
-
-        })
+        setInputs({ ...inputs, header: 'Lets try again', tryAgain: false })
     }
 
 
@@ -81,6 +73,7 @@ function AddSong({ display, setDisplay }) {
             header={inputs.header}
             trigger={trigger}
         >
+
             <form>
                 {/* search new song inputs */}
                 {!inputs.loading && !inputs.tryAgain
@@ -101,7 +94,8 @@ function AddSong({ display, setDisplay }) {
                         onClick={handleInputSubmit}
                     >Search
                     </Button>
-                    : !inputs.loading && !inputs.tryAgain
+
+                    : !inputs.loading
                         ? <Button
                             disabled
                             className="login__btn"
@@ -124,17 +118,10 @@ function AddSong({ display, setDisplay }) {
                         >New Search
                         </Button>
                     </>
-
-
                     : null
                 }
-
-
-
-
             </form>
+
         </Modal >
     )
 }
-
-export default AddSong;

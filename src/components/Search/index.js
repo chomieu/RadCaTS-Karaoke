@@ -10,61 +10,59 @@ function Search({ userState, search, songData, setSongData, display, setDisplay 
 
     const [formInputs, setFormInputs] = useState({
         isClearable: true,
-        isDisabled: false,
-        isLoading: false,
-        isRtl: false,
         isSearchable: true,
-        searchBox: '',
-        label: null,
-        value: null
+        label: '',
+        value: '',
     })
 
     const handleInputChange = e => {
-        setFormInputs({
-            ...formInputs,
-            searchBox: e
-        })
-    }
+        console.log(e)
 
-    const handleSelection = e => {
         if (e) {
             setFormInputs({
                 ...formInputs,
                 label: e.label,
-                value: e.value
+                value: e.value,
             })
-            console.log(`selected ${e.label}`)
         } else {
             setFormInputs({
                 ...formInputs,
                 label: null,
-                value: null
+                value: null,
             })
-            console.log('cleared')
         }
     }
 
 
-
-
     const handleSearch = e => {
         e.preventDefault()
-        setSongData(formInputs)
-        setDisplay({
-            ...display,
-            search: false,
-            logout: false,
-            loading: true
-        })
-        setTimeout(() => {
-            setDisplay({
-                ...display,
-                loading: false,
-                search: false,
-                audioPlayer: true,
-                logout: true
-            })
-        }, 3000);
+
+        const data = {
+            host: userState.id,
+            karaokeSong: formInputs.value
+        }
+
+        console.log(data)
+
+
+        // setDisplay({
+        //     ...display,
+        //     search: false,
+        //     logout: false,
+        //     loading: true
+        // })
+
+
+
+        // setTimeout(() => {
+        //     setDisplay({
+        //         ...display,
+        //         loading: false,
+        //         search: false,
+        //         audioPlayer: true,
+        //         logout: true
+        //     })
+        // }, 2000);
     }
 
 
@@ -78,19 +76,13 @@ function Search({ userState, search, songData, setSongData, display, setDisplay 
                 <span className="searchInput">
                     <p>search for an existing karaoke track</p>
                     <Select
-                        className="searchInput"
-                        classNamePrefix="select"
-                        defaultValue={search[0]}
-                        isDisabled={formInputs.isDisabled}
-                        // isLoading={formInputs.isLoading}
-                        isClearable={formInputs.isClearable}
-                        // isRtl={formInputs.isRtl}
                         isSearchable={formInputs.isSearchable}
-                        name="searchBox"
-                        inputValue={formInputs.searchBox}
-                        onInputChange={handleInputChange}
-                        onChange={handleSelection}
+                        isClearable={formInputs.isClearable}
+                        onChange={handleInputChange}
+                        classNamePrefix="select"
+                        className="searchInput"
                         options={search}
+                        name="searchBox"
                     />
                 </span>
 
@@ -98,6 +90,15 @@ function Search({ userState, search, songData, setSongData, display, setDisplay 
                     display={display}
                     setDisplay={setDisplay}
                 />
+
+                {formInputs.value
+                    ? <Button
+                        onClick={handleSearch}
+                    >start session
+                </Button>
+
+                    : <Button disabled>...</Button>
+                }
 
             </form>
         </Container>
