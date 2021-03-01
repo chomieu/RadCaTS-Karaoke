@@ -8,7 +8,7 @@ import "./style.css"
 import API from '../../utils/API';
 import LyricsContainer from '../LyricsContainer';
 
-function Search({ userState, search, songData, setSongData, display, setDisplay }) {
+function Search({ userState, search, sessionData, setSessionData, display, setDisplay }) {
 
     const [formInputs, setFormInputs] = useState({
         isClearable: true,
@@ -39,46 +39,60 @@ function Search({ userState, search, songData, setSongData, display, setDisplay 
     const handleSearch = e => {
         e.preventDefault()
 
+        // set loading screen
+        setDisplay({
+            ...display,
+            search: false,
+            logout: false,
+            loading: true
+        })
+
+        // prepard data object for api call.
+        // call API to create session
         const data = {
             host: userState.id,
             karaokeSong: formInputs.value
         }
-
         API.createSession(data)
             .then(data => {
+                // second api call to start session with session id
                 const id = data.data
-
-                console.log(data)
                 API.startSession(id)
                     .then(data => {
 
-                        data.data.lyrics = JSON.parse(data.data.lyrics)
+                        // parse strigified lyrics to an object array
+                        // format the data we need to start our session.
+                        let x = data.data
+                        let parsed = JSON.parse(x.lyrics)
+                        let lyricsArr = parsed.lines
+                        let formatted = {
+                            sessionId: id,
+                            songId: x._id,
+                            artist: x.artist,
+                            name: x.name,
+                            lyrics: lyricsArr
+                        }
 
-                        console.log(data.data)
+                        // save the formatted data to sessionData
+                        setSessionData(formatted)
+                        // hide loading screen
+                        // mount audio player now that sessionData is available in state
+                        setDisplay({
+                            ...display,
+                            loading: false,
+                            search: false,
+                            audioPlayer: true,
+                            logout: true
+                        })
                     })
                     .catch(err => { console.log(err) })
             })
             .catch(err => { console.log(err) })
 
 
-        // setDisplay({
-        //     ...display,
-        //     search: false,
-        //     logout: false,
-        //     loading: true
-        // })
 
 
 
-        // setTimeout(() => {
-        //     setDisplay({
-        //         ...display,
-        //         loading: false,
-        //         search: false,
-        //         audioPlayer: true,
-        //         logout: true
-        //     })
-        // }, 2000);
 
 
     }

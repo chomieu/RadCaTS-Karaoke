@@ -14,7 +14,7 @@ import KaraokeBox from "../KaraokeBox"
 import songFile from "../../utils/song/song.mp3"
 
 
-function AudioPlayer({ songData }) {
+function AudioPlayer({ display, setDisplay, userState, setUserState, sessionData }) {
 
     const [pts, setPts] = useState({ pts: 0 })
     const [language, setLanguage] = useState('en-Us')
@@ -38,11 +38,11 @@ function AudioPlayer({ songData }) {
     return (
         <div className="container">
             <AudioTop
-                songData={songData}
+                sessionData={sessionData}
                 songFile={songFile}
             />
 
-            <FileDrop playing={ playing } />
+            {/* <FileDrop playing={ playing } /> */}
 
             <KaraokeBox
                 pts={pts}
@@ -50,6 +50,7 @@ function AudioPlayer({ songData }) {
                 curTime={curTime}
                 playing={playing}
                 language={language}
+                sessionData={sessionData}
             />
 
             {/* <Bar curTime={curTime} duration={duration} onTimeUpdate={(time) => setClickedTime(time)} /> */}

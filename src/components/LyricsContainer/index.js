@@ -4,7 +4,11 @@ import "./style.css"
 
 
 
-function LyricsContainer({ curTime, playing, userInput, pts, setPts }) {
+function LyricsContainer({ curTime, playing, userInput, pts, setPts, sessionData }) {
+
+    useEffect(() => {
+        // console.log(sessionData)
+    }, [])
 
     // track the index location of the current lyrics object
     const [lrcIdx, setLrcIdx] = useState({

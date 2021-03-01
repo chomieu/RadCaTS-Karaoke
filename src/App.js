@@ -13,7 +13,7 @@ import AudioPlayer from "./components/AudioPlayer"
 
 function App() {
 
-  const [songData, setSongData] = useState([])
+  const [sessionData, setSessionData] = useState([])
   const [search, setSearch] = useState([])
   const [userState, setUserState] = useState({
     id: "",
@@ -73,7 +73,7 @@ function App() {
 
     API.getAllSongs()
       .then(data => {
-        setSongData(data.data)
+        setSessionData(data.data)
         formatAutoComplete(data.data)
       })
       .catch(err => { console.error(err) })
@@ -134,15 +134,23 @@ function App() {
         ? <Search
           search={search}
           display={display}
-          songData={songData}
+          sessionData={sessionData}
           userState={userState}
           setDisplay={setDisplay}
-          setSongData={setSongData}
+          setSessionData={setSessionData}
         />
         : null
       }
 
-      {display.audioPlayer ? <AudioPlayer songData={songData} /> : null}
+      {display.audioPlayer
+        ? <AudioPlayer
+          display={display}
+          sessionData={sessionData}
+          setDisplay={setDisplay}
+          userState={userState}
+        />
+        : null
+      }
 
       {display.logout
         ? <Logout

@@ -5,19 +5,27 @@ import song from '../../utils/song/song.mp3'
 
 
 
-function AudioTop({ songData }) {
+function AudioTop({ sessionData }) {
 
     return (
 
         <div className="row player top">
             <div className="col s12">
                 <audio id="audio">
-                    {/* <source src={song.file} /> */}
-                    {/* <source src={song} /> */}
+                    <source src={song} />
                     <p>Your browser does not support the <code>audio</code> element.</p>
                 </audio>
 
-                <SongInfo songName={songData.song} songArtist={songData.artist} />
+
+
+                {/* <audio controls id="">
+                    <source src="" />
+                    <p>Your browser does not support the <code>audio</code> element.</p>
+                </audio> */}
+
+
+
+                <SongInfo songName={sessionData.name} songArtist={sessionData.artist} />
             </div>
         </div>
 
