@@ -9,8 +9,11 @@ function AudioBottom({ pts, curTime, duration, playing, handlePause, handlePlay,
 
     return (
         <>
-            <audio id="audio">
-                <source src={sessionData.mixed} />
+            <audio
+                id="audio"
+                autostart="0"
+                src={sessionData.mixed}
+            >
                 {/* <source src="https://tinyurl.com/ycnjfay4" /> */}
                 <p>Your browser does not support the <code>audio</code> element.</p>
             </audio>
