@@ -22,6 +22,9 @@ const API = {
     startSession: id => {
         return axios.get(`${URL_PREFIX}/api/session/${id}`)
     },
+    finishSession: (id, data) => {
+        return axios.put(`${URL_PREFIX}/api/session/${id}`, data)
+    },
     checkWebToken: token => {
         return axios.get(`${URL_PREFIX}/`, {
             headers: {
