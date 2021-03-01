@@ -8,7 +8,7 @@ import "./style.css"
 import API from '../../utils/API';
 import LyricsContainer from '../LyricsContainer';
 
-function Search({ userState, search, songData, setSongData, display, setDisplay }) {
+function Search({ userData, search, sessionData, setSessionData, display, setDisplay }) {
 
     const [formInputs, setFormInputs] = useState({
         isClearable: true,
@@ -39,46 +39,62 @@ function Search({ userState, search, songData, setSongData, display, setDisplay 
     const handleSearch = e => {
         e.preventDefault()
 
+        // set loading screen
+        setDisplay({
+            ...display,
+            search: false,
+            logout: false,
+            loading: true
+        })
+
+        // prepard data object for api call.
+        // call API to create session
         const data = {
-            host: userState.id,
+            host: userData.id,
             karaokeSong: formInputs.value
         }
-
         API.createSession(data)
             .then(data => {
+                // second api call to start session with session id
                 const id = data.data
-
-                console.log(data)
                 API.startSession(id)
                     .then(data => {
 
-                        data.data.lyrics = JSON.parse(data.data.lyrics)
+                        // parse stringified lyrics to an object array.
+                        let x = data.data
+                        let parsed = JSON.parse(x.lyrics)
+                        let lyricsArr = parsed.lines
+                        // build data object we need to start our session.
+                        let obj = {
+                            artist: x.artist,
+                            lyrics: lyricsArr,
+                            mixed: x.mixed,
+                            sessionId: id,
+                            songId: x._id,
+                            name: x.name
+                        }
 
-                        console.log(data.data)
+                        console.log(obj)
+                        // save the obj data to sessionData
+                        setSessionData(obj)
+                        // hide loading screen
+                        // mount audio player now that sessionData is available in state
+                        setDisplay({
+                            ...display,
+                            loading: false,
+                            search: false,
+                            audioPlayer: true,
+                            logout: true
+                        })
                     })
                     .catch(err => { console.log(err) })
             })
             .catch(err => { console.log(err) })
 
 
-        // setDisplay({
-        //     ...display,
-        //     search: false,
-        //     logout: false,
-        //     loading: true
-        // })
 
 
 
-        // setTimeout(() => {
-        //     setDisplay({
-        //         ...display,
-        //         loading: false,
-        //         search: false,
-        //         audioPlayer: true,
-        //         logout: true
-        //     })
-        // }, 2000);
 
 
     }

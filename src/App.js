@@ -13,9 +13,9 @@ import AudioPlayer from "./components/AudioPlayer"
 
 function App() {
 
-  const [songData, setSongData] = useState([])
+  const [sessionData, setSessionData] = useState([])
   const [search, setSearch] = useState([])
-  const [userState, setUserState] = useState({
+  const [userData, setUserData] = useState({
     id: "",
     token: "",
     username: "",
@@ -63,7 +63,7 @@ function App() {
       search: true,
       logout: true
     })
-    setUserState({
+    setUserData({
       isLoggedIn: true,
       id: res.data.user._id,
       token: res.data.token,
@@ -73,18 +73,18 @@ function App() {
 
     API.getAllSongs()
       .then(data => {
-        setSongData(data.data)
+        setSessionData(data.data)
         formatAutoComplete(data.data)
       })
       .catch(err => { console.error(err) })
   }
 
   const logoutUser = (err) => {
-    console.error('!!!!!!!!')
+    console.error('Logged out')
     // localStorage.removeItem("token");
     if (err) { console.log(err) };
     userLoginPage()
-    setUserState({
+    setUserData({
       isLoggedIn: false,
       email: '',
       token: '',
@@ -109,7 +109,7 @@ function App() {
   return (
 
     <div className="App center-align">
-      <Header userState={userState} />
+      <Header userData={userData} />
 
       {display.signInBtns
         ? <>
@@ -134,20 +134,28 @@ function App() {
         ? <Search
           search={search}
           display={display}
-          songData={songData}
-          userState={userState}
+          userData={userData}
+          sessionData={sessionData}
           setDisplay={setDisplay}
-          setSongData={setSongData}
+          setSessionData={setSessionData}
         />
         : null
       }
 
-      {display.audioPlayer ? <AudioPlayer songData={songData} /> : null}
+      {display.audioPlayer
+        ? <AudioPlayer
+          display={display}
+          userData={userData}
+          sessionData={sessionData}
+          setDisplay={setDisplay}
+        />
+        : null
+      }
 
       {display.logout
         ? <Logout
           display={display}
-          userState={userState}
+          userData={userData}
           setDisplay={setDisplay}
           logoutUser={logoutUser}
         />

@@ -5,11 +5,11 @@ import song from '../../utils/song/song.mp3'
 var mix;
 var mix2;
 
-function FileDrop( { playing } ) {
+function FileDrop({ playing }) {
 
-  const [ isKaraoke, setIsKaraoke ] = useState({ isKaraoke: true });
+  const [isKaraoke, setIsKaraoke] = useState({ isKaraoke: true });
 
-  if ( playing ) {
+  if (playing) {
     fileSelectHandler();
   }
 
@@ -38,7 +38,7 @@ function FileDrop( { playing } ) {
     // .then( resp => resp.blob())
     // .then( blob => reader.readAsArrayBuffer( blob ));
     // TODO: Else (if it's uploaded by the user)
-    reader.readAsArrayBuffer( droppedFiles[ 0 ] );
+    reader.readAsArrayBuffer(droppedFiles[0]);
 
   }
 
@@ -47,9 +47,9 @@ function FileDrop( { playing } ) {
     var context = new (window.AudioContext || window.webkitAudioContext)();
     console.log("context", context);
     var source;
-    if (source) { 
+    if (source) {
       source.stop(0);
-      console.log( "source, line 48", source );
+      console.log("source, line 48", source);
     };
 
     source = context.createBufferSource();
@@ -63,7 +63,7 @@ function FileDrop( { playing } ) {
       }, function (e) {
         console.error(e);
       });
-    // Otherwise, if we're on webkitAudioContext, do it with createBuffer.
+      // Otherwise, if we're on webkitAudioContext, do it with createBuffer.
     } else {
       source.buffer = context.createBuffer(data, false);
       createAudio(source, context);
@@ -91,8 +91,8 @@ function FileDrop( { playing } ) {
 
     mix2 = context.createGain();
 
-    console.log( "mix 93", mix )
-    console.log( "mix2 94", mix2 )
+    console.log("mix 93", mix)
+    console.log("mix2 94", mix2)
     source.connect(mix2);
     // Connecting to the browser output of the audio file?
     mix2.connect(context.destination);
@@ -132,29 +132,29 @@ function FileDrop( { playing } ) {
   }
 
   function disableKaraoke() {
-    console.log( "disabled!" );
+    console.log("disabled!");
     setIsKaraoke({ isKaraoke: false });
-    console.log( "mix", mix );
-    console.log( "mix2", mix2 );
+    console.log("mix", mix);
+    console.log("mix2", mix2);
 
     mix2.gain.value = 1;
     mix.gain.value = 0;
 
-    console.log( "mix", mix );
-    console.log( "mix2", mix2 );
+    console.log("mix", mix);
+    console.log("mix2", mix2);
   }
 
   function enableKaraoke() {
-    console.log( "enabled!" );
+    console.log("enabled!");
     setIsKaraoke({ isKaraoke: true });
-    console.log( "mix", mix );
-    console.log( "mix2", mix2 );
+    console.log("mix", mix);
+    console.log("mix2", mix2);
     mix.gain.value = 1;
     mix2.gain.value = 0;
   }
 
-  console.log("jDataView", !!jDataView);
-  console.log("FileReader", !!FileReader);
+  // console.log("jDataView", !!jDataView);
+  // console.log("FileReader", !!FileReader);
 
   // useEffect(() => {
   //     const script = document.createElement('script');
@@ -179,10 +179,10 @@ function FileDrop( { playing } ) {
       <div id="current-song"></div>
       <div id="options">
         Options:
-          <button 
-            id="disable-filter" 
-            onClick={ isKaraoke.isKaraoke ? disableKaraoke : enableKaraoke }>
-              Toggle vocal filter
+          <button
+          id="disable-filter"
+          onClick={isKaraoke.isKaraoke ? disableKaraoke : enableKaraoke}>
+          Toggle vocal filter
           </button>
       </div>
 
