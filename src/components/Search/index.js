@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Container, Row, Col, TextInput, Button, Icon, Autocomplete } from 'react-materialize';
 // import API from "../../utils/API"
 import "./style.css"
+import FileDrop from "../FileDrop";
 
 function Search({ userState, songData, setSongData, display, setDisplay }) {
 
@@ -95,6 +96,7 @@ function Search({ userState, songData, setSongData, display, setDisplay }) {
                     <Icon right>send</Icon>
                     </Button>
                 </form>
+                <FileDrop />
             </Container>
         </>
     )
