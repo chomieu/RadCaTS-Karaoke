@@ -22,9 +22,10 @@ const API = {
     },
     getAllSongs: () => {
         return axios.get(`${URL_PREFIX}/api/song`)
-    },
-
-
+    } //,
+    // getSongCORS: query => {
+    //     return axios.get( `https://cors-anywhere.herokuapp.com/https://tinyurl.com/ycnjfay4` );
+    // }
     //TODO: if user selects song return selection for backewnd 
 }
 

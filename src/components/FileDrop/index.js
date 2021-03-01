@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import jDataView from 'jdataview';
-import song from '../../utils/song/song.mp3'
+import API from '../../utils/API';
+import song from '../../utils/song/song.mp3';
 
 // Defined outside the component so they won't be reset to undefined every time the component is loaded.
 var mix;
@@ -31,7 +32,8 @@ function FileDrop( { playing } ) {
     // https://github.com/jDataView/jDataView/blob/master/src/jDataView.js
 
     // TODO: if it's pulled in through URL
-    fetch( "https://tinyurl.com/ycnjfay4" )
+    
+    fetch( "https://res.cloudinary.com/demo/video/upload/so_3,eo_6/dog-audio.mp3" )
     .then( resp => resp.blob())
     .then( blob => reader.readAsArrayBuffer( blob ));
     // TODO: Else (if it's uploaded by the user)

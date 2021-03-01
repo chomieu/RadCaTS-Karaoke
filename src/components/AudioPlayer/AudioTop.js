@@ -13,7 +13,7 @@ function AudioTop({ songData }) {
             <div className="col s12">
                 <audio id="audio">
                     {/* <source src={song} /> */}
-                    <source src="https://tinyurl.com/ycnjfay4" />
+                    <source src="https://res.cloudinary.com/demo/video/upload/so_3,eo_6/dog-audio.mp3" />
                     <p>Your browser does not support the <code>audio</code> element.</p>
                 </audio>
 
