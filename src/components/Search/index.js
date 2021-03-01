@@ -5,6 +5,8 @@ import Select from 'react-select';
 import { Container, Row, Col, TextInput, Button, Icon, Autocomplete } from 'react-materialize';
 import AddSongModal from "../AddSongModal"
 import "./style.css"
+import API from '../../utils/API';
+import LyricsContainer from '../LyricsContainer';
 
 function Search({ userState, search, songData, setSongData, display, setDisplay }) {
 
@@ -42,7 +44,21 @@ function Search({ userState, search, songData, setSongData, display, setDisplay 
             karaokeSong: formInputs.value
         }
 
-        console.log(data)
+        API.createSession(data)
+            .then(data => {
+                const id = data.data
+
+                console.log(data)
+                API.startSession(id)
+                    .then(data => {
+
+                        data.data.lyrics = JSON.parse(data.data.lyrics)
+
+                        console.log(data.data)
+                    })
+                    .catch(err => { console.log(err) })
+            })
+            .catch(err => { console.log(err) })
 
 
         // setDisplay({
@@ -63,6 +79,8 @@ function Search({ userState, search, songData, setSongData, display, setDisplay 
         //         logout: true
         //     })
         // }, 2000);
+
+
     }
 
 

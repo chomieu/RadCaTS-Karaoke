@@ -107,6 +107,7 @@ function App() {
 
 
   return (
+
     <div className="App center-align">
       <Header userState={userState} />
 
@@ -158,4 +159,15 @@ function App() {
   );
 }
 
+
 export default App;
+
+
+// <Router>
+//   <Switch>
+//     <Route path={"/api/session/:id"}/>
+//     <Route exact path={"/api/session"}/>
+
+//   </Switch>
+
+// </Router>

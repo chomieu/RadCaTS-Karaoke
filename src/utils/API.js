@@ -16,6 +16,12 @@ const API = {
     getAllSongs: () => {
         return axios.get(`${URL_PREFIX}/api/song`)
     },
+    createSession: data => {
+        return axios.post(`${URL_PREFIX}/api/session`, data)
+    },
+    startSession: id => {
+        return axios.get(`${URL_PREFIX}/api/session/${id}`)
+    },
     checkWebToken: token => {
         return axios.get(`${URL_PREFIX}/`, {
             headers: {
