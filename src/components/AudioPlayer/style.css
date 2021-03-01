@@ -1,0 +1,169 @@
+.audioPlayer {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.player {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgba(52, 0, 111, 0.753);
+  border: 1px solid rgba(211, 206, 194, 0.5);
+  border-radius: .5rem;
+}
+
+.top{
+    padding: 1rem 0 0 0;
+    border-top-left-radius: 3rem;
+    color: rgba(255, 255, 255, 0);
+}
+
+
+.bottom {
+  padding: 1rem 0 0 0;
+  border-bottom-right-radius: 3rem;
+}
+
+.song {
+  user-select: none;
+  margin: 0 20px;
+}
+
+.song__title {
+  margin: 0 0 ;
+  color: rgb(145, 123, 76);
+  font-family: "Permanent Marker", cursive;
+  font-weight: normal;
+  font-size: 3em;
+}
+
+.song__title:hover {
+    color: rgba(172, 255, 47, 0.5);
+}
+
+.divider {
+    background-color: rgba(211, 206, 194, 0.5);
+}
+
+.song__artist {
+  margin: 1rem 0;
+  color: rgb(145, 123, 76);
+  font-family: "Rock Salt", cursive;
+  font-weight: normal;
+  font-size: 1.5rem;
+}
+
+.song__artist:hover {
+  color: rgba(172, 255, 47, 0.5);
+  cursor: pointer;
+}
+
+.controls {
+  flex-grow: 1;
+  margin: 0 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.player__button {
+    width: fit-content;
+    margin: 0 0 15px 0;
+    background-color: transparent;
+    border: none;
+    color: rgba(232, 211, 162, 0.75);
+}
+
+.player__button:focus {
+  outline: none;
+}
+
+.player__button:hover {
+  cursor: pointer;
+  color: rgb(145, 123, 76)
+  
+}
+
+.button__pause {
+    color: rgb(145, 123, 76);
+}
+
+.bar {
+    user-select: none;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.bar__time {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  color: rgba(255, 255, 255, 0.753);
+  font-size: 16px;
+}
+
+.bar__progress {
+  flex: 1;
+  border: 1px solid rgba(211, 206, 194, 0.5);
+  border-radius: 5px;
+  margin: 0 20px;
+  height: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  cursor: pointer;
+}
+
+.bar__progress__knob {
+  position:relative;
+  height: 40px;
+  width: 15px;
+  border: 2px solid rgb(52, 0, 111);
+  border-radius: 10%;
+  background-color: rgb(145, 123, 76);
+  /* background-color: rgba(52, 0, 111, 0.753); */
+}
+
+.mb0 {
+    margin-bottom: 0;
+}
+.mb1 {
+    margin-bottom: .5rem;
+}
+
+.points__container {
+    padding-left: 2rem !important ;
+}
+
+.points {
+ margin: 2rem 0 0 0;
+}
+
+.points__label {
+    margin: 0 0 0 0 !important ;
+    font-size: 1.75rem;
+}
+
+/* @media screen and (max-width: 800px) {
+    flex-direction: column;
+
+    .controls {
+      width: 100%;
+      margin-top: 20px;
+    }
+
+    .bar {
+      width: 90%;
+    }
+  }
+
+  @media screen and (max-width: 500px) {
+        
+      .song__title {
+        font-size: 2.5em;
+      }
+
+      .song__artist {
+        font-size: 0.8em;
+      }
+  } */

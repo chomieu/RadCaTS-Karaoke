@@ -1,0 +1,38 @@
+.search__container {
+    margin: 1rem;
+}
+
+
+/* turns the whole input field orange, figure out how to target the form text */
+/* #artist, #song {
+    color: rgba(235, 115, 72, 0.658) !important;
+} */
+
+
+
+.search__title {
+    margin:3rem !important ;
+    line-height: 3rem;
+    letter-spacing: 0rem;
+}
+
+.underline {
+    text-decoration: underline;
+}
+
+.searchInput, #dropdown-content, .autocomplete {
+    color: rgba(235, 115, 72, 0.658) !important;
+    font-family: Arial, Helvetica, sans-serif;
+
+
+}
+
+.active {
+    color: rgba(235, 115, 72, 0.658) !important;
+
+}
+
+.searchSongBtn{
+    z-index: 0;
+}
+
