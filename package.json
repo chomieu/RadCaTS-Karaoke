@@ -19,7 +19,6 @@
     "react-materialize": "^3.9.7",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.2",
-    "react-select": "^4.1.0",
     "react-speech-recognition": "^3.6.0",
     "three": "^0.125.2",
     "web-vitals": "^1.1.0"

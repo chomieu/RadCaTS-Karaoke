@@ -65,6 +65,7 @@ function Search({ userData, setSessionData }) {
     }
 
 
+
     const handleSearch = e => {
         e.preventDefault()
         const data = {
@@ -106,22 +107,21 @@ function Search({ userData, setSessionData }) {
                         options={search}
                         name="searchBox"
                     />
-                </span>
 
-                <AddSongModal
-                    setLoading={setLoading}
-                    getSongs={getSongs}
-                    loading={loading}
-                    getSongs={getSongs}
-                />
+                    <AddSongModal
+                        setLoading={setLoading}
+                        getSongs={getSongs}
+                        loading={loading}
+                        getSongs={getSongs}
+                    />
 
-                <Button onClick={getSongs} >refresh results</Button>
+                    <Button onClick={getSongs} >refresh results</Button>
 
-                {formInputs.value
-                    ? <Button onClick={handleSearch}>start session</Button>
-                    : <Button disabled>...</Button>}
+                    {formInputs.value
+                        ? <Button onClick={handleSearch}>start session</Button>
+                        : <Button disabled>...</Button>}
             </form>
-            {redirectPage}
+                {redirectPage}
 
         </Container >
     )
