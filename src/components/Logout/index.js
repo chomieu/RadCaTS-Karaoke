@@ -3,13 +3,13 @@ import { Modal, Button } from 'react-materialize';
 
 const trigger = <Button>logout</Button>;
 
-export default function logout({ userData, logoutUser }) {
+export default function logout({ userState, logoutUser }) {
 
     return (
         <Modal
             trigger={trigger}
             className="center-align"
-            header={`logout ${userData.username}?`}
+            header={`logout ${userState.username}?`}
         >
             <Button
                 modal="close"

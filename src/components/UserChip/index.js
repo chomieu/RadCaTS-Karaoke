@@ -2,18 +2,18 @@ import React from 'react'
 import "./style.css"
 import { Chip, Icon } from 'react-materialize';
 
-export default function UserChip({ userData }) {
+export default function UserChip({ userState }) {
     return (
         <Chip className="right userIcon" >
 
-            {userData.profilePicture
+            {userState.profilePicture
                 ? <>
                     <img
                         alt="Contact Person"
                         className="responsive-img"
-                        src={userData.profilePicture}
+                        src={userState.profilePicture}
                     />
-                    {userData.username}
+                    {userState.username}
                 </>
                 : <>
                     <Icon>person</Icon>
