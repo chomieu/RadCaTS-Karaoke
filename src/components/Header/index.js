@@ -1,14 +1,19 @@
 import React from 'react';
 import { Container, Row, Col, TextInput, Button, Icon } from 'react-materialize';
-import UserChip from '../UserChip'
+import UserChip from '../UserChip';
+import Logout from "../Logout";
 import "./style.css"
 
-function Header({ userData }) {
+function Header({ userData, setUserData }) {
   return (
     <>
-      <Row className="mb0">
-        <UserChip userData={userData} />
-      </Row>
+      { userData.isLoggedIn
+        ? <Row className="mb0">
+          <UserChip userData={userData} />
+          <Logout userData={userData} setUserData={setUserData} />
+        </Row>
+        : null
+      }
       <Row>
 
         <header>

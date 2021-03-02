@@ -1,7 +1,9 @@
 const axios = require("axios")
 
+const URL_PREFIX = 'https://radcats-karaoke-api.herokuapp.com'
+
 // const URL_PREFIX = 'https://radcats-karaoke-backend.herokuapp.com'
-const URL_PREFIX = 'http://localhost:8080'
+// const URL_PREFIX = 'http://localhost:8080'
 
 const API = {
     signup: userData => {
@@ -21,6 +23,9 @@ const API = {
     },
     startSession: id => {
         return axios.get(`${URL_PREFIX}/api/session/${id}`)
+    },
+    finishSession: (id, data) => {
+        return axios.put(`${URL_PREFIX}/api/session/${id}`, data)
     },
     checkWebToken: token => {
         return axios.get(`${URL_PREFIX}/`, {

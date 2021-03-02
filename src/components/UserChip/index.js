@@ -3,6 +3,7 @@ import "./style.css"
 import { Chip, Icon } from 'react-materialize';
 
 export default function UserChip({ userData }) {
+
     return (
         <Chip className="right userIcon" >
 

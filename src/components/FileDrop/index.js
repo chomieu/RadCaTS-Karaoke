@@ -1,24 +1,15 @@
-import React, { useState } from 'react';
+import React from 'react';
 import jDataView from 'jdataview';
-import song from '../../utils/song/song.mp3'
+// import Main from './js/main';
 
-var mix;
-var mix2;
+function FileDrop() {
 
-function FileDrop({ playing }) {
-
-  const [isKaraoke, setIsKaraoke] = useState({ isKaraoke: true });
-
-  if (playing) {
-    fileSelectHandler();
-  }
-
+  // TODO: Play song.
   function fileSelectHandler(e) {
     // cancel event and hover styling
     // fileDragHover(e);
 
-    // e.dataTransferFiles is only for dropping things in. e.target.files is what we need.
-    var droppedFiles = e.target.files; // || e.dataTransfer.files
+    var droppedFiles = e.target.files || e.dataTransfer.files;
     console.log("droppedFiles", droppedFiles);
 
     var reader = new FileReader();
@@ -33,13 +24,7 @@ function FileDrop({ playing }) {
     // http://ericbidelman.tumblr.com/post/8343485440/reading-mp3-id3-tags-in-javascript
     // https://github.com/jDataView/jDataView/blob/master/src/jDataView.js
 
-    // TODO: if it's pulled in through URL
-    // fetch( song )
-    // .then( resp => resp.blob())
-    // .then( blob => reader.readAsArrayBuffer( blob ));
-    // TODO: Else (if it's uploaded by the user)
     reader.readAsArrayBuffer(droppedFiles[0]);
-
   }
 
   function initAudio(data) {
@@ -47,15 +32,10 @@ function FileDrop({ playing }) {
     var context = new (window.AudioContext || window.webkitAudioContext)();
     console.log("context", context);
     var source;
-    if (source) {
-      source.stop(0);
-      console.log("source, line 48", source);
-    };
+    if (source) source.stop(0);
 
     source = context.createBufferSource();
 
-    // This if/else is testing whether we're using an AudioContext or webkitAudioContext object.
-    // If we're on an AudioContext object, create a buffer using the decodeAudioData method
     if (context.decodeAudioData) {
       context.decodeAudioData(data, function (buffer) {
         source.buffer = buffer;
@@ -63,16 +43,18 @@ function FileDrop({ playing }) {
       }, function (e) {
         console.error(e);
       });
-      // Otherwise, if we're on webkitAudioContext, do it with createBuffer.
     } else {
       source.buffer = context.createBuffer(data, false);
       createAudio(source, context);
     }
   }
 
-  // source is buffer, where we're reading data from. context is the actual object.
   function createAudio(source, context) {
-    var processor, filterLowPass, filterHighPass;
+    var processor,
+      filterLowPass,
+      filterHighPass,
+      mix,
+      mix2;
     // create low-pass filter
     filterLowPass = context.createBiquadFilter();
     source.connect(filterLowPass);
@@ -90,11 +72,7 @@ function FileDrop({ playing }) {
     mix = context.createGain();
 
     mix2 = context.createGain();
-
-    console.log("mix 93", mix)
-    console.log("mix2 94", mix2)
     source.connect(mix2);
-    // Connecting to the browser output of the audio file?
     mix2.connect(context.destination);
 
     mix.gain.value = 1;
@@ -115,9 +93,7 @@ function FileDrop({ playing }) {
     // playback the sound
     source.start(0);
 
-    // setTimeout(() => {
-    //   source.stop(0);
-    // }, 2000);
+    // setTimeout(disconnect, source.buffer.duration * 1000 + 1000);
   }
 
   function karaoke(evt) {
@@ -131,30 +107,8 @@ function FileDrop({ playing }) {
     }
   }
 
-  function disableKaraoke() {
-    console.log("disabled!");
-    setIsKaraoke({ isKaraoke: false });
-    console.log("mix", mix);
-    console.log("mix2", mix2);
-
-    mix2.gain.value = 1;
-    mix.gain.value = 0;
-
-    console.log("mix", mix);
-    console.log("mix2", mix2);
-  }
-
-  function enableKaraoke() {
-    console.log("enabled!");
-    setIsKaraoke({ isKaraoke: true });
-    console.log("mix", mix);
-    console.log("mix2", mix2);
-    mix.gain.value = 1;
-    mix2.gain.value = 0;
-  }
-
-  // console.log("jDataView", !!jDataView);
-  // console.log("FileReader", !!FileReader);
+  console.log("jDataView", !!jDataView);
+  console.log("FileReader", !!FileReader);
 
   // useEffect(() => {
   //     const script = document.createElement('script');
@@ -179,11 +133,7 @@ function FileDrop({ playing }) {
       <div id="current-song"></div>
       <div id="options">
         Options:
-          <button
-          id="disable-filter"
-          onClick={isKaraoke.isKaraoke ? disableKaraoke : enableKaraoke}>
-          Toggle vocal filter
-          </button>
+          <button id="disable-filter">Disable karaoke</button>
       </div>
 
       <p>If you don't have any file at hand, <a id="demo-audio" href="#"><strong>click here for a demo</strong></a> of <a href="http://www.jamendo.com/en/track/1074874/happy">Happy by MMO</a>.</p>

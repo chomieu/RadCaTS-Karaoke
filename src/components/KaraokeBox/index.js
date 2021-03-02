@@ -6,9 +6,16 @@ import "./style.css"
 
 function KaraokeBox({ curTime, playing, pts, setPts, language, sessionData }) {
 
-    // store mic recordings here with timestamp
+    // store user mic inputs here with timestamp
     // Note: time is at time of printing, not time of recording start
     const [userInput, setUserInput] = useState([
+        // {
+        //     time: 0,
+        //     vocals: "This hit that ice cold Michelle Pfeiffer that white gold This one for them hood girls Them good girls straight masterpieces Stylin′ whilen livin it up in the city Got Chucks on with Saint Laurent Got kiss myself I am so pretty I am too hot hot damn "
+        // },
+        // {
+        //     time: 34
+        // }
         { time: 0 }
     ])
 
@@ -27,28 +34,17 @@ function KaraokeBox({ curTime, playing, pts, setPts, language, sessionData }) {
 
 
     useEffect(() => {
+
+
         if (finalTranscript !== '') {
-
-            // visual of the object array stored in userInput.
-            // tracks recordings throughout the karaoke session.
-            // time value comes from the curTime (song time position from AudioPlayer), as a whole number
-
-            // [{
-            //     time: 0 //start time
-            //     vocals: 'recording 1'
-            // },
-            // {
-            //     time: 10, // time that 'recording 1' printed
-            //     vocals: null // end of session
-            // }]
 
             // make copy of 'userInput', collect new data object and add to copy.
             var copy = [...userInput]
-            var thisRec = {}
+            var thisInput = {}
             copy[copy.length - 1].vocals = finalTranscript
-            thisRec.time = Math.floor(curTime)
-            thisRec.vocals = null
-            copy.push(thisRec)
+            thisInput.time = Math.floor(curTime)
+            thisInput.vocals = null
+            copy.push(thisInput)
             // set updated copy as new state
             setUserInput(copy)
             // empty the 'finalTranscript' container.
@@ -81,7 +77,6 @@ function KaraokeBox({ curTime, playing, pts, setPts, language, sessionData }) {
                         setPts={setPts}
                         curTime={curTime}
                         playing={playing}
-                        sessionData={sessionData}
                         userInput={userInput}
                     />
 

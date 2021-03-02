@@ -1,21 +1,19 @@
 import React, { useState } from 'react';
 import { Modal, Button } from 'react-materialize';
-import SearchNewSong from "../SearchNewSong"
 import Preloader from "../Preloader"
 import API from "../../utils/API"
 import "./style.css";
 
 
-export default function AddSongModal({ display, setDisplay }) {
+export default function AddSongModal({ loading, setLoading, getSongs }) {
 
     const trigger = <Button>can't find your song?</Button>
     const [inputs, setInputs] = useState({
         header: 'maybe we can find it!',
-        message: '',
-        title: '',
-        artist: '',
-        loading: false,
         tryAgain: false,
+        message: '',
+        artist: '',
+        title: '',
     })
 
     // control form inputs for search
@@ -28,37 +26,29 @@ export default function AddSongModal({ display, setDisplay }) {
     // activate loading visual to await api response
     const handleInputSubmit = e => {
         e.preventDefault();
-        setInputs({ ...inputs, loading: true })
+        setLoading(true)
 
         // send title and artist search as one string with the key of name
-        let data = { name: `${inputs.title} ${inputs.artist}` }
+        let data = { name: inputs.title }
         API.searchNewSong(data)
             .then(data => {
                 let x = data.data
                 console.log(x)
-                // clear form inputs, 
-                setInputs({ ...inputs, artist: "", title: "" })
+                setLoading(false)
 
                 //  if theres an error, set the message and display to user.
                 if (x.errorMessage) {
-                    console.log('!!!!!')
-
+                    console.log(x.errorMessage)
                     setInputs({ ...inputs, header: 'oops..', tryAgain: true })
+
                     if (x.errorMessage === "this song already existed!") {
-                        console.log(x.errorMessage)
-                        setInputs({
-                            ...inputs,
-                            title: '',
-                            artist: '',
-                            message: `${x.title} by ${x.artist} is already in the database.`
-                        })
+                        setInputs({ ...inputs, message: `${x.title} by ${x.artist} is already in the database.` })
                     } else {
-                        setInputs({
-                            ...inputs,
-                            message: `${x.title} by ${x.artist} is not available for karaoke yet.`,
-                        })
+                        setInputs({ ...inputs, message: `${x.title} by ${x.artist} is not available for karaoke yet.` })
                     }
                 }
+                getSongs()
+                setInputs({ ...inputs, artist: "", title: "" })
             })
             .catch(err => { console.log(err) })
     }
@@ -77,50 +67,27 @@ export default function AddSongModal({ display, setDisplay }) {
         >
 
             <form>
-                {/* search new song inputs */}
-                {!inputs.loading && !inputs.tryAgain
-
-                    ? < SearchNewSong
-                        inputs={inputs}
-                        handleInputChange={handleInputChange}
+                < div className="form-group left-align">
+                    <input
+                        type="text"
+                        name="title"
+                        value={inputs.title}
+                        onChange={handleInputChange}
                     />
-                    : null
-                }
+                    <label htmlFor="title">title / artist</label>
+                </div>
 
-                {/* button for search */}
-                {inputs.title && inputs.artist && !inputs.tryAgain
+                {inputs.title
+
                     ? <Button
+                        onClick={handleInputSubmit}
                         className="login__btn"
                         type="submit"
-                        // modal="close"
-                        onClick={handleInputSubmit}
+                        modal="close"
                     >Search
                     </Button>
 
-                    : !inputs.loading
-                        ? <Button
-                            disabled
-                            className="login__btn"
-                            type="submit"
-                        >...
-                    </Button>
-                        : null
-                }
-
-                {/* waiting for search results */}
-                {inputs.loading
-                    ? <Preloader />
-                    : null
-                }
-                {inputs.tryAgain
-                    ? <>
-                        <p>{inputs.message}</p>
-                        <Button
-                            onClick={handleTryAgain}
-                        >New Search
-                        </Button>
-                    </>
-                    : null
+                    : <Button disabled>...</Button>
                 }
             </form>
 
