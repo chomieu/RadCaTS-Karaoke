@@ -10,8 +10,9 @@ import Preloader from "../components/Preloader";
 import AudioPlayer from "../components/AudioPlayer";
 
 
-function Page( { setSessionData, sessionData } ) {
+function Page() {
 
+  const [sessionData, setSessionData] = useState([])
   const [search, setSearch] = useState([])
   const [userData, setUserData] = useState({
     id: "",

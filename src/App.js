@@ -6,18 +6,16 @@ import Page from "./pages/Page";
 
 function App() {
 
-  const [sessionData, setSessionData] = useState([])
-
   return (
 
     <div className="App center-align">
       <Router>
         <Switch>
           <Route path={"/api/session/:id"}>
-            <Page setSessionData={ setSessionData } sessionData={ sessionData } />
+            <Page />
           </Route>
           <Route path={"/"}>
-            <Page setSessionData={ setSessionData } sessionData={ sessionData } />
+            <Page />
           </Route>
         </Switch>
       </Router>
