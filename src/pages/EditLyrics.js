@@ -63,4 +63,5 @@ export default function EditLyrics({ sessionData, setSessionData }) {
 
         </div>
     )
+
 }

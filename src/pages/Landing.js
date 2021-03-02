@@ -45,6 +45,7 @@ export default function Landing({ userData, setUserData }) {
                     </>
                     : null
             }
+
             {redirectPage}
         </div>
     )

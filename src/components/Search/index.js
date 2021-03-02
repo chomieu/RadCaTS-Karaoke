@@ -20,7 +20,6 @@ function Search({ userData, setSessionData }) {
     useEffect(() => {
         if (loading) {
             setMessage('searching')
-            // loadingMessage()
         }
     }, [loading])
 
@@ -28,19 +27,6 @@ function Search({ userData, setSessionData }) {
         getSongs()
     }, [])
 
-
-    // const loadingMessage = () => {
-    //     setTimeout(() => {
-    //         setMessage('loading .')
-    //         setTimeout(() => {
-    //             setMessage('loading . .')
-    //             setTimeout(() => {
-    //                 setMessage('loading . . .')
-    //             }, 1000)
-    //         }, 1000)
-    //     }, 1000)
-    //     setMessage(`What's your favorite song ?`)
-    // }
 
     const handleInputChange = e => {
         console.log(e)
@@ -120,7 +106,7 @@ function Search({ userData, setSessionData }) {
 
                     />
 
-                    <Button onClick={getSongs} >refresh results</Button>
+                    {/* <Button onClick={getSongs} >refresh results</Button> */}
 
                     {formInputs.value
 
