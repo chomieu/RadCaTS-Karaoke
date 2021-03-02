@@ -5,7 +5,7 @@ import API from "../../utils/API"
 import "./style.css";
 
 
-export default function AddSongModal({ loading, setLoading, getSongs }) {
+export default function AddSongModal({ loading, setLoading, getSongs, message, setMessage }) {
 
     const trigger = <Button>can't find your song?</Button>
     const [inputs, setInputs] = useState({
@@ -50,7 +50,11 @@ export default function AddSongModal({ loading, setLoading, getSongs }) {
                 getSongs()
                 setInputs({ ...inputs, artist: "", title: "" })
             })
-            .catch(err => { console.log(err) })
+            .catch(err => {
+                setMessage('search Error')
+                setLoading(false)
+                console.log(err)
+            })
     }
 
     // if the previous search failed and user clicks button to search again

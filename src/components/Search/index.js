@@ -19,24 +19,28 @@ function Search({ userData, setSessionData }) {
 
     useEffect(() => {
         if (loading) {
-            setMessage('loading')
-            loadingMessage()
+            setMessage('searching')
+            // loadingMessage()
         }
-        setTimeout(() => { setLoading(false) }, 10000)
     }, [loading])
 
-    const loadingMessage = () => {
-        setTimeout(() => {
-            setMessage('loading .')
-            setTimeout(() => {
-                setMessage('loading . .')
-                setTimeout(() => {
-                    setMessage('loading . . .')
-                }, 1000)
-            }, 1000)
-        }, 1000)
-        setMessage(`What's your favorite song ?`)
-    }
+    useEffect(() => {
+        getSongs()
+    }, [])
+
+
+    // const loadingMessage = () => {
+    //     setTimeout(() => {
+    //         setMessage('loading .')
+    //         setTimeout(() => {
+    //             setMessage('loading . .')
+    //             setTimeout(() => {
+    //                 setMessage('loading . . .')
+    //             }, 1000)
+    //         }, 1000)
+    //     }, 1000)
+    //     setMessage(`What's your favorite song ?`)
+    // }
 
     const handleInputChange = e => {
         console.log(e)
@@ -53,7 +57,6 @@ function Search({ userData, setSessionData }) {
         if (e) { e.preventDefault() }
         API.getAllSongs()
             .then(data => {
-                console.log(data)
                 const formatted = []
                 data.data.map(song => {
                     let obj = { label: `${song.name} - ${song.artist}`, value: song._id }
@@ -68,17 +71,9 @@ function Search({ userData, setSessionData }) {
 
     const handleSearch = e => {
         e.preventDefault()
-        const data = {
-            host: userData.id,
-            karaokeSong: formInputs.value
-        }
+        const data = { host: userData.id, karaokeSong: formInputs.value }
         API.createSession(data)
-            .then(sessionId => {
-                console.log(sessionId)
-
-                // session has been created, what to do next?
-                setRedirectPage(<Redirect to={`/lyrics/${sessionId.data}`} />)
-            })
+            .then(sessionId => { setRedirectPage(<Redirect to={`/lyrics/${sessionId.data}`} />) })
             .catch(err => { console.log(err) })
 
     }
@@ -88,40 +83,55 @@ function Search({ userData, setSessionData }) {
         <Container className="center-align">
 
             <h4 className="search__title">{message}</h4>
+
             {loading
+
                 ? <Preloader />
                 : null
+
             }
 
-
             <form className="search__container">
+
                 <span className="searchInput">
+
                     <p>search for an existing karaoke track</p>
+
                     <Select
-                        isSearchable={true}
-                        isClearable={true}
+
                         onChange={handleInputChange}
                         onClick={handleSelectClick}
                         classNamePrefix="select"
                         className="searchInput"
+                        isSearchable={true}
+                        isClearable={true}
                         options={search}
                         name="searchBox"
+
                     />
 
                     <AddSongModal
-                        setLoading={setLoading}
-                        getSongs={getSongs}
+
                         loading={loading}
+                        message={message}
                         getSongs={getSongs}
+                        setLoading={setLoading}
+                        setMessage={setMessage}
+
                     />
 
                     <Button onClick={getSongs} >refresh results</Button>
 
                     {formInputs.value
+
                         ? <Button onClick={handleSearch}>start session</Button>
-                        : <Button disabled>...</Button>}
+                        : <Button disabled>...</Button>
+
+                    }
+
                 </span>
             </form>
+
             {redirectPage}
 
         </Container >

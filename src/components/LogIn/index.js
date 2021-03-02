@@ -30,7 +30,7 @@ function LogIn({ loginSuccess, redirect }) {
 
         API.login(formInputs)
             .then(res => {
-                loginSuccess(res, 'login')
+                loginSuccess('login', res)
             })
             .catch(err => { console.log(err) })
     }

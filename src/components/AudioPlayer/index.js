@@ -1,36 +1,22 @@
 // source: https://codesandbox.io/s/5wwj02qy7k?file=/src/useAudioPlayer.js:0-1246
 import React, { useState, useEffect } from "react";
-import moment from "moment";
-import momentDurationFormatSetup from "moment-duration-format";
-import useAudioPlayer from './useAudioPlayer';
-import { Button } from "react-materialize"
 import AudioBottom from "./AudioBottom";
 import KaraokeBox from "../KaraokeBox";
 import AudioTop from "./AudioTop";
 import "./style.css"
-import API from "../../utils/API";
 
 
-function AudioPlayer({ userData, setUserData, sessionData }) {
+function AudioPlayer({ userData, setUserData, sessionData, playing, setPlaying, curTime, duration, formatDuration, }) {
 
-    const { curTime, duration, playing, setPlaying, setClickedTime } = useAudioPlayer();
     const [pts, setPts] = useState({ pts: 0 })
     const [language, setLanguage] = useState('en-Us')
 
 
     const handlePlay = () => { setPlaying(true) }
     const handlePause = () => { setPlaying(false) }
-    const handleBack = () => { setPlaying(false) }
 
-    const handleFinish = () => {
-        setPlaying(false)
-    }
 
-    const formatDuration = (duration) => {
-        return moment
-            .duration(duration, "seconds")
-            .format("mm:ss", { trim: false });
-    }
+
 
     return (
         <div className="container">
@@ -51,25 +37,18 @@ function AudioPlayer({ userData, setUserData, sessionData }) {
 
             {/* <Bar curTime={curTime} duration={duration} onTimeUpdate={(time) => setClickedTime(time)} /> */}
             <AudioBottom
-                pts={pts}
-                curTime={curTime}
-                playing={playing}
-                duration={duration}
-                sessionData={sessionData}
-                setClickedTime={setClickedTime}
+
                 formatDuration={formatDuration}
+                sessionData={sessionData}
                 handlePause={handlePause}
                 handlePlay={handlePlay}
+                duration={duration}
+                playing={playing}
+                curTime={curTime}
+                pts={pts}
+
             />
 
-            <Button
-                onClick={handleBack}
-            >Back
-            </Button>
-            <Button
-                onClick={handleFinish}
-            >Finish
-            </Button>
 
         </div>
     );

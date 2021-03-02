@@ -1,15 +1,30 @@
 import React, { useState, useEffect } from 'react';
+import useAudioPlayer from '../components/AudioPlayer/useAudioPlayer';
+import momentDurationFormatSetup from "moment-duration-format";
 import { useParams, Redirect } from "react-router-dom";
 import AudioPlayer from "../components/AudioPlayer";
 import Preloader from "../components/Preloader"
+import { Button } from "react-materialize"
 import Header from "../components/Header";
 import API from "../utils/API";
+import moment from "moment";
+import "../App.css"
 
 export default function Session({ userData, setUserData, sessionData, setSessionData }) {
 
+
+    const { curTime, duration, playing, setPlaying, setClickedTime } = useAudioPlayer();
     const [loading, setLoading] = useState(true)
     const { id } = useParams()
 
+    const handleFinish = () => { setPlaying(false) }
+    const handleBack = () => { setPlaying(false) }
+
+    const formatDuration = (duration) => {
+        return moment
+            .duration(duration, "seconds")
+            .format("mm:ss", { trim: false });
+    }
 
     useEffect(() => {
         API.startSession(id)
@@ -43,16 +58,42 @@ export default function Session({ userData, setUserData, sessionData, setSession
         <>
             {
                 !userData.isLoggedIn
+
                     ? <Redirect to="/" />
+
                     : loading
+
                         ? <>
+                            <Header userData={userData} setUserData={setUserData} />
                             <Preloader />
                         </>
+
                         : <>
                             <Header userData={userData} setUserData={setUserData} />
-                            <AudioPlayer userData={userData} sessionData={sessionData} />
+
+                            <AudioPlayer
+
+                                formatDuration={formatDuration}
+                                sessionData={sessionData}
+                                userData={userData}
+                                duration={duration}
+                                curTime={curTime}
+                                playing={playing}
+
+                            />
                         </>
             }
+
+            <Button
+                onClick={handleBack}
+            >Back
+            </Button>
+
+            <Button
+                onClick={handleFinish}
+            >Finish
+            </Button>
+
         </>
     )
 }
