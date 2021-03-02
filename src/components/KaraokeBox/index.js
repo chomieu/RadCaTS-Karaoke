@@ -20,11 +20,10 @@ function KaraokeBox({ curTime, playing, pts, setPts, language, sessionData }) {
     ])
 
     // deconstructed properties needed from the WebSpeechAPI / react-speech-recognition
-    const {
-        finalTranscript,
-        resetTranscript,
-        listening
-    } = useSpeechRecognition()
+    const { listening, finalTranscript, resetTranscript } = useSpeechRecognition()
+
+    // when start button is clicked
+    const activateMic = (x) => { SpeechRecognition.startListening({ continuous: true, language: x }) };
 
     // activate / deactivate mic when play/pause is clicked
     useEffect(() => {
@@ -34,7 +33,6 @@ function KaraokeBox({ curTime, playing, pts, setPts, language, sessionData }) {
 
 
     useEffect(() => {
-
 
         if (finalTranscript !== '') {
 
@@ -52,22 +50,13 @@ function KaraokeBox({ curTime, playing, pts, setPts, language, sessionData }) {
         }
     }, [finalTranscript])
 
-
-
-
-    // when start button is clicked
-    const activateMic = (x) => {
-        SpeechRecognition.startListening({ continuous: true, language: x })
-        // set 'playing' to true to trigger the start of other events.
-    };
-
-
     // Note: Browser support is limited with WebSpeechAPI.
     // if the browser is not supported, alert user.
     if (!SpeechRecognition.browserSupportsSpeechRecognition()) {
         return (<h3>Your browser does not support speech recognition software! Sorry for the trouble, try Chrome desktop.</h3>)
-        // content to load if browser is supported
+
     } else {
+
         return (
             <div className="row player left-align">
                 <div className="col s12">
@@ -80,7 +69,6 @@ function KaraokeBox({ curTime, playing, pts, setPts, language, sessionData }) {
                         userInput={userInput}
                     />
 
-                    {/* <h5>Mic: {listening ? 'on' : 'off'}</h5> */}
                 </div>
             </div>
         )
