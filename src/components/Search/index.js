@@ -7,6 +7,7 @@ import AddSongModal from "../AddSongModal"
 import "./style.css"
 import API from '../../utils/API';
 import LyricsContainer from '../LyricsContainer';
+import { Redirect } from 'react-router-dom';
 
 function Search({ userData, search, sessionData, setSessionData, display, setDisplay }) {
 
@@ -86,20 +87,13 @@ function Search({ userData, search, sessionData, setSessionData, display, setDis
                             audioPlayer: true,
                             logout: true
                         })
+                        console.log( `/api/session/${ id }` );
                     })
                     .catch(err => { console.log(err) })
             })
             .catch(err => { console.log(err) })
 
-
-
-
-
-
-
     }
-
-
 
     return (
 
