@@ -5,15 +5,16 @@ import { Redirect } from "react-router-dom";
 
 export default function SearchPage({ userData, setUserData }) {
 
+
     return (
         <>
             {
                 userData.isLoggedIn ?
-                <>
-                    <Header userData={ userData } setUserData={ setUserData } />
-                    <Search userData={ userData } />
-                </>
-                : <Redirect to="/" />
+                    <>
+                        <Header userData={userData} setUserData={setUserData} />
+                        <Search userData={userData} />
+                    </>
+                    : <Redirect to="/" />
             }
         </>
     )

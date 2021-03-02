@@ -5,7 +5,7 @@ import "./style.css";
 
 
 
-function LogIn({ loginSuccess }) {
+function LogIn({ loginSuccess, redirect }) {
 
     const trigger = <Button>Sign In</Button>
     const [formInputs, setFormInputs] = useState({
@@ -28,9 +28,11 @@ function LogIn({ loginSuccess }) {
             password: ""
         })
 
-    API.login(formInputs)
-        .then(res => { loginSuccess(res) })
-        .catch(err => { console.log( err )})
+        API.login(formInputs)
+            .then(res => {
+                loginSuccess(res, 'login')
+            })
+            .catch(err => { console.log(err) })
     }
 
 
@@ -74,6 +76,7 @@ function LogIn({ loginSuccess }) {
                     >Submit</Button>
                 }
             </form>
+            {redirect}
         </Modal >
     )
 }

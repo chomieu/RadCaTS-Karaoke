@@ -7,12 +7,12 @@ import "./style.css"
 function Header({ userData, setUserData }) {
   return (
     <>
-      { userData.isLoggedIn 
+      { userData.isLoggedIn
         ? <Row className="mb0">
           <UserChip userData={userData} />
-          <Logout setUserData={setUserData}/>
-        </Row> 
-        : null 
+          <Logout userData={userData} setUserData={setUserData} />
+        </Row>
+        : null
       }
       <Row>
 

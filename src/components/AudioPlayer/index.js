@@ -26,12 +26,8 @@ function AudioPlayer({ userData, setUserData, sessionData }) {
 
 
     const handlePlay = () => { setPlaying(true) }
-
     const handlePause = () => { setPlaying(false) }
-
-    const handleBack = () => {
-        setPlaying(false)
-    }
+    const handleBack = () => { setPlaying(false) }
 
     const handleFinish = () => {
         setPlaying(false)

@@ -9,30 +9,31 @@ import Landing from "./pages/Landing";
 
 
 function App() {
+
   const [userData, setUserData] = useState({
-    id: "",
-    token: "",
-    username: "",
+    profilePicture: "",
     isLoggedIn: false,
-    profilePicture: ""
+    username: "",
+    token: "",
+    id: ""
   })
 
   return (
     <Router>
       <Switch>
-        <Route path={"/"}>
-          <Landing userData={ userData } setUserData={ setUserData } />
+        <Route exact path="/">
+          {/* <Header userData={userData} setUserData={setUserData} /> */}
+          <Landing userData={userData} setUserData={setUserData} />
         </Route>
-        <Route path={"/api/session/:id"}>
-          <Session userData={ userData } setUserData={ setUserData } />
+        <Route exact path="/search">
+          {/* <Header userData={userData} setUserData={setUserData} /> */}
+          <SearchPage userData={userData} setUserData={setUserData} />
         </Route>
-        <Route path={"/search"}>
-          <SearchPage userData={ userData } setUserData={ setUserData } />
+        <Route exact path="/api/session/:id">
+          <Session userData={userData} setUserData={setUserData} />
         </Route>
       </Switch>
     </Router>
   );
 }
-
-
 export default App;

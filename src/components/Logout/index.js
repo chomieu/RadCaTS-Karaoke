@@ -7,12 +7,12 @@ export default function logout({ userData, setUserData }) {
 
     const logoutUser = () => {
         console.error('Logged out')
-        // localStorage.removeItem("token");
+        localStorage.removeItem("token");
         setUserData({
-          isLoggedIn: false,
-          email: '',
-          token: '',
-          id: ''
+            isLoggedIn: false,
+            email: '',
+            token: '',
+            id: ''
         })
     }
 
