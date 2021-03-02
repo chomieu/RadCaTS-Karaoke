@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Redirect } from "react-router-dom";
-
 import { Button } from 'react-materialize';
 import API from "../utils/API";
+import "../App.css"
 
 
 
@@ -14,8 +14,11 @@ export default function EditLyrics({ sessionData, setSessionData }) {
 
 
     useEffect(() => {
+        console.log('start useEffect', id)
+
         API.startSession(id)
             .then(data => {
+                console.log('session request response', data)
 
                 // parse stringified lyrics to an object array.
                 let x = data.data
@@ -30,12 +33,14 @@ export default function EditLyrics({ sessionData, setSessionData }) {
                     songId: x._id,
                     name: x.name
                 }
+
                 console.log(obj)
                 // save the obj data to sessionData
                 setSessionData(obj)
                 setTimeout(() => { setLoading(false) }, 5000)
             })
             .catch(err => {
+                console.log('session response error')
                 setLoading(false)
                 console.log(err)
             })
@@ -43,6 +48,7 @@ export default function EditLyrics({ sessionData, setSessionData }) {
 
 
     const handleSkip = () => {
+        console.log('handleSkip')
         setRedirectPage(<Redirect to={`/api/session/${sessionData.sessionId}`} />)
 
     }
