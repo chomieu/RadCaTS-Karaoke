@@ -77,7 +77,7 @@ function Search({ userData, setSessionData }) {
                 console.log(sessionId)
 
                 // session has been created, what to do next?
-                setRedirectPage(<Redirect to={`/api/session/${sessionId.data}`} />)
+                setRedirectPage(<Redirect to={`/lyrics/${sessionId.data}`} />)
             })
             .catch(err => { console.log(err) })
 

@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Redirect } from "react-router-dom";
-import AudioPlayer from "../components/AudioPlayer";
-import Preloader from "../components/Preloader"
-import Header from "../components/Header";
+
+import { Button } from 'react-materialize';
 import API from "../utils/API";
 
-export default function Session({ userData, setUserData, sessionData, setSessionData }) {
+
+
+export default function EditLyrics({ sessionData, setSessionData }) {
 
     const [loading, setLoading] = useState(true)
-    const { id } = useParams()
+    const [redirectPage, setRedirectPage] = useState()
+    const { id } = useParams();
 
 
     useEffect(() => {
@@ -39,20 +41,20 @@ export default function Session({ userData, setUserData, sessionData, setSession
             })
     }, [])
 
+
+    const handleSkip = () => {
+        setRedirectPage(<Redirect to={`/api/session/${sessionData.sessionId}`} />)
+
+    }
+
     return (
-        <>
-            {
-                !userData.isLoggedIn
-                    ? <Redirect to="/" />
-                    : loading
-                        ? <>
-                            <Preloader />
-                        </>
-                        : <>
-                            <Header userData={userData} setUserData={setUserData} />
-                            <AudioPlayer userData={userData} sessionData={sessionData} />
-                        </>
-            }
-        </>
+        <div>
+            <h1>Lyrics Editor Tool</h1>
+            <Button
+                onClick={handleSkip}
+            >Skip Lyrics</Button>
+            {redirectPage}
+
+        </div>
     )
 }
