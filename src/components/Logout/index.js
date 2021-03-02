@@ -20,7 +20,7 @@ export default function logout({ userData, setUserData }) {
         <Modal
             trigger={trigger}
             className="center-align"
-            header={`logout ${userState.username}?`}
+            header={`logout ${userData.username}?`}
         >
             <Button
                 modal="close"

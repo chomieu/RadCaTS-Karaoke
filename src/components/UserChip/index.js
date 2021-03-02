@@ -7,7 +7,7 @@ export default function UserChip({ userData }) {
     return (
         <Chip className="right userIcon" >
 
-            {userState.profilePicture
+            {userData.profilePicture
                 ? <>
                     <img
                         alt="Contact Person"
