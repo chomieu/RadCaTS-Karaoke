@@ -5,7 +5,7 @@ import mp3File from "./babyShark.mp3"
 const socket = io.connect("http://radcats-karaoke-server.herokuapp.com")
 const audio = new Audio()
 
-function App() {
+function LiveSession() {
 
   const [role, setRole] = useState("")
   const [playing, setPlaying] = useState("")
@@ -48,4 +48,4 @@ function App() {
   );
 }
 
-export default App;
+export default LiveSession;

@@ -4,6 +4,7 @@ import SearchPage from "./pages/SearchPage";
 import EditLyrics from "./pages/EditLyrics"
 import Session from "./pages/Session";
 import Landing from "./pages/Landing";
+import LiveSession from "./pages/LiveSession"
 import './App.css';
 
 
@@ -29,6 +30,9 @@ function App() {
         </Route>
         <Route exact path="/api/session/:id">
           <Session userData={userData} setUserData={setUserData} sessionData={sessionData} setSessionData={setSessionData} />
+        </Route>
+        <Route exact path="/liveSession">
+          <LiveSession />
         </Route>
       </Switch>
     </Router>
