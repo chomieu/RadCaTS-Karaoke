@@ -6,6 +6,7 @@ body {
   /* color: #333; */
   color: rgba(232, 211, 162, 0.75);
   background-color: rgb(88, 79, 110);
+  text-align: center;
 }
 
 h1, h2 {
