@@ -7,15 +7,13 @@ import { Button } from "react-materialize"
 import AudioBottom from "./AudioBottom";
 import KaraokeBox from "../KaraokeBox";
 import AudioTop from "./AudioTop";
-import moment from "moment";
 import "./style.css"
 import API from "../../utils/API";
-
-import songFile from "../../utils/song/song.mp3"
 
 
 function AudioPlayer({ userData, setUserData, sessionData }) {
 
+    const { curTime, duration, playing, setPlaying, setClickedTime } = useAudioPlayer();
     const [pts, setPts] = useState({ pts: 0 })
     const [language, setLanguage] = useState('en-Us')
 
@@ -28,12 +26,19 @@ function AudioPlayer({ userData, setUserData, sessionData }) {
         setPlaying(false)
     }
 
+    const formatDuration = (duration) => {
+        return moment
+            .duration(duration, "seconds")
+            .format("mm:ss", { trim: false });
+    }
+
     return (
         <div className="container">
             <AudioTop
-                songData={songData}
-                songFile={songFile}
+                sessionData={sessionData}
             />
+
+            {/* <FileDrop playing={ playing } /> */}
 
             <KaraokeBox
                 pts={pts}
@@ -41,6 +46,7 @@ function AudioPlayer({ userData, setUserData, sessionData }) {
                 curTime={curTime}
                 playing={playing}
                 language={language}
+                sessionData={sessionData}
             />
 
             {/* <Bar curTime={curTime} duration={duration} onTimeUpdate={(time) => setClickedTime(time)} /> */}
@@ -49,11 +55,21 @@ function AudioPlayer({ userData, setUserData, sessionData }) {
                 curTime={curTime}
                 playing={playing}
                 duration={duration}
+                sessionData={sessionData}
                 setClickedTime={setClickedTime}
                 formatDuration={formatDuration}
                 handlePause={handlePause}
                 handlePlay={handlePlay}
             />
+
+            <Button
+                onClick={handleBack}
+            >Back
+            </Button>
+            <Button
+                onClick={handleFinish}
+            >Finish
+            </Button>
 
         </div>
     );

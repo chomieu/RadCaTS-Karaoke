@@ -120,8 +120,9 @@ function Search({ userData, setSessionData }) {
                     {formInputs.value
                         ? <Button onClick={handleSearch}>start session</Button>
                         : <Button disabled>...</Button>}
+                </span>
             </form>
-                {redirectPage}
+            {redirectPage}
 
         </Container >
     )
