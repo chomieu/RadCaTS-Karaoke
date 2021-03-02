@@ -41,20 +41,12 @@ export default function Session({ userData, setUserData }) {
     return (
         <>
             {
-                !userData.isLoggedIn ? <Redirect to="/" />
-
+                !userData.isLoggedIn
+                    ? <Redirect to="/" />
                     : loading
                         ? <>
-                            <br />
-                            <br />
-                            <br />
-                            <br />
-                            <br />
-                            <br />
-                            <br />
                             <Preloader />
                         </>
-
                         : <>
                             <Header userData={userData} setUserData={setUserData} />
                             <AudioPlayer userData={userData} sessionData={sessionData} />
