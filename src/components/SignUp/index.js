@@ -4,7 +4,7 @@ import API from "../../utils/API"
 import "./style.css";
 
 
-function SignUp({ setDisplay, display, loginSuccess, logoutUser }) {
+function SignUp({ loginSuccess }) {
 
     const trigger = <Button>Sign Up</Button>;
     const [formInputs, setFormInputs] = useState({
@@ -45,18 +45,10 @@ function SignUp({ setDisplay, display, loginSuccess, logoutUser }) {
             confirm: "",
             valid: false
         })
-        setDisplay({
-            ...display,
-            signInBtns: false,
-            loading: true
-        })
 
-        // mimicking a 3 second loading time / waiting for API response
-        setTimeout(() => {
-            API.signup(formInputs)
-                .then(res => { loginSuccess(res) })
-                .catch(err => { logoutUser(err) })
-        }, 2000);
+        API.signup(formInputs)
+            .then(res => { loginSuccess(res) })
+            .catch(err => { console.log( err )})
     }
 
     return (

@@ -3,17 +3,16 @@ import React, { useState, useEffect } from "react";
 import momentDurationFormatSetup from "moment-duration-format";
 import useAudioPlayer from './useAudioPlayer';
 import { Button } from "react-materialize"
-import AudioBottom from "./AudioBottom"
-import KaraokeBox from "../KaraokeBox"
-import FileDrop from "../FileDrop";
-import AudioTop from "./AudioTop"
+import AudioBottom from "./AudioBottom";
+import KaraokeBox from "../KaraokeBox";
+import AudioTop from "./AudioTop";
 import moment from "moment";
 import "./style.css"
 import API from "../../utils/API";
 
 
 
-function AudioPlayer({ display, setDisplay, userData, setUserData, sessionData }) {
+function AudioPlayer({ userData, setUserData, sessionData }) {
 
     const { curTime, duration, playing, setPlaying, setClickedTime } = useAudioPlayer();
     const [pts, setPts] = useState({ pts: 0 })
@@ -32,12 +31,6 @@ function AudioPlayer({ display, setDisplay, userData, setUserData, sessionData }
 
     const handleBack = () => {
         setPlaying(false)
-        setDisplay({
-            ...display,
-            audioPlayer: false,
-            logout: true,
-            search: true
-        })
     }
 
     const handleFinish = () => {
@@ -55,7 +48,6 @@ function AudioPlayer({ display, setDisplay, userData, setUserData, sessionData }
             .then(data => { console.log(data) })
             .catch(err => { console.log(err) })
     }
-
 
     return (
         <div className="container">

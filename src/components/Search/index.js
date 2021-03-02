@@ -9,8 +9,9 @@ import API from '../../utils/API';
 import LyricsContainer from '../LyricsContainer';
 import { Redirect } from 'react-router-dom';
 
-function Search({ userData, search, sessionData, setSessionData, display, setDisplay }) {
+function Search({ userData, setSessionData }) {
 
+    const [search, setSearch] = useState([])
     const [formInputs, setFormInputs] = useState({
         isClearable: true,
         isSearchable: true,
@@ -36,17 +37,28 @@ function Search({ userData, search, sessionData, setSessionData, display, setDis
         }
     }
 
+    const handleSelectClick = () => {
+        API.getAllSongs()
+        .then(data => {
+            formatAutoComplete(data.data)
+        })
+        .catch(err => { console.error(err) })    
+    }
+    
+    const formatAutoComplete = (data) => {
+        const formatted = []
+        data.map(song => {
+            let obj = {
+            label: `${song.name} - ${song.artist}`,
+            value: song._id
+            }
+            formatted.push(obj)
+        })
+        setSearch(formatted)
+    }
 
     const handleSearch = e => {
         e.preventDefault()
-
-        // set loading screen
-        setDisplay({
-            ...display,
-            search: false,
-            logout: false,
-            loading: true
-        })
 
         // prepard data object for api call.
         // call API to create session
@@ -58,38 +70,6 @@ function Search({ userData, search, sessionData, setSessionData, display, setDis
             .then(data => {
                 // second api call to start session with session id
                 const id = data.data
-                API.startSession(id)
-                    .then(data => {
-
-                        // parse stringified lyrics to an object array.
-                        let x = data.data
-                        let parsed = JSON.parse(x.lyrics)
-                        let lyricsArr = parsed.lines
-                        // build data object we need to start our session.
-                        let obj = {
-                            artist: x.artist,
-                            lyrics: lyricsArr,
-                            mixed: x.mixed,
-                            sessionId: id,
-                            songId: x._id,
-                            name: x.name
-                        }
-
-                        console.log(obj)
-                        // save the obj data to sessionData
-                        setSessionData(obj)
-                        // hide loading screen
-                        // mount audio player now that sessionData is available in state
-                        setDisplay({
-                            ...display,
-                            loading: false,
-                            search: false,
-                            audioPlayer: true,
-                            logout: true
-                        })
-                        console.log( `/api/session/${ id }` );
-                    })
-                    .catch(err => { console.log(err) })
             })
             .catch(err => { console.log(err) })
 
@@ -107,6 +87,7 @@ function Search({ userData, search, sessionData, setSessionData, display, setDis
                         isSearchable={formInputs.isSearchable}
                         isClearable={formInputs.isClearable}
                         onChange={handleInputChange}
+                        onClick={handleSelectClick}
                         classNamePrefix="select"
                         className="searchInput"
                         options={search}
@@ -114,19 +95,11 @@ function Search({ userData, search, sessionData, setSessionData, display, setDis
                     />
                 </span>
 
-                <AddSongModal
-                    display={display}
-                    setDisplay={setDisplay}
-                />
+                <AddSongModal />
 
-                {formInputs.value
-                    ? <Button
-                        onClick={handleSearch}
-                    >start session
-                </Button>
-
-                    : <Button disabled>...</Button>
-                }
+                { formInputs.value ?
+                <Button onClick={handleSearch}>start session</Button>
+                : <Button disabled>...</Button> }
 
             </form>
         </Container>

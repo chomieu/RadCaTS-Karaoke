@@ -1,25 +1,36 @@
 import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import './App.css';
-import Page from "./pages/Page";
+import API from "./utils/API";
+import Header from "./components/Header";
+import Session from "./pages/Session";
+import SearchPage from "./pages/SearchPage";
+import Landing from "./pages/Landing";
 
 
 function App() {
+  const [userData, setUserData] = useState({
+    id: "",
+    token: "",
+    username: "",
+    isLoggedIn: false,
+    profilePicture: ""
+  })
 
   return (
-
-    <div className="App center-align">
-      <Router>
-        <Switch>
-          <Route path={"/api/session/:id"}>
-            <Page />
-          </Route>
-          <Route path={"/"}>
-            <Page />
-          </Route>
-        </Switch>
-      </Router>
-    </div>
+    <Router>
+      <Switch>
+        <Route path={"/"}>
+          <Landing userData={ userData } setUserData={ setUserData } />
+        </Route>
+        <Route path={"/api/session/:id"}>
+          <Session userData={ userData } setUserData={ setUserData } />
+        </Route>
+        <Route path={"/search"}>
+          <SearchPage userData={ userData } setUserData={ setUserData } />
+        </Route>
+      </Switch>
+    </Router>
   );
 }
 

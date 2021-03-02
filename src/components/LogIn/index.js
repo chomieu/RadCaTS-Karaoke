@@ -5,7 +5,7 @@ import "./style.css";
 
 
 
-function SignIn({ display, setDisplay, loginSuccess, logoutUser }) {
+function LogIn({ loginSuccess }) {
 
     const trigger = <Button>Sign In</Button>
     const [formInputs, setFormInputs] = useState({
@@ -27,18 +27,10 @@ function SignIn({ display, setDisplay, loginSuccess, logoutUser }) {
             username: "",
             password: ""
         })
-        setDisplay({
-            ...display,
-            signInBtns: false,
-            loading: true
-        })
 
-        // mimicking a 3 second loading time / waiting for API response
-        // setTimeout(() => {
-        API.login(formInputs)
-            .then(res => { loginSuccess(res) })
-            .catch(err => { logoutUser(err) })
-        // }, 2000);
+    API.login(formInputs)
+        .then(res => { loginSuccess(res) })
+        .catch(err => { console.log( err )})
     }
 
 
@@ -86,4 +78,4 @@ function SignIn({ display, setDisplay, loginSuccess, logoutUser }) {
     )
 }
 
-export default SignIn;
+export default LogIn;
