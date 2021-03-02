@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import API from "../utils/API";
-import Header from "../components/Header";
-import Preloader from "../components/Preloader"
-import AudioPlayer from "../components/AudioPlayer";
 import { useParams, Redirect } from "react-router-dom";
+import AudioPlayer from "../components/AudioPlayer";
+import Preloader from "../components/Preloader"
+import Header from "../components/Header";
+import API from "../utils/API";
 
 export default function Session({ userData, setUserData }) {
     const [sessionData, setSessionData] = useState([]);
@@ -11,7 +11,6 @@ export default function Session({ userData, setUserData }) {
     const { id } = useParams();
 
     useEffect(() => {
-
         API.startSession(id)
             .then(data => {
 
@@ -28,22 +27,18 @@ export default function Session({ userData, setUserData }) {
                     songId: x._id,
                     name: x.name
                 }
-
                 console.log(obj)
                 // save the obj data to sessionData
                 setSessionData(obj)
                 setTimeout(() => { setLoading(false) }, 5000)
-
             })
             .catch(err => {
                 setLoading(false)
                 console.log(err)
             })
-
     }, [])
 
     return (
-
         <>
             {
                 !userData.isLoggedIn ? <Redirect to="/" />
@@ -58,7 +53,6 @@ export default function Session({ userData, setUserData }) {
                             <br />
                             <br />
                             <Preloader />
-
                         </>
 
                         : <>

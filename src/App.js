@@ -1,11 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import './App.css';
-import API from "./utils/API";
-import Header from "./components/Header";
-import Session from "./pages/Session";
 import SearchPage from "./pages/SearchPage";
+import Session from "./pages/Session";
 import Landing from "./pages/Landing";
+import './App.css';
 
 
 function App() {

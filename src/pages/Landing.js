@@ -8,7 +8,6 @@ import { Redirect } from 'react-router-dom';
 export default function Landing({ userData, setUserData }) {
 
     const [redirectPage, setRedirectPage] = useState()
-
     useEffect(() => {
         const token = localStorage.getItem("token")
         if (token) {
@@ -19,7 +18,6 @@ export default function Landing({ userData, setUserData }) {
                 .catch(err => { console.log(err) })
         }
     }, [])
-
 
     const loginSuccess = (res, source) => {
         localStorage.setItem("token", res.data.token)
@@ -32,16 +30,12 @@ export default function Landing({ userData, setUserData }) {
             username: res.data.user.username,
             profilePicture: res.data.user.profilePicture
         })
-
         setRedirectPage(<Redirect to="/search" />)
     }
-
-
     return (
         <div>
             <Header userData={userData} setUserData={setUserData} />
             {
-
                 !userData.isLoggedIn
                     ?
                     <>
@@ -50,7 +44,6 @@ export default function Landing({ userData, setUserData }) {
                     </>
                     : null
             }
-
             {redirectPage}
         </div>
     )

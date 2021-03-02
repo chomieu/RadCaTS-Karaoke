@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react';
+import { Redirect } from "react-router-dom";
 import Search from "../components/Search";
 import Header from "../components/Header";
-import { Redirect } from "react-router-dom";
 
 export default function SearchPage({ userData, setUserData }) {
-
-
     return (
         <>
             {
