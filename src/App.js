@@ -30,8 +30,8 @@ function App() {
         <Route exact path="/api/session/:id">
           <Session userData={userData} setUserData={setUserData} sessionData={sessionData} setSessionData={setSessionData} />
         </Route>
-        <Route exact path="/liveSession">
-          <LiveSession />
+        <Route exact path="/liveSession/:id">
+          <LiveSession userData={userData} />
         </Route>
       </Switch>
     </Router>
