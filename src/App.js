@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import KittyHeader from "./components/KittyHeader";
 import SearchPage from "./pages/SearchPage";
 import EditLyrics from "./pages/EditLyrics"
 import Session from "./pages/Session";
@@ -15,6 +16,7 @@ function App() {
 
   return (
     <Router>
+      <KittyHeader />
       <Switch>
         <Route exact path="/">
           {/* <Header userData={userData} setUserData={setUserData} /> */}
