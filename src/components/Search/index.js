@@ -15,7 +15,6 @@ function Search({ userData, setSessionData }) {
     const [message, setMessage] = useState(`What's your favorite song?`)
     const [search, setSearch] = useState(['search'])
 
-    // useEffect(() => { getSongs() }, [])
 
     useEffect(() => {
         if (loading) {
@@ -68,19 +67,18 @@ function Search({ userData, setSessionData }) {
 
     const handleSearch = e => {
         e.preventDefault()
+
         const data = {
             host: userData.id,
-            karaokeSong: formInputs.value
+            karaokeSong: formInputs.value,
         }
         API.createSession(data)
             .then(sessionId => {
                 console.log(sessionId)
-
                 // session has been created, what to do next?
                 setRedirectPage(<Redirect to={`/lyrics/${sessionId.data}`} />)
             })
             .catch(err => { console.log(err) })
-
     }
 
     return (

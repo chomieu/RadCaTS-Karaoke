@@ -1,9 +1,9 @@
 const axios = require("axios")
 
-const URL_PREFIX = 'https://radcats-karaoke-api.herokuapp.com'
+// const URL_PREFIX = 'https://radcats-karaoke-api.herokuapp.com'
 
 // const URL_PREFIX = 'https://radcats-karaoke-backend.herokuapp.com'
-// const URL_PREFIX = 'http://localhost:8080'
+const URL_PREFIX = 'http://localhost:8080';
 
 const API = {
     signup: userData => {
@@ -34,6 +34,12 @@ const API = {
             }
         })
     },
+    uploadLyrics: lyrics => {
+        return axios.post(`${URL_PREFIX}/api/lyric`, lyrics)
+    },
+    getLyricsBySong: songId => {
+        return axios.get(`${URL_PREFIX}/api/lyric`, songId)
+    }
 }
 
 export default API

@@ -10,7 +10,7 @@ import './App.css';
 function App() {
 
   const [userData, setUserData] = useState({ isLoggedIn: false })
-  const [sessionData, setSessionData] = useState([])
+  const [sessionData, setSessionData] = useState({})
 
 
   return (
