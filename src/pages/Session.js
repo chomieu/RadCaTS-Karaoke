@@ -1,30 +1,26 @@
 import React, { useState, useEffect } from 'react';
-import useAudioPlayer from '../components/AudioPlayer/useAudioPlayer';
-import momentDurationFormatSetup from "moment-duration-format";
 import { useParams, Redirect } from "react-router-dom";
-import AudioPlayer from "../components/AudioPlayer";
+import AudioPlayer from "../components/AudioPlayer"
 import Preloader from "../components/Preloader"
 import { Button } from "react-materialize"
 import Header from "../components/Header";
 import API from "../utils/API";
-import moment from "moment";
 import "../App.css"
 
 export default function Session({ userData, setUserData, sessionData, setSessionData }) {
 
 
-    const { curTime, duration, playing, setPlaying, setClickedTime } = useAudioPlayer();
     const [loading, setLoading] = useState(true)
+    const [isPlaying, setIsPlaying] = useState(false)
+
     const { id } = useParams()
 
-    const handleFinish = () => { setPlaying(false) }
-    const handleBack = () => { setPlaying(false) }
-
-    const formatDuration = (duration) => {
-        return moment
-            .duration(duration, "seconds")
-            .format("mm:ss", { trim: false });
+    const handleFinish = () => { setIsPlaying(false) }
+    const handleBack = () => {
+        setIsPlaying(false)
     }
+
+
 
     useEffect(() => {
         API.startSession(id)
@@ -72,13 +68,9 @@ export default function Session({ userData, setUserData, sessionData, setSession
                             <Header userData={userData} setUserData={setUserData} />
 
                             <AudioPlayer
-
-                                formatDuration={formatDuration}
+                                setIsPlaying={setIsPlaying}
                                 sessionData={sessionData}
                                 userData={userData}
-                                duration={duration}
-                                curTime={curTime}
-                                playing={playing}
 
                             />
                         </>

@@ -7,7 +7,7 @@ import Select from 'react-select';
 import API from '../../utils/API';
 import "./style.css"
 
-function Search({ userData, setSessionData }) {
+function Search({ userData }) {
 
     const [formInputs, setFormInputs] = useState({ label: '', value: '', })
     const [loading, setLoading] = useState(false)
@@ -55,14 +55,20 @@ function Search({ userData, setSessionData }) {
 
 
 
-    const handleSearch = e => {
+    const handleLyrics = e => {
         e.preventDefault()
-        const data = { host: userData.id, karaokeSong: formInputs.value }
-        API.createSession(data)
+        const newSessionObj = { host: userData.id, karaokeSong: formInputs.value }
+        createNewSession(newSessionObj)
+
+    }
+
+
+    const createNewSession = (newSessionObj => {
+        API.createSession(newSessionObj)
             .then(sessionId => { setRedirectPage(<Redirect to={`/lyrics/${sessionId.data}`} />) })
             .catch(err => { console.log(err) })
 
-    }
+    })
 
     return (
 
@@ -98,11 +104,10 @@ function Search({ userData, setSessionData }) {
 
                     <AddSongModal
 
-                        loading={loading}
-                        message={message}
-                        getSongs={getSongs}
+                        userData={userData}
                         setLoading={setLoading}
                         setMessage={setMessage}
+                        createNewSession={createNewSession}
 
                     />
 
@@ -110,7 +115,7 @@ function Search({ userData, setSessionData }) {
 
                     {formInputs.value
 
-                        ? <Button onClick={handleSearch}>start session</Button>
+                        ? <Button onClick={handleLyrics}>Setup Lyrics</Button>
                         : <Button disabled>...</Button>
 
                     }
