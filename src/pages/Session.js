@@ -9,7 +9,7 @@ import "../App.css"
 
 export default function Session({ userData, setUserData, sessionData, setSessionData }) {
 
-    const [loading, setLoading] = useState(true)
+    const [loadingSession, setLoadingSession] = useState(true)
     const [isPlaying, setIsPlaying] = useState(false)
 
     const { id } = useParams()
@@ -26,6 +26,8 @@ export default function Session({ userData, setUserData, sessionData, setSession
     }
 
     useEffect(() => {
+        setLoadingSession(true)
+
         API.startSession(id)
             .then(data => {
 
@@ -39,11 +41,11 @@ export default function Session({ userData, setUserData, sessionData, setSession
                 console.log(sessionObj)
                 setSessionData(sessionObj)
 
-                setTimeout(() => { setLoading(false) }, 5000)
+                setTimeout(() => { setLoadingSession(false) }, 5000)
 
             })
             .catch(err => {
-                setLoading(false)
+                setLoadingSession(false)
                 console.log(err)
             })
     }, [])
@@ -54,7 +56,7 @@ export default function Session({ userData, setUserData, sessionData, setSession
             {!userData.isLoggedIn ? <Redirect to="/" /> : null}
             <Header userData={userData} setUserData={setUserData} />
 
-            {loading
+            {loadingSession
 
                 ? <>
                     <Preloader />

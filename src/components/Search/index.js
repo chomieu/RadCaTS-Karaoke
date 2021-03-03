@@ -13,11 +13,18 @@ function Search({ userData }) {
     const [message, setMessage] = useState(`What's your favorite song?`)
     const [redirectPage, setRedirectPage] = useState()
     const [search, setSearch] = useState(['search'])
-    const [loading, setLoading] = useState(false)
+    const [loadingSearch, setLoadingSearch] = useState()
 
-    useEffect(() => { getSongs() }, [])
+    useEffect(() => {
+        setLoadingSearch(false)
+    }, [])
 
-    useEffect(() => { if (loading) { setMessage('searching') } }, [loading])
+    useEffect(() => { if (loadingSearch) { setMessage('searching') } }, [loadingSearch])
+
+    const handleRefreshDataBase = (e) => {
+        e.preventDefault()
+        getSongs()
+    }
 
 
     const handleInputChange = e => {
@@ -68,7 +75,7 @@ function Search({ userData }) {
 
             <h4 className="search__title">{message}</h4>
 
-            {loading
+            {loadingSearch
 
                 ? <Preloader />
                 : null
@@ -81,6 +88,7 @@ function Search({ userData }) {
 
                     <p>search for an existing karaoke track</p>
 
+                    <Button onClick={handleRefreshDataBase}>click here to load songs</Button>
                     <Select
 
                         onChange={handleInputChange}
@@ -97,7 +105,7 @@ function Search({ userData }) {
                     <AddSongModal
 
                         userData={userData}
-                        setLoading={setLoading}
+                        setLoadingSearch={setLoadingSearch}
                         setMessage={setMessage}
                         createNewSession={createNewSession}
 

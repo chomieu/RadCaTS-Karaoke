@@ -11,12 +11,13 @@ export default function EditLyrics({ userData, sessionData, setSessionData }) {
 
     const [message, setMessage] = useState(`loading . . .`)
     const [redirectPage, setRedirectPage] = useState()
-    const [loading, setLoading] = useState(true)
+    const [loadingLyrics, setLoadingLyrics] = useState(true)
     const [error, setError] = useState(false)
     const { id } = useParams();
 
 
     useEffect(() => {
+        setLoadingLyrics(true)
         console.log('startSession', id)
 
         API.startSession(id)
@@ -37,7 +38,7 @@ export default function EditLyrics({ userData, sessionData, setSessionData }) {
                 console.log(sessionObj)
                 setSessionData(sessionObj)
                 setMessage('lets add lyrics!')
-                setLoading(false)
+                setLoadingLyrics(false)
 
             })
             // change displayed message
@@ -46,7 +47,7 @@ export default function EditLyrics({ userData, sessionData, setSessionData }) {
             .catch(err => {
                 console.log('session response error')
                 setMessage('were sorry, \nsomething went wrong  :\'(')
-                setLoading(false)
+                setLoadingLyrics(false)
                 setError(true)
                 console.log(err)
             })
@@ -72,7 +73,7 @@ export default function EditLyrics({ userData, sessionData, setSessionData }) {
             <br />
 
             {
-                loading
+                loadingLyrics
 
                     ? <Preloader />
 
