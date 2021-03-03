@@ -12,8 +12,8 @@ function App() {
 
   let status
   const userInfo = JSON.parse(localStorage.getItem("radcatsInfo"))
-  userInfo ? status = true : status = false 
-  
+  userInfo ? status = true : status = false
+
   const [userData, setUserData] = useState({ isLoggedIn: status, userInfo })
   console.log(userData)
   const [sessionData, setSessionData] = useState([])
