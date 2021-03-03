@@ -17,11 +17,7 @@ function LiveSession({ userData, setUserData, sessionData, setSessionData }) {
     score: 0,
     avatar: userData.profilePicture || "tbd" // placeholder for actual avatar
   })
-  // const [connected, setConnected] = useState(false)
-  // const [currentSession, setCurrentSession] = useState({ inSession: true, sessionId: id })
-  // const [connectedSession, setConnectedSession] = useState([id])
   const [allMembers, setAllMembers] = useState([])
-  // const socketRef = useRef()
   const [start, setStart] = useState(false)
   const [countdown, setCountdown] = useState()
   const [playing, setPlaying] = useState("")
