@@ -20,6 +20,7 @@ export default function Landing({ userData, setUserData }) {
         }
     }, [])
 
+
     const loginSuccess = (source, res) => {
         localStorage.setItem("token", res.data.token)
         console.log(source, res)
@@ -34,7 +35,8 @@ export default function Landing({ userData, setUserData }) {
         setRedirectPage(<Redirect to="/search" />)
     }
     return (
-        <div>
+        <div className="pageContents">
+            <h1 className="white-text">Radcats karaoke</h1>
             <Header userData={userData} setUserData={setUserData} />
             {
                 !userData.isLoggedIn
@@ -45,6 +47,7 @@ export default function Landing({ userData, setUserData }) {
                     </>
                     : null
             }
+
             {redirectPage}
         </div>
     )
