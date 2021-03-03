@@ -24,7 +24,7 @@ function App() {
           {/* <Header userData={userData} setUserData={setUserData} /> */}
           <SearchPage userData={userData} setUserData={setUserData} />
         </Route>
-        <Route exact path="/lyrics/:id">
+        <Route exact path="/api/lyrics/:id">
           <EditLyrics userData={userData} setUserData={setUserData} sessionData={sessionData} setSessionData={setSessionData} />
         </Route>
         <Route exact path="/api/session/:id">

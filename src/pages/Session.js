@@ -29,10 +29,11 @@ export default function Session({ userData, setUserData, sessionData, setSession
     useEffect(() => {
         API.startSession(id)
             .then(data => {
-
                 // parse stringified lyrics to an object array.
-                let x = data.data
-                let parsed = JSON.parse(x.lyrics)
+                let x = data.data.karaokeSong
+                console.log("x", x)
+                // let parsed = JSON.parse(x.lyrics)
+                let parsed = JSON.parse("[]")
                 let lyricsArr = parsed.lines
                 // build data object we need to start our session.
                 let obj = {
@@ -43,7 +44,7 @@ export default function Session({ userData, setUserData, sessionData, setSession
                     songId: x._id,
                     name: x.name
                 }
-                console.log(obj)
+                console.log("obj", obj)
                 // save the obj data to sessionData
                 setSessionData(obj)
                 setTimeout(() => { setLoading(false) }, 5000)

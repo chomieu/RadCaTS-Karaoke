@@ -73,7 +73,7 @@ function Search({ userData, setSessionData }) {
         e.preventDefault()
         const data = { host: userData.id, karaokeSong: formInputs.value }
         API.createSession(data)
-            .then(sessionId => { setRedirectPage(<Redirect to={`/lyrics/${sessionId.data}`} />) })
+            .then(sessionId => { setRedirectPage(<Redirect to={`/api/lyrics/${sessionId.data}`} />) })
             .catch(err => { console.log(err) })
 
     }
