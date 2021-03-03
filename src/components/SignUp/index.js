@@ -47,8 +47,8 @@ function SignUp({ loginSuccess }) {
         })
 
         API.signup(formInputs)
-            .then(res => { loginSuccess(res) })
-            .catch(err => { console.log( err )})
+            .then(res => { loginSuccess('signup', res) })
+            .catch(err => { console.log(err) })
     }
 
     return (

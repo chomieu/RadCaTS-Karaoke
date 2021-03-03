@@ -1,6 +1,7 @@
 body {
-    background-color: rgb(89, 41, 167);
+    /* background-color: rgba(89, 41, 167, 0.5); */
     color: rgb(235, 115, 72);
+    z-index: 0;
 }
 
 .btn {
