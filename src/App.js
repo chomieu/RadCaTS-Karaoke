@@ -11,23 +11,22 @@ import './App.css';
 function App() {
 
   let status
-  const userInfo = JSON.parse(localStorage.getItem("radcatsInfo"))
-  userInfo ? status = true : status = false 
-  
-  const [userData, setUserData] = useState({ isLoggedIn: status, userInfo })
-  console.log(userData)
+  const { token, id, username, profilePicture } = JSON.parse(localStorage.getItem("radcatsInfo"))
+  token ? status = true : status = false
+
+  const [userData, setUserData] = useState({ isLoggedIn: status, token, id, username, profilePicture })
   const [sessionData, setSessionData] = useState([])
   const [isPlaying, setIsPlaying] = useState(false)
 
   const authorizeUser = () => {
-    if (userInfo) {
-      API.checkWebToken(userInfo.token)
+    if (token) {
+      API.checkWebToken(token)
         .then(res => { loginSuccess('checkWebToken', res) })
         .catch(err => { console.log("checkWebToken", err) })
     }
   }
 
-  useEffect(() => { authorizeUser() }, [userData.isLoggedIn])
+  useEffect(() => { authorizeUser() }, [token])
 
   const loginSuccess = (source, res) => {
     const radcatsInfo = {

@@ -69,28 +69,41 @@ export default function Session({ userData, setUserData, sessionData, setSession
     const [start, setStart] = useState(false)
     const [countdown, setCountdown] = useState()
     const [leaderboard, setLeaderboard] = useState()
+    const [score, setScore] = useState(0)
+
+    console.log("member", member)
+    console.log("userData", userData)
 
     function handleNewMembers(users) {
         setAllMembers(users)
+        setLeaderboard(users.map(u => { return <Row key={u.userId}><Col><img src={`${u.pfp}`} /></Col><Col>{u.username} {u.score}</Col></Row> }))
     }
 
     function handlePlaySound() {
         console.log("handleplaysound")
-        socket.emit("start", id, { path: sessionData.mixed })
+        socket.emit("start", id, { path: sessionData.src })
     }
 
     useEffect(() => {
-        socket.emit("joinSession", id, member.id, (users) => handleNewMembers(users))
-        document.getElementById("leaderboard").append(<p>{member.username}</p>)
-    }, [userData.id])
+        socket.emit("joinSession",
+            id,
+            member.id,
+            member.username,
+            member.profilePicture,
+            score,
+            (users) => handleNewMembers(users)
+        )
+    }, [userData.userInfo])
 
     useEffect(() => {
         function recieveMsg(m) {
             console.log(m)
+            console.log(start)
             if (start) {
                 let time = 3
                 setCountdown(time)
                 const timer = setInterval(() => {
+                    console.log(time)
                     if (time === 0) {
                         clearInterval(timer)
                         setCountdown("Start")
@@ -132,14 +145,16 @@ export default function Session({ userData, setUserData, sessionData, setSession
                                 setStart={setStart}
                                 audio={audio}
                             />
+                            {countdown}
                             <Button onClick={handleBack}>Back</Button>
                             <Button onClick={handleFinish}>Finish</Button>
-                            {countdown}
                         </Col>
                         <Col s={12} m={6}>
                             Leaderboard
-                            {console.log("all", allMembers)}
-                            <div id="leaderboard"></div>
+                            {console.log("session", sessionData)}
+                            <div>
+                                {leaderboard}
+                            </div>
                         </Col>
                     </Row>
 
