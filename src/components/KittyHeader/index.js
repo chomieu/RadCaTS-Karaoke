@@ -1,6 +1,7 @@
 import React, { Suspense, useState } from "react";
 import { Canvas, useThree } from "react-three-fiber";
 import { CubeTextureLoader } from "three";
+import { OrbitControls } from "@react-three/drei";
 import './KittyHeader.css';
 import Kitty from "../3D/Kitty";
 import ManageLights from "../3D/ManageLights";
