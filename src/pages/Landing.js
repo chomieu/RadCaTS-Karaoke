@@ -1,54 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import API from "../utils/API";
+import { Redirect } from 'react-router-dom';
 import Header from '../components/Header';
 import SignUp from '../components/SignUp';
 import LogIn from '../components/LogIn';
-import { Redirect } from 'react-router-dom';
 import "../App.css"
 
-export default function Landing({ userData, setUserData }) {
+export default function Landing({ loginSuccess, userData, setUserData }) {
 
-    const [redirectPage, setRedirectPage] = useState()
-
-    useEffect(() => {
-        const token = localStorage.getItem("token")
-        if (token) {
-
-            API.checkWebToken(token)
-                .then(res => { loginSuccess('checkWebToken', res) })
-                .catch(err => { console.log("checkWebToken", err) })
-        }
-    }, [])
-
-
-    const loginSuccess = (source, res) => {
-        localStorage.setItem("token", res.data.token)
-        console.log(source, res)
-
-        setUserData({
-            isLoggedIn: true,
-            id: res.data.user._id,
-            token: res.data.token,
-            username: res.data.user.username,
-            profilePicture: res.data.user.profilePicture
-        })
-        setRedirectPage(<Redirect to="/search" />)
-    }
     return (
-        <div className="pageContents">
-            <h1 className="white-text">Radcats karaoke</h1>
-            <Header userData={userData} setUserData={setUserData} />
-            {
-                !userData.isLoggedIn
-                    ?
-                    <>
-                        <SignUp loginSuccess={loginSuccess} />
-                        <LogIn loginSuccess={loginSuccess} redirectPage={redirectPage} />
-                    </>
-                    : null
-            }
+        <div>
+            {userData.isLoggedIn ? <Redirect to="/search" /> : null}
 
-            {redirectPage}
+            <Header userData={userData} setUserData={setUserData} />
+
+            <SignUp loginSuccess={loginSuccess} />
+
+            <LogIn loginSuccess={loginSuccess} />
+
         </div>
     )
 }
