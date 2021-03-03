@@ -25,7 +25,7 @@ function Kitty( props ) {
     })
   
     useFrame(() => {
-      group.current.rotation.x = -Math.atan(( window.innerWidth/2 - mousePosition.mouseY ) / ( window.innerHeight/2 )) + ( props.isPlaying ? time/40 : 0 );
+      group.current.rotation.x = -Math.atan(( window.innerHeight/2 - mousePosition.mouseY ) / ( window.innerHeight/2 )) + ( props.isPlaying ? time/40 : 0 );
       group.current.rotation.y = -Math.atan(( window.innerWidth/2 - mousePosition.mouseX ) / ( window.innerWidth/2 ));
     })
     const { nodes, materials } = useGLTF('/3d/KittyA.gltf')

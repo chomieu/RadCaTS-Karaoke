@@ -66,7 +66,7 @@ function App() {
         </Route>
 
         <Route exact path="/lyrics/:id">
-          <KittyHeader />
+          <KittyHeader isPlaying={ isPlaying } />
           <EditLyrics 
             userData={userData} 
             setUserData={setUserData} 
@@ -77,7 +77,7 @@ function App() {
         </Route>
 
         <Route exact path="/api/session/:id">
-          <KittyHeader />
+          <KittyHeader isPlaying={ isPlaying } />
           <Session 
             isPlaying={ isPlaying } 
             setIsPlaying={ setIsPlaying } 
