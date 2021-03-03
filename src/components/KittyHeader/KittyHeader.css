@@ -1,4 +1,7 @@
 canvas {
-    height: 200px !important;
-    border-bottom: 10px solid #1abc9cd0;
+    position: relative;
+    top: 0;
+    left: 0;
+    width: auto !important;
+    height: 100vh !important;
 }

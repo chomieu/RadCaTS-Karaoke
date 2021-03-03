@@ -1,15 +1,14 @@
 .chip {
-    display: inline-block;
+    /* display: inline-block; */
     height: 32px;
     font-size: 13px;
     font-weight: 500;
-    color: rgb(235, 115, 72);
+    color: rgb(252, 144, 105);
     line-height: 32px;
     padding: 0 12px;
     border-radius: 16px;
     background-color: #e4e4e43f;
-    margin-bottom: 5px;
-    margin-right: 5px;
+    margin: 0.5rem !important;
 }
 
 h1 {
