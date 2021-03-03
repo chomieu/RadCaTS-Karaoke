@@ -11,25 +11,32 @@ import './App.css';
 function App() {
 
   let status
-  const token = localStorage.getItem("token")
-  token ? status = true : status = false 
+  const userInfo = JSON.parse(localStorage.getItem("radcatsInfo"))
+  userInfo ? status = true : status = false 
   
-  const [userData, setUserData] = useState({ isLoggedIn: status })
+  const [userData, setUserData] = useState({ isLoggedIn: status, userInfo })
+  console.log(userData)
   const [sessionData, setSessionData] = useState([])
   const [isPlaying, setIsPlaying] = useState(false)
 
   const authorizeUser = () => {
-    if (token) {
-      API.checkWebToken(token)
+    if (userInfo) {
+      API.checkWebToken(userInfo.token)
         .then(res => { loginSuccess('checkWebToken', res) })
         .catch(err => { console.log("checkWebToken", err) })
     }
   }
 
-  useEffect(() => { authorizeUser() }, [token])
+  useEffect(() => { authorizeUser() }, [userData.isLoggedIn])
 
   const loginSuccess = (source, res) => {
-    localStorage.setItem("token", res.data.token)
+    const radcatsInfo = {
+      token: res.data.token,
+      id: res.data.user._id,
+      username: res.data.user.username,
+      profilePicture: res.data.user.profilePicture
+    }
+    localStorage.setItem("radcatsInfo", JSON.stringify(radcatsInfo))
     console.log(source, res)
 
     setUserData({

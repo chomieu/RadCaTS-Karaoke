@@ -4,7 +4,7 @@ import LyricsContainer from "../LyricsContainer/"
 import "./style.css"
 
 
-function KaraokeBox({ curTime, playing, pts, setPts, language, sessionData }) {
+function KaraokeBox({ curTime, isPlaying, pts, setPts, language, sessionData }) {
 
     // store user mic inputs here with timestamp
     // Note: time is at time of printing, not time of recording start
@@ -27,9 +27,9 @@ function KaraokeBox({ curTime, playing, pts, setPts, language, sessionData }) {
 
     // activate / deactivate mic when play/pause is clicked
     useEffect(() => {
-        if (playing) { activateMic(language) }
+        if (isPlaying) { activateMic(language) }
         else { SpeechRecognition.stopListening() }
-    }, [playing])
+    }, [isPlaying])
 
 
     useEffect(() => {
@@ -65,7 +65,7 @@ function KaraokeBox({ curTime, playing, pts, setPts, language, sessionData }) {
                         pts={pts.pts}
                         setPts={setPts}
                         curTime={curTime}
-                        playing={playing}
+                        isPlaying={isPlaying}
                         userInput={userInput}
                     />
 

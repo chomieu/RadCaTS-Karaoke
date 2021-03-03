@@ -30,60 +30,59 @@ export default function Session({ userData, setUserData, sessionData, setSession
         // setIsPlaying(false) 
     }
 
-    useEffect(() => {
+    const startSession = () => {
         API.startSession(id)
-            .then(data => {
-
-                const sessionObj = {
+            .then((data) => {
+                setSessionData({
+                    ...sessionData,
                     hostId: data.data.host,
-                    sessionId: data.data._id,
-                    name: data.data.karaokeSong.name,
+                    songName: data.data.karaokeSong.name,
                     artist: data.data.karaokeSong.artist,
-                    src: data.data.karaokeSong.mixed,
-                }
-                console.log(sessionObj)
-                setSessionData(sessionObj)
-
-                setTimeout(() => { setLoading(false) }, 5000)
-
+                    mixed: data.data.karaokeSong.mixed,
+                    sessionId: data.data._id,
+                    songId: data.data.karaokeSong._id,
+                    lyrics: [`[ti:${data.data.karaokeSong.name}]`, `[ar:${data.data.karaokeSong.artist}]`]
+                })
+                return data;
+            }).then(data => {
+                API.getLyricsBySong(data.data.karaokeSong._id)
+                    .then(lrcFiles => {
+                        // setLyricsFile(lrcFiles.data)
+                    })
+                    .catch(err => {
+                        console.log(err)
+                    })
             })
             .catch(err => {
-                setLoading(false)
                 console.log(err)
             })
+    }
+    useEffect(() => {
+        console.log('startSession', id)
+        startSession();
     }, [])
 
-    // Live Session - Starts
-    let hostInfo, memberInfo
-    userData.id === sessionData.host ?
-        hostInfo = userData : memberInfo = userData
+    // Live Session - Start
 
-    const [member, setMember] = useState(hostInfo)
-
+    const [member, setMember] = useState(userData)
     const [allMembers, setAllMembers] = useState([])
     const [start, setStart] = useState(false)
     const [countdown, setCountdown] = useState()
+    const [leaderboard, setLeaderboard] = useState()
 
     function handleNewMembers(users) {
         setAllMembers(users)
     }
 
-    // useEffect(() => {
-    //     setMemberInfo({
-    //         userId: userData.id,
-    //         username: userData.username,
-    //         score: 0,
-    //         avatar: userData.profilePicture // placeholder for actual avatar
-    //     })
-    //     return () => {
-    //         setMemberInfo({})
-    //     }
-    // }, [])
+    function handlePlaySound() {
+        console.log("handleplaysound")
+        socket.emit("start", id, { path: sessionData.mixed })
+    }
 
     useEffect(() => {
-        allMembers.filter(a => a.userId === memberInfo.id).length > 0 ? console.log("Member exists")
-            : socket.emit("joinSession", id, memberInfo.id, (users) => handleNewMembers(users))
-    }, [member, memberInfo])
+        socket.emit("joinSession", id, member.id, (users) => handleNewMembers(users))
+        document.getElementById("leaderboard").append(<p>{member.username}</p>)
+    }, [userData.id])
 
     useEffect(() => {
         function recieveMsg(m) {
@@ -113,11 +112,6 @@ export default function Session({ userData, setUserData, sessionData, setSession
         }
     }, [start])
 
-    function handlePlaySound() {
-        console.log("handleplaysound")
-        socket.emit("start", id, { path: sessionData.src })
-    }
-
     // Live Session - Ends
 
     return (
@@ -140,15 +134,15 @@ export default function Session({ userData, setUserData, sessionData, setSession
                             />
                             <Button onClick={handleBack}>Back</Button>
                             <Button onClick={handleFinish}>Finish</Button>
+                            {countdown}
                         </Col>
                         <Col s={12} m={6}>
                             Leaderboard
                             {console.log("all", allMembers)}
-                            {console.log("userData", userData)}
+                            <div id="leaderboard"></div>
                         </Col>
                     </Row>
 
-                    {countdown}
                 </>
             }
         </div>

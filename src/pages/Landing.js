@@ -6,19 +6,7 @@ import SignUp from '../components/SignUp';
 import LogIn from '../components/LogIn';
 import "../App.css"
 
-export default function Landing({ userData, setUserData }) {
-    const loginSuccess = (source, res) => {
-        localStorage.setItem("token", res.data.token)
-
-        setUserData({
-            isLoggedIn: true,
-            id: res.data.user._id,
-            token: res.data.token,
-            username: res.data.user.username,
-            profilePicture: res.data.user.profilePicture
-        })
-    }
-
+export default function Landing({ userData, setUserData, loginSuccess }) {
     return (
         <div className="pageContents">
             {userData.isLoggedIn ? <Redirect to="/search" /> : null}

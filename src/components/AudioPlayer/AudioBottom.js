@@ -3,11 +3,11 @@ import React from "react";
 import Play from "./Play";
 import Pause from "./Pause";
 
-function AudioBottom({ pts, curTime, duration, playing, handlePause, handlePlay, formatDuration, sessionData, handlePlaySound, setStart }) {
+function AudioBottom({ pts, isPlaying, handlePause, handlePlay, handlePlaySound, setStart }) {
 
     return (
         <>
-              <div className="row player bottom">
+            <div className="row player bottom">
                 <div className="col s4 m3 l2 left-align points__container">
                     <h1 className="points">{pts.pts}</h1>
                     <div className="divider"></div>
@@ -19,7 +19,7 @@ function AudioBottom({ pts, curTime, duration, playing, handlePause, handlePlay,
                     {/* <span className="bar__time">{formatDuration(curTime)} / {formatDuration(duration)}</span> */}
 
                     <div className="right-align">
-                        {playing
+                        {isPlaying
                             ? <Pause handleClick={handlePause} />
                             : <Play 
                                 handleClick={handlePlay} 
@@ -38,11 +38,3 @@ function AudioBottom({ pts, curTime, duration, playing, handlePause, handlePlay,
 }
 
 export default AudioBottom;
-
-// const sessionObj = {
-//     hostId: data.data.host,
-//     sessionId: data.data._id,
-//     name: data.data.karaokeSong.name,
-//     artist: data.data.karaokeSong.artist,
-//     src: data.data.karaokeSong.mixed,
-// }

@@ -11,7 +11,7 @@ import "./style.css"
 
 function AudioPlayer({ userData, setUserData, sessionData, isPlaying, setIsPlaying, handlePlaySound, setStart, audio }) {
 
-    const { curTime, duration, playing, setPlaying, setClickedTime } = useAudioPlayer( isPlaying, setIsPlaying, audio );
+    const { curTime, duration, setClickedTime } = useAudioPlayer( isPlaying, setIsPlaying, audio );
     const [language, setLanguage] = useState('en-Us')
     const [pts, setPts] = useState({ pts: 0 })
 
@@ -21,13 +21,13 @@ function AudioPlayer({ userData, setUserData, sessionData, isPlaying, setIsPlayi
             .format("mm:ss", { trim: false });
     }
 
-    const handlePlay = () => { 
-        console.log( 'play' )
-        setIsPlaying(true) 
+    const handlePlay = () => {
+        console.log('play')
+        setIsPlaying(true)
     }
     const handlePause = () => {
-        console.log( 'pause' );
-        setIsPlaying(false) 
+        console.log('pause');
+        setIsPlaying(false)
     }
 
     return (
@@ -37,13 +37,13 @@ function AudioPlayer({ userData, setUserData, sessionData, isPlaying, setIsPlayi
                 sessionData={sessionData}
             />
 
-            {/* <FileDrop playing={ playing } /> */}
+            {/* <FileDrop isPlaying={ isPlaying } /> */}
 
             <KaraokeBox
                 pts={pts}
                 setPts={setPts}
                 curTime={curTime}
-                playing={playing}
+                isPlaying={isPlaying}
                 language={language}
                 sessionData={sessionData}
             />
@@ -55,13 +55,12 @@ function AudioPlayer({ userData, setUserData, sessionData, isPlaying, setIsPlayi
                 handlePause={handlePause}
                 handlePlay={handlePlay}
                 duration={duration}
-                playing={playing}
+                isPlaying={isPlaying}
                 curTime={curTime}
                 pts={pts}
                 handlePlaySound={handlePlaySound}
                 setStart={setStart}
             />
-
 
         </div>
     );
