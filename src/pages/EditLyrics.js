@@ -172,10 +172,6 @@ export default function EditLyrics({ userData, sessionData, setSessionData }) {
             })
     }
 
-    const handleBack = () => {
-
-    }
-
     return (
         <Container className="pageContents">
             {lyricsFile.len > 0 ?
