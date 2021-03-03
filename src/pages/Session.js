@@ -7,10 +7,9 @@ import Header from "../components/Header";
 import API from "../utils/API";
 import "../App.css"
 
-export default function Session({ userData, setUserData, sessionData, setSessionData }) {
+export default function Session({ userData, setUserData, sessionData, setSessionData, isPlaying, setIsPlaying }) {
 
     const [loading, setLoading] = useState(true)
-    const [isPlaying, setIsPlaying] = useState(false)
 
     const { id } = useParams()
 
@@ -50,7 +49,7 @@ export default function Session({ userData, setUserData, sessionData, setSession
 
 
     return (
-        <>
+        <div className="pageContents">
             {!userData.isLoggedIn ? <Redirect to="/" /> : null}
             <Header userData={userData} setUserData={setUserData} />
 
@@ -59,15 +58,14 @@ export default function Session({ userData, setUserData, sessionData, setSession
                 ? <>
                     <Preloader />
                 </>
-
                 : <>
                     <AudioPlayer
+                        isPlaying={isPlaying}
                         setIsPlaying={setIsPlaying}
                         sessionData={sessionData}
                         userData={userData}
                     />
                 </>
-
             }
 
             <Button
@@ -80,6 +78,6 @@ export default function Session({ userData, setUserData, sessionData, setSession
             >Finish
             </Button>
 
-        </>
+        </div>
     )
 }

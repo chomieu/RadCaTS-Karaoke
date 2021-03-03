@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import KittyHeader from "./components/KittyHeader";
 import SearchPage from "./pages/SearchPage";
 import EditLyrics from "./pages/EditLyrics"
 import Session from "./pages/Session";
@@ -12,6 +13,7 @@ function App() {
 
   const [userData, setUserData] = useState({ isLoggedIn: false })
   const [sessionData, setSessionData] = useState([])
+  const [isPlaying, setIsPlaying] = useState(false)
 
   const authorizeUser = () => {
     const token = localStorage.getItem("token")
@@ -42,38 +44,48 @@ function App() {
       <Switch>
 
         <Route exact path="/">
-          <Landing
-            userData={userData}
-            setUserData={setUserData}
-            loginSuccess={loginSuccess}
-          />
+          <div>
+            <KittyHeader isPlaying={ isPlaying } />
+            <Landing 
+              userData={userData} 
+              setUserData={setUserData}
+              loginSuccess={loginSuccess}
+            />
+          </div>
+          {/* <Header userData={userData} setUserData={setUserData} /> */}
         </Route>
 
         <Route exact path="/search">
-          <SearchPage
-            userData={userData}
-            setUserData={setUserData}
+          {/* <Header userData={userData} setUserData={setUserData} /> */}
+          <KittyHeader isPlaying={ isPlaying } />
+          <SearchPage 
+            userData={userData} 
+            setUserData={setUserData} 
             loginSuccess={loginSuccess}
           />
         </Route>
 
         <Route exact path="/lyrics/:id">
-          <EditLyrics
-            userData={userData}
-            setUserData={setUserData}
+          <KittyHeader isPlaying={ isPlaying } />
+          <EditLyrics 
+            userData={userData} 
+            setUserData={setUserData} 
             sessionData={sessionData}
             loginSuccess={loginSuccess}
-            setSessionData={setSessionData}
+            setSessionData={setSessionData} 
           />
         </Route>
 
         <Route exact path="/api/session/:id">
-          <Session
-            userData={userData}
-            setUserData={setUserData}
-            sessionData={sessionData}
-            loginSuccess={loginSuccess}
+          <KittyHeader isPlaying={ isPlaying } />
+          <Session 
+            isPlaying={ isPlaying } 
+            setIsPlaying={ setIsPlaying } 
+            userData={userData} 
+            setUserData={setUserData} 
+            sessionData={sessionData} 
             setSessionData={setSessionData}
+            loginSuccess={loginSuccess}
           />
         </Route>
         <Route exact path="/liveSession/:id">

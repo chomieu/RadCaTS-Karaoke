@@ -1,0 +1,223 @@
+{
+    "asset": {
+        "copyright": "(C)2021",
+        "generator": "maya2glTF v1.2.1 03f669e0d38e",
+        "version": "2.0"
+    },
+    "scenes": [
+        {
+            "nodes": [
+                0
+            ]
+        }
+    ],
+    "scene": 0,
+    "nodes": [
+        {
+            "name": "KittyA_MSH",
+            "children": [
+                1
+            ],
+            "translation": [
+                0.0,
+                2.171713352203369,
+                0.1061851978302002
+            ]
+        },
+        {
+            "name": "KittyA_MSH:PIV",
+            "mesh": 0,
+            "translation": [
+                0.0,
+                -2.171713352203369,
+                -0.1061851978302002
+            ]
+        }
+    ],
+    "meshes": [
+        {
+            "name": "KittyA_MSHShape",
+            "extras": {
+                "targetNames": []
+            },
+            "primitives": [
+                {
+                    "attributes": {
+                        "NORMAL": 1,
+                        "POSITION": 2,
+                        "TANGENT": 3,
+                        "TEXCOORD_0": 4
+                    },
+                    "indices": 0,
+                    "mode": 4,
+                    "material": 0
+                }
+            ]
+        }
+    ],
+    "materials": [
+        {
+            "name": "blinn1",
+            "pbrMetallicRoughness": {
+                "baseColorFactor": [
+                    1.0,
+                    1.0,
+                    1.0,
+                    1.0
+                ],
+                "baseColorTexture": {
+                    "index": 0
+                },
+                "metallicFactor": 0.0,
+                "roughnessFactor": 1.0
+            }
+        }
+    ],
+    "textures": [
+        {
+            "sampler": 0,
+            "source": 0
+        }
+    ],
+    "images": [
+        {
+            "uri": "KittyA.png"
+        }
+    ],
+    "samplers": [
+        {
+            "magFilter": 9729,
+            "minFilter": 9987,
+            "wrapS": 10497,
+            "wrapT": 10497
+        }
+    ],
+    "accessors": [
+        {
+            "name": "KittyA_MSHShape#0/indices",
+            "bufferView": 0,
+            "byteOffset": 0,
+            "componentType": 5123,
+            "count": 3306,
+            "max": [
+                1374
+            ],
+            "min": [
+                0
+            ],
+            "type": "SCALAR"
+        },
+        {
+            "name": "KittyA_MSHShape#0/vertices/NORMAL",
+            "bufferView": 1,
+            "byteOffset": 0,
+            "componentType": 5126,
+            "count": 1375,
+            "max": [
+                0.9961813688278198,
+                0.9992192387580872,
+                0.9994617700576782
+            ],
+            "min": [
+                -0.9961813688278198,
+                -0.9996246695518494,
+                -0.999454379081726
+            ],
+            "type": "VEC3"
+        },
+        {
+            "name": "KittyA_MSHShape#0/vertices/POSITION",
+            "bufferView": 1,
+            "byteOffset": 16500,
+            "componentType": 5126,
+            "count": 1375,
+            "max": [
+                4.433491230010986,
+                6.445796012878418,
+                5.234131336212158
+            ],
+            "min": [
+                -4.433491230010986,
+                -2.1023690700531008,
+                -5.021760940551758
+            ],
+            "type": "VEC3"
+        },
+        {
+            "name": "KittyA_MSHShape#0/vertices/TANGENT",
+            "bufferView": 2,
+            "byteOffset": 0,
+            "componentType": 5126,
+            "count": 1375,
+            "max": [
+                0.9970208406448364,
+                0.9998274445533752,
+                0.9970895648002625,
+                1.0
+            ],
+            "min": [
+                -0.9970208406448364,
+                -0.9998274445533752,
+                -0.9990575909614564,
+                -1.0
+            ],
+            "type": "VEC4"
+        },
+        {
+            "name": "KittyA_MSHShape#0/vertices/TEXCOORD_0",
+            "bufferView": 3,
+            "byteOffset": 0,
+            "componentType": 5126,
+            "count": 1375,
+            "max": [
+                0.9885216355323792,
+                0.9899848103523254
+            ],
+            "min": [
+                0.013878080993890764,
+                0.011001527309417725
+            ],
+            "type": "VEC2"
+        }
+    ],
+    "bufferViews": [
+        {
+            "name": "KittyA/data/indices-2",
+            "buffer": 0,
+            "byteOffset": 66000,
+            "byteLength": 6612,
+            "target": 34963
+        },
+        {
+            "name": "KittyA/data/vertices-12",
+            "buffer": 0,
+            "byteOffset": 22000,
+            "byteLength": 33000,
+            "byteStride": 12,
+            "target": 34962
+        },
+        {
+            "name": "KittyA/data/vertices-16",
+            "buffer": 0,
+            "byteOffset": 0,
+            "byteLength": 22000,
+            "byteStride": 16,
+            "target": 34962
+        },
+        {
+            "name": "KittyA/data/vertices-8",
+            "buffer": 0,
+            "byteOffset": 55000,
+            "byteLength": 11000,
+            "byteStride": 8,
+            "target": 34962
+        }
+    ],
+    "buffers": [
+        {
+            "name": "KittyA/data",
+            "byteLength": 72612,
+            "uri": "KittyA0.bin"
+        }
+    ]
+}
