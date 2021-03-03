@@ -7,29 +7,16 @@ import "./style.css"
 function LyricsContainer({ curTime, playing, userInput, pts, setPts }) {
 
     // track the index location of the current lyrics object
-    const [lrcIdx, setLrcIdx] = useState({
-        idx: 1
-    })
+    const [lrcIdx, setLrcIdx] = useState({ idx: 1 })
     // // container for the previous lyric object to check for pts
-    const [lrcObj0, setLrcObj0] = useState({
-        time: 0,
-        lyrics: ''
-    })
+    const [lrcObj0, setLrcObj0] = useState({ time: 0, lyrics: '' })
     // container for the current index lyric object
-    const [lrcObj1, setLrcObj1] = useState({
-        time: 0,
-        lyrics: ''
-    })
+    const [lrcObj1, setLrcObj1] = useState({ time: 0, lyrics: '' })
     // container for the next index lyric object 
-    const [lrcObj2, setLrcObj2] = useState({
-        time: 0,
-        lyrics: ''
-    })
+    const [lrcObj2, setLrcObj2] = useState({ time: 0, lyrics: '' })
 
 
-    const [ptsIdx, setPtsIdx] = useState({
-        idx: 1
-    })
+    const [ptsIdx, setPtsIdx] = useState({ idx: 1 })
 
 
 
@@ -112,15 +99,11 @@ function LyricsContainer({ curTime, playing, userInput, pts, setPts }) {
     return (
         <div className="center-align">
 
-            <div className="row muted">
-                {playing ? <h6 className="underline">{track[0].artist} - {track[0].title}</h6> : '-'}
+            <div className="row">
+                <h4>{playing ? lrcObj1.lyrics : '-'}</h4>
             </div>
 
-            <div className="row">
-                <div className="divider"></div>
-                <h4>{playing ? lrcObj1.lyrics : '-'}</h4>
-                <div className="divider"></div>
-            </div>
+            <div className="divider"></div>
 
             <div className="row">
                 <h6 className="muted">{playing ? lrcObj2.lyrics : '-'}</h6>
