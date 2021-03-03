@@ -20,6 +20,7 @@ export default function Landing({ userData, setUserData }) {
         }
     }, [])
 
+
     const loginSuccess = (source, res) => {
         localStorage.setItem("token", res.data.token)
         console.log(source, res)
@@ -45,6 +46,7 @@ export default function Landing({ userData, setUserData }) {
                     </>
                     : null
             }
+
             {redirectPage}
         </div>
     )
