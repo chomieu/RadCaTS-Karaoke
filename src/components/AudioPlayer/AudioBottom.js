@@ -8,9 +8,10 @@ function AudioBottom({ pts, curTime, duration, playing, handlePause, handlePlay,
     return (
         <>
             <audio
+                controls
                 id="audio"
-                autostart="0"
-                src={sessionData.mixed}
+                // autostart="0"
+                src={sessionData.src}
             >
                 {/* <source src="https://tinyurl.com/ycnjfay4" /> */}
                 <p>Your browser does not support the <code>audio</code> element.</p>
@@ -44,3 +45,11 @@ function AudioBottom({ pts, curTime, duration, playing, handlePause, handlePlay,
 }
 
 export default AudioBottom;
+
+// const sessionObj = {
+//     hostId: data.data.host,
+//     sessionId: data.data._id,
+//     name: data.data.karaokeSong.name,
+//     artist: data.data.karaokeSong.artist,
+//     src: data.data.karaokeSong.mixed,
+// }

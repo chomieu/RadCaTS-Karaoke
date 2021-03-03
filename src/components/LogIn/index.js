@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { Modal, Button } from 'react-materialize';
+import { Redirect } from 'react-router-dom';
+
 import API from "../../utils/API"
 import "./style.css";
 
 
 
-function LogIn({ loginSuccess, redirect }) {
+function LogIn({ loginSuccess }) {
 
     const trigger = <Button>Sign In</Button>
     const [formInputs, setFormInputs] = useState({
@@ -76,7 +78,6 @@ function LogIn({ loginSuccess, redirect }) {
                     >Submit</Button>
                 }
             </form>
-            {redirect}
         </Modal >
     )
 }

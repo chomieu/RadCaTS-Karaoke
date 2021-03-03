@@ -7,7 +7,7 @@ import "../App.css"
 
 
 
-export default function EditLyrics({ sessionData, setSessionData }) {
+export default function EditLyrics({ userData, sessionData, setSessionData }) {
 
     const [message, setMessage] = useState(`loading . . .`)
     const [redirectPage, setRedirectPage] = useState()
@@ -33,6 +33,7 @@ export default function EditLyrics({ sessionData, setSessionData }) {
                     artist: data.data.karaokeSong.artist,
                     src: data.data.karaokeSong.mixed,
                 }
+
                 console.log(sessionObj)
                 setSessionData(sessionObj)
                 setMessage('lets add lyrics!')
@@ -53,7 +54,6 @@ export default function EditLyrics({ sessionData, setSessionData }) {
 
 
     const handleSkip = () => {
-        console.log('handleSkip', sessionData)
         setRedirectPage(<Redirect to={`/api/session/${sessionData.sessionId}`} />)
     }
     const handleBack = () => {
@@ -63,6 +63,8 @@ export default function EditLyrics({ sessionData, setSessionData }) {
 
     return (
         <div>
+            {!userData.isLoggedIn ? <Redirect to="/" /> : null}
+
             <br />
             <h2>Lyrics Editor Tool</h2>
             <br />

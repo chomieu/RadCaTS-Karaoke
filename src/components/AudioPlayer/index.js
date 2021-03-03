@@ -21,12 +21,14 @@ function AudioPlayer({ userData, setUserData, sessionData, isPlaying, setIsPlayi
             .format("mm:ss", { trim: false });
     }
 
-
-    const handlePlay = () => { setIsPlaying(true) }
-    const handlePause = () => { setIsPlaying(false) }
-
-
-
+    const handlePlay = () => { 
+        console.log( 'play' )
+        setIsPlaying(true) 
+    }
+    const handlePause = () => {
+        console.log( 'pause' );
+        setIsPlaying(false) 
+    }
 
     return (
         <div className="container">
