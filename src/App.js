@@ -7,7 +7,6 @@ import Landing from "./pages/Landing";
 import LiveSession from "./pages/LiveSession"
 import './App.css';
 
-
 function App() {
 
   const [userData, setUserData] = useState({ isLoggedIn: false })
