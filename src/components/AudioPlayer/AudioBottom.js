@@ -7,17 +7,6 @@ function AudioBottom({ pts, curTime, duration, playing, handlePause, handlePlay,
 
     return (
         <>
-            <audio
-                controls
-                id="audio"
-                // autostart="0"
-                src={sessionData.src}
-            >
-                {/* <source src="https://tinyurl.com/ycnjfay4" /> */}
-                <p>Your browser does not support the <code>audio</code> element.</p>
-            </audio>
-
-
             <div className="row player bottom">
                 <div className="col s4 m3 l2 left-align points__container">
                     <h1 className="points">{pts.pts}</h1>

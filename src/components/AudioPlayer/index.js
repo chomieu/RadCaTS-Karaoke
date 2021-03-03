@@ -11,7 +11,7 @@ import "./style.css"
 
 function AudioPlayer({ userData, setUserData, sessionData, isPlaying, setIsPlaying }) {
 
-    const { curTime, duration, playing, setPlaying, setClickedTime } = useAudioPlayer( isPlaying, setIsPlaying );
+    const { curTime, duration, setClickedTime } = useAudioPlayer( isPlaying, setIsPlaying );
     const [language, setLanguage] = useState('en-Us')
     const [pts, setPts] = useState({ pts: 0 })
 
@@ -37,13 +37,13 @@ function AudioPlayer({ userData, setUserData, sessionData, isPlaying, setIsPlayi
                 sessionData={sessionData}
             />
 
-            {/* <FileDrop playing={ playing } /> */}
+            {/* <FileDrop isPlaying={ isPlaying } /> */}
 
             <KaraokeBox
                 pts={pts}
                 setPts={setPts}
                 curTime={curTime}
-                playing={playing}
+                isPlaying={isPlaying}
                 language={language}
                 sessionData={sessionData}
             />
@@ -56,7 +56,7 @@ function AudioPlayer({ userData, setUserData, sessionData, isPlaying, setIsPlayi
                 handlePause={handlePause}
                 handlePlay={handlePlay}
                 duration={duration}
-                playing={playing}
+                isPlaying={isPlaying}
                 curTime={curTime}
                 pts={pts}
 
