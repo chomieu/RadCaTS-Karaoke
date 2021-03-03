@@ -13,11 +13,10 @@ import io from "socket.io-client"
 const socket = io.connect("http://localhost:3001")
 const audio = new Audio()
 
-export default function Session({ userData, setUserData, sessionData, setSessionData, isPlaying, setIsPlaying }) {
-
-    const [loading, setLoading] = useState(true)
+export default function Session({ userData, setUserData, isPlaying, setIsPlaying }) {
 
     const { id } = useParams()
+    const [sessionData, setSessionData] = useState()
 
     const handleFinish = () => {
         // setIsPlaying(false) 
@@ -41,22 +40,16 @@ export default function Session({ userData, setUserData, sessionData, setSession
                     mixed: data.data.karaokeSong.mixed,
                     sessionId: data.data._id,
                     songId: data.data.karaokeSong._id,
-                    lyrics: [`[ti:${data.data.karaokeSong.name}]`, `[ar:${data.data.karaokeSong.artist}]`]
+                    lyrics: data.data.karaokeLyrics.lyrics
                 })
-                return data;
-            }).then(data => {
-                API.getLyricsBySong(data.data.karaokeSong._id)
-                    .then(lrcFiles => {
-                        // setLyricsFile(lrcFiles.data)
-                    })
-                    .catch(err => {
-                        console.log(err)
-                    })
+                console.log("sessionAPIcall", data)
+                // data.data.karaokeSong.mixed;
             })
             .catch(err => {
-                console.log(err)
+                console.log('session response error', err)
             })
     }
+
     useEffect(() => {
         console.log('startSession', id)
         startSession();
@@ -81,7 +74,8 @@ export default function Session({ userData, setUserData, sessionData, setSession
 
     function handlePlaySound() {
         console.log("handleplaysound")
-        socket.emit("start", id, { path: sessionData.src })
+        console.log(sessionData.mixed)
+        socket.emit("start", id, { path: sessionData.mixed })
     }
 
     useEffect(() => {
@@ -93,7 +87,7 @@ export default function Session({ userData, setUserData, sessionData, setSession
             score,
             (users) => handleNewMembers(users)
         )
-    }, [userData.userInfo])
+    }, [userData])
 
     useEffect(() => {
         function recieveMsg(m) {
@@ -135,6 +129,7 @@ export default function Session({ userData, setUserData, sessionData, setSession
                 <>
                     <Header userData={userData} setUserData={setUserData} />
                     <Row>
+                        {console.log(start)}
                         <Col s={12} m={6}>
                             <AudioPlayer
                                 isPlaying={isPlaying}

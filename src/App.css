@@ -13,8 +13,9 @@ body {
 .pageContents {
   position: absolute;
   top: 0;
-  left: 0;
+  left: 50%;
   width: 100%;
+  transform: translate(-50%, 0%);
 }
 
 header {

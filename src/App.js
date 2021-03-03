@@ -10,16 +10,24 @@ import './App.css';
 
 function App() {
 
-  let status
-  const { token, id, username, profilePicture } = JSON.parse(localStorage.getItem("radcatsInfo"))
-  token ? status = true : status = false
+  let status, token, id, username, profilePicture
+  const userInfo = JSON.parse(localStorage.getItem("radcatsInfo"))
+  if (userInfo) {
+    status = true
+    token = userInfo.token
+    id = userInfo.id
+    username = userInfo.username
+    profilePicture = userInfo.profilePicture
+  } else {
+    status = false
+  }
 
   const [userData, setUserData] = useState({ isLoggedIn: status, token, id, username, profilePicture })
   const [sessionData, setSessionData] = useState([])
   const [isPlaying, setIsPlaying] = useState(false)
 
   const authorizeUser = () => {
-    if (token) {
+    if (userInfo) {
       API.checkWebToken(token)
         .then(res => { loginSuccess('checkWebToken', res) })
         .catch(err => { console.log("checkWebToken", err) })
