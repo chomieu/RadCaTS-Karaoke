@@ -15,7 +15,7 @@ function AudioTop({ sessionData }) {
                     <source src={sessionData.src} />
                     <p>Your browser does not support the <code>audio</code> element.</p>
                 </audio>
-                <SongInfo songName={sessionData.name} songArtist={sessionData.artist} />
+                <SongInfo songName={sessionData.songName} songArtist={sessionData.artist} />
             </div>
         </div>
 

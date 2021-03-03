@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Redirect } from "react-router-dom";
-import { Button } from 'react-materialize';
+import { Container, Button } from 'react-materialize';
 import Preloader from '../components/Preloader'
 import API from "../utils/API";
 import "../App.css"
@@ -15,42 +15,58 @@ export default function EditLyrics({ userData, sessionData, setSessionData }) {
     const [error, setError] = useState(false)
     const { id } = useParams();
 
+    const [audioSrc, setAudioSrc] = useState()
 
-    useEffect(() => {
-        console.log('startSession', id)
 
+
+    const startSession = () => {
         API.startSession(id)
-            // collect session data from the session id
-            // save to sessionData state
-            // change displayed message
-            // turn on Preloader
-            .then(data => {
+            .then((data) => {
+                setSessionData({
 
-                const sessionObj = {
+                    ...sessionData,
                     hostId: data.data.host,
-                    sessionId: data.data._id,
-                    name: data.data.karaokeSong.name,
+                    songName: data.data.karaokeSong.name,
                     artist: data.data.karaokeSong.artist,
-                    src: data.data.karaokeSong.mixed,
-                }
+                    mixed: data.data.karaokeSong.mixed,
+                    sessionId: data.data._id,
+                    songId: data.data.karaokeSong._id,
+                    lyrics: [`[ti:${data.data.karaokeSong.name}]`, `[ar:${data.data.karaokeSong.artist}]`],
+                    isActive: true
 
-                console.log(sessionObj)
-                setSessionData(sessionObj)
-                setMessage('lets add lyrics!')
+                })
+                setAudioSrc(data.data.karaokeSong.mixed);
                 setLoading(false)
+                return data;
+            }).then(data => {
+
+                console.log('Ready to call => API.getLyricsBySong(data.data.karaokeSong._id)')
+
+                // API.getLyricsBySong(data.data.karaokeSong._id)
+
+                //     .then(lrcFiles => {
+                //         // setLyricsFile(lrcFiles.data)
+                //     })
+                //     .catch(err => {
+                //         console.log(err)
+                //     })
 
             })
-            // change displayed message
-            // turn off Preloader
-            // turn on error (button display)
             .catch(err => {
                 console.log('session response error')
-                setMessage('were sorry, \nsomething went wrong  :\'(')
+                setMessage('we\'re sorry, \nsomething went wrong  :\'(')
                 setLoading(false)
                 setError(true)
                 console.log(err)
             })
+    }
+    useEffect(() => {
+        console.log('startSession', id)
+        startSession();
     }, [])
+
+
+
 
 
     const handleSkip = () => {
@@ -63,35 +79,23 @@ export default function EditLyrics({ userData, sessionData, setSessionData }) {
 
     return (
         <div className="pageContents">
+
             {!userData.isLoggedIn ? <Redirect to="/" /> : null}
-
-            <br />
-            <h2>Lyrics Editor Tool</h2>
-            <br />
-            <h4>{message}</h4>
-            <br />
-
-            {
-                loading
-
-                    ? <Preloader />
-
-                    : !error
-
-                        ? <Button
-                            onClick={handleSkip}
-                        >Skip Lyrics</Button>
-
-                        : null
-            }
-
-            <Button
-                onClick={handleBack}
-            > Back to Search</Button>
 
             { redirectPage}
 
+            {loading ? <Preloader /> : null}
+
+            {!loading && !error
+
+                ? <>
+                    <Button onClick={handleBack} > Back to Search</Button>
+                    <Button onClick={handleSkip}>Skip Lyrics</Button>
+                </>
+
+                : <Button onClick={handleBack} > Back to Search</Button>
+            }
+
         </div >
     )
-
 }

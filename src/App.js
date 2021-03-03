@@ -12,7 +12,7 @@ import './App.css';
 function App() {
 
   const [userData, setUserData] = useState({ isLoggedIn: false })
-  const [sessionData, setSessionData] = useState([])
+  const [sessionData, setSessionData] = useState({ isActive: false })
   const [isPlaying, setIsPlaying] = useState(false)
 
   const authorizeUser = () => {
@@ -45,9 +45,9 @@ function App() {
 
         <Route exact path="/">
           <div>
-            <KittyHeader isPlaying={ isPlaying } />
-            <Landing 
-              userData={userData} 
+            <KittyHeader isPlaying={isPlaying} />
+            <Landing
+              userData={userData}
               setUserData={setUserData}
               loginSuccess={loginSuccess}
             />
@@ -57,33 +57,33 @@ function App() {
 
         <Route exact path="/search">
           {/* <Header userData={userData} setUserData={setUserData} /> */}
-          <KittyHeader isPlaying={ isPlaying } />
-          <SearchPage 
-            userData={userData} 
-            setUserData={setUserData} 
+          <KittyHeader isPlaying={isPlaying} />
+          <SearchPage
+            userData={userData}
+            setUserData={setUserData}
             loginSuccess={loginSuccess}
           />
         </Route>
 
         <Route exact path="/lyrics/:id">
-          <KittyHeader isPlaying={ isPlaying } />
-          <EditLyrics 
-            userData={userData} 
-            setUserData={setUserData} 
+          <KittyHeader isPlaying={isPlaying} />
+          <EditLyrics
+            userData={userData}
+            setUserData={setUserData}
             sessionData={sessionData}
             loginSuccess={loginSuccess}
-            setSessionData={setSessionData} 
+            setSessionData={setSessionData}
           />
         </Route>
 
         <Route exact path="/api/session/:id">
-          <KittyHeader isPlaying={ isPlaying } />
-          <Session 
-            isPlaying={ isPlaying } 
-            setIsPlaying={ setIsPlaying } 
-            userData={userData} 
-            setUserData={setUserData} 
-            sessionData={sessionData} 
+          <KittyHeader isPlaying={isPlaying} />
+          <Session
+            isPlaying={isPlaying}
+            setIsPlaying={setIsPlaying}
+            userData={userData}
+            setUserData={setUserData}
+            sessionData={sessionData}
             setSessionData={setSessionData}
             loginSuccess={loginSuccess}
           />

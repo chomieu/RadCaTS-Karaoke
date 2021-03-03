@@ -3,80 +3,102 @@ import { useParams, Redirect } from "react-router-dom";
 import AudioPlayer from "../components/AudioPlayer"
 import Preloader from "../components/Preloader"
 import { Button } from "react-materialize"
-import Header from "../components/Header";
+import SessionHeader from "../components/SessionHeader";
 import API from "../utils/API";
 import "../App.css"
 
 export default function Session({ userData, setUserData, sessionData, setSessionData, isPlaying, setIsPlaying }) {
 
     const [loading, setLoading] = useState(true)
+    const [redirect, setRedirect] = useState()
+    const [error, setError] = useState(false)
+    const [message, setMessage] = useState()
+
 
     const { id } = useParams()
 
     const handleFinish = () => {
-        // setIsPlaying(false) 
+        setIsPlaying(false)
         console.log('finish')
     }
 
 
-    const handleBack = () => {
-        console.log('back')
-        // setIsPlaying(false) 
+    const handleBackToSearch = () => {
+        setIsPlaying(false)
+        setRedirect(<Redirect to="/search" />)
     }
 
-    useEffect(() => {
+    const startSession = () => {
         API.startSession(id)
-            .then(data => {
+            .then((data) => {
+                setSessionData({
 
-                const sessionObj = {
+                    ...sessionData,
                     hostId: data.data.host,
-                    sessionId: data.data._id,
-                    name: data.data.karaokeSong.name,
+                    songName: data.data.karaokeSong.name,
                     artist: data.data.karaokeSong.artist,
-                    src: data.data.karaokeSong.mixed,
-                }
-                console.log(sessionObj)
-                setSessionData(sessionObj)
+                    mixed: data.data.karaokeSong.mixed,
+                    sessionId: data.data._id,
+                    songId: data.data.karaokeSong._id,
+                    lyrics: [`[ti:${data.data.karaokeSong.name}]`, `[ar:${data.data.karaokeSong.artist}]`],
+                    isActive: true
 
-                setTimeout(() => { setLoading(false) }, 5000)
+                })
+                setLoading(false)
+                return data;
+            }).then(data => {
+
+                console.log('Ready to call => API.getLyricsBySong(data.data.karaokeSong._id)')
+
+                // API.getLyricsBySong(data.data.karaokeSong._id)
+
+                //     .then(lrcFiles => {
+                //         // setLyricsFile(lrcFiles.data)
+                //     })
+                //     .catch(err => {
+                //         console.log(err)
+                //     })
 
             })
             .catch(err => {
+                setMessage('we\'re sorry, \nsomething went wrong  :\'(')
                 setLoading(false)
-                console.log(err)
+                setError(true)
+                console.log('session response error', err)
             })
+    }
+    useEffect(() => {
+        console.log('startSession', id)
+        startSession();
     }, [])
 
-
     return (
+
         <div className="pageContents">
+
             {!userData.isLoggedIn ? <Redirect to="/" /> : null}
-            <Header userData={userData} setUserData={setUserData} />
 
-            {loading
+            <SessionHeader userData={userData} setUserData={setUserData} />
 
-                ? <>
-                    <Preloader />
-                </>
-                : <>
-                    <AudioPlayer
-                        isPlaying={isPlaying}
-                        setIsPlaying={setIsPlaying}
-                        sessionData={sessionData}
-                        userData={userData}
-                    />
-                </>
+            {loading ? <Preloader /> : null}
+
+            {!loading && !error
+                ? <AudioPlayer
+                    isPlaying={isPlaying}
+                    setIsPlaying={setIsPlaying}
+                    sessionData={sessionData}
+                    setSessionData={setSessionData}
+                    userData={userData}
+                />
+                : null
             }
-
-            <Button
-                onClick={handleBack}
-            >Back
-            </Button>
 
             <Button
                 onClick={handleFinish}
             >Finish
             </Button>
+
+            {redirect}
 
         </div>
     )

@@ -9,7 +9,7 @@ import moment from "moment";
 import "./style.css"
 
 
-function AudioPlayer({ userData, setUserData, sessionData, isPlaying, setIsPlaying }) {
+function AudioPlayer({ userData, setUserData, sessionData, setSessionData, isPlaying, setIsPlaying }) {
 
     const { curTime, duration, setClickedTime } = useAudioPlayer(isPlaying, setIsPlaying);
     const [language, setLanguage] = useState('en-Us')
@@ -23,12 +23,13 @@ function AudioPlayer({ userData, setUserData, sessionData, isPlaying, setIsPlayi
 
     const handlePlay = () => {
         console.log('play')
+        setSessionData({ ...sessionData, isActive: true })
         setIsPlaying(true)
     }
-    const handlePause = () => {
-        console.log('pause');
-        setIsPlaying(false)
-    }
+    // const handlePause = () => {
+    //     console.log('pause');
+    //     setIsPlaying(false)
+    // }
 
     return (
         <div className="container">
@@ -53,7 +54,6 @@ function AudioPlayer({ userData, setUserData, sessionData, isPlaying, setIsPlayi
 
                 formatDuration={formatDuration}
                 sessionData={sessionData}
-                handlePause={handlePause}
                 handlePlay={handlePlay}
                 duration={duration}
                 isPlaying={isPlaying}
