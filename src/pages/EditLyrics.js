@@ -54,7 +54,7 @@ export default function EditLyrics({ userData, sessionData, setSessionData }) {
 
 
     const handleSkip = () => {
-        setRedirectPage(<Redirect to={`/api/session/${sessionData.sessionId}`} />)
+        setRedirectPage(<Redirect to={`/api/session/${id}`} />)
     }
     const handleBack = () => {
         console.log('handleBack', sessionData)

@@ -31,7 +31,7 @@ function KittyHeader( { isPlaying } ) {
         colorManagement
         shadowMap
         // camera={{ position: [0, 2, 16], fov: 40 }}>
-        camera={{ position: [0, 2, 40], fov: 40 }}>
+        camera={{ position: [0, 2, 20], fov: 40 }}>
         <ambientLight intensity={0.7} />
         <ManageLights isPlaying={isPlaying} />
         {/* <OrbitControls /> */}
