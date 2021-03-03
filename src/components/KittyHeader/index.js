@@ -21,8 +21,7 @@ function SkyBox() {
     return null;
 }
 
-function KittyHeader() {
-  const [ isPlaying, setIsPlaying ] = useState( false );
+function KittyHeader( { isPlaying } ) {
 
   return (
     <>

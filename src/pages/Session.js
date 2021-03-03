@@ -7,11 +7,10 @@ import Header from "../components/Header";
 import API from "../utils/API";
 import "../App.css"
 
-export default function Session({ userData, setUserData, sessionData, setSessionData }) {
+export default function Session({ userData, setUserData, sessionData, setSessionData, isPlaying, setIsPlaying }) {
 
 
     const [loading, setLoading] = useState(true)
-    const [isPlaying, setIsPlaying] = useState(false)
 
     const { id } = useParams()
 
@@ -68,6 +67,7 @@ export default function Session({ userData, setUserData, sessionData, setSession
                             <Header userData={userData} setUserData={setUserData} />
 
                             <AudioPlayer
+                                isPlaying={isPlaying}
                                 setIsPlaying={setIsPlaying}
                                 sessionData={sessionData}
                                 userData={userData}

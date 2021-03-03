@@ -1,10 +1,9 @@
 // source: https://codesandbox.io/s/5wwj02qy7k?file=/src/useAudioPlayer.js:0-1246
 import { useState, useEffect } from "react";
 
-function useAudioPlayer() {
+function useAudioPlayer( isPlaying, setIsPlaying ) {
     const [duration, setDuration] = useState();
     const [curTime, setCurTime] = useState();
-    const [playing, setPlaying] = useState(false);
     const [clickedTime, setClickedTime] = useState();
 
     useEffect(() => {
@@ -24,7 +23,7 @@ function useAudioPlayer() {
         audio.addEventListener("timeupdate", setAudioTime);
 
         // React state listeners: update DOM on React state changes
-        playing ? audio.play() : audio.pause();
+        isPlaying ? audio.play() : audio.pause();
 
         if (clickedTime && clickedTime !== curTime) {
             audio.currentTime = clickedTime;
@@ -41,8 +40,8 @@ function useAudioPlayer() {
     return {
         curTime,
         duration,
-        playing,
-        setPlaying,
+        isPlaying,
+        setIsPlaying,
         setClickedTime
     }
 }
