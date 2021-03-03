@@ -5,16 +5,14 @@ import Header from "../components/Header";
 import "../App.css"
 
 export default function SearchPage({ userData, setUserData }) {
+
     return (
         <>
-            {
-                userData.isLoggedIn ?
-                    <>
-                        <Header userData={userData} setUserData={setUserData} />
-                        <Search userData={userData} />
-                    </>
-                    : <Redirect to="/" />
-            }
+            {!userData.isLoggedIn ? <Redirect to="/" /> : null}
+
+            <Header userData={userData} setUserData={setUserData} />
+
+            <Search userData={userData} />
         </>
     )
 }

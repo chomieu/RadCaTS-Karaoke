@@ -5,15 +5,12 @@ const trigger = <Button>logout</Button>;
 
 export default function logout({ userData, setUserData }) {
 
+
+    // remove token from local storage
+    // reset userData
     const logoutUser = () => {
-        console.error('Logged out')
         localStorage.removeItem("token");
-        setUserData({
-            isLoggedIn: false,
-            email: '',
-            token: '',
-            id: ''
-        })
+        setUserData({ isLoggedIn: false, email: '', token: '', id: '' })
     }
 
     return (
