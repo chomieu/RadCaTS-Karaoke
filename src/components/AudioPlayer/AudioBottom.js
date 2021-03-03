@@ -3,22 +3,11 @@ import React from "react";
 import Play from "./Play";
 import Pause from "./Pause";
 
-function AudioBottom({ pts, curTime, duration, playing, handlePause, handlePlay, formatDuration, sessionData }) {
+function AudioBottom({ pts, curTime, duration, playing, handlePause, handlePlay, formatDuration, sessionData, handlePlaySound, setStart }) {
 
     return (
         <>
-            <audio
-                controls
-                id="audio"
-                // autostart="0"
-                src={sessionData.src}
-            >
-                {/* <source src="https://tinyurl.com/ycnjfay4" /> */}
-                <p>Your browser does not support the <code>audio</code> element.</p>
-            </audio>
-
-
-            <div className="row player bottom">
+              <div className="row player bottom">
                 <div className="col s4 m3 l2 left-align points__container">
                     <h1 className="points">{pts.pts}</h1>
                     <div className="divider"></div>
@@ -32,7 +21,11 @@ function AudioBottom({ pts, curTime, duration, playing, handlePause, handlePlay,
                     <div className="right-align">
                         {playing
                             ? <Pause handleClick={handlePause} />
-                            : <Play handleClick={handlePlay} />
+                            : <Play 
+                                handleClick={handlePlay} 
+                                handlePlaySound={handlePlaySound}
+                                setStart={setStart}
+                            />
                         }
                     </div>
                 </div>

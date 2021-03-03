@@ -11,7 +11,7 @@ export default function logout({ userData, setUserData }) {
     // reset userData
     const logoutUser = () => {
         localStorage.removeItem("token");
-        setUserData({ isLoggedIn: false, email: '', token: '', id: '' })
+        setUserData({ isLoggedIn: false, username: '', token: '', id: '', profilePicture: '' })
     }
 
     return (
