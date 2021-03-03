@@ -35,7 +35,8 @@ export default function Landing({ userData, setUserData }) {
         setRedirectPage(<Redirect to="/search" />)
     }
     return (
-        <div>
+        <div className="pageContents">
+            <h1 className="white-text mt-5">Radcats karaoke</h1>
             <Header userData={userData} setUserData={setUserData} />
             {
                 !userData.isLoggedIn

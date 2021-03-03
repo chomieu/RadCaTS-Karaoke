@@ -2,7 +2,7 @@ import React from 'react'
 import { Modal, Button } from 'react-materialize';
 import "./style.css";
 
-const trigger = <Button className="logout_button">logout</Button>;
+const trigger = <Button className="logout_button"><i class="material-icons">exit_to_app</i></Button>;
 
 export default function logout({ userData, setUserData }) {
 
@@ -26,7 +26,7 @@ export default function logout({ userData, setUserData }) {
             <Button
                 modal="close"
                 onClick={logoutUser}
-            >Logout</Button>
+            >logout</Button>
 
         </Modal >
 

@@ -16,20 +16,25 @@ function App() {
 
   return (
     <Router>
-      <KittyHeader />
       <Switch>
         <Route exact path="/">
+          <div>
+            <KittyHeader />
+            <Landing userData={userData} setUserData={setUserData} />
+          </div>
           {/* <Header userData={userData} setUserData={setUserData} /> */}
-          <Landing userData={userData} setUserData={setUserData} />
         </Route>
         <Route exact path="/search">
           {/* <Header userData={userData} setUserData={setUserData} /> */}
+          <KittyHeader />
           <SearchPage userData={userData} setUserData={setUserData} />
         </Route>
         <Route exact path="/lyrics/:id">
+          <KittyHeader />
           <EditLyrics userData={userData} setUserData={setUserData} sessionData={sessionData} setSessionData={setSessionData} />
         </Route>
         <Route exact path="/api/session/:id">
+          <KittyHeader />
           <Session userData={userData} setUserData={setUserData} sessionData={sessionData} setSessionData={setSessionData} />
         </Route>
       </Switch>
