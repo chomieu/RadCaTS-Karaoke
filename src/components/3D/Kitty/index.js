@@ -15,7 +15,6 @@ function Kitty( props ) {
 
             const timeInterval = setInterval(() => {
                 setTime( Math.sin( Date.now()/100 )  );
-                console.log( time );
             }, 40 )
     
             return () => {
