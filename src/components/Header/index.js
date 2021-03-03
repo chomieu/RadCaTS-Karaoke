@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Container, Row, Col, TextInput, Button, Icon } from 'react-materialize';
 import UserChip from '../UserChip';
 import Logout from "../Logout";
@@ -8,20 +8,17 @@ function Header({ userData, setUserData }) {
   return (
     <>
       { userData.isLoggedIn
-        ? <Row className="mb0">
-          <UserChip userData={userData} />
-          <Logout userData={userData} setUserData={setUserData} />
+        ? <Row>
+          <Col s={1}>
+            <h6>Radcats Karaoke</h6>
+          </Col>
+          <Col className="right">
+            <Logout userData={userData} setUserData={setUserData} />
+            <UserChip userData={userData} />
+          </Col>
         </Row>
         : null
       }
-      <Row>
-
-        <header>
-
-          <h1>Radcats  Karaoke</h1>
-        </header>
-
-      </Row>
     </>
   );
 }

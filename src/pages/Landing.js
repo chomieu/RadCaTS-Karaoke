@@ -9,9 +9,9 @@ import "../App.css"
 export default function Landing({ loginSuccess, userData, setUserData }) {
 
     return (
-        <div>
+        <div className="pageContents">
             {userData.isLoggedIn ? <Redirect to="/search" /> : null}
-
+            <h1 className="white-text mt-5">Radcats karaoke</h1>
             <Header userData={userData} setUserData={setUserData} />
 
             <SignUp loginSuccess={loginSuccess} />

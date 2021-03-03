@@ -7,12 +7,15 @@ import "../App.css"
 export default function SearchPage({ userData, setUserData }) {
 
     return (
-        <>
-            {!userData.isLoggedIn ? <Redirect to="/" /> : null}
-
-            <Header userData={userData} setUserData={setUserData} />
-
-            <Search userData={userData} />
-        </>
+        <div className="pageContents">
+            {
+                userData.isLoggedIn ?
+                    <>
+                        <Header userData={userData} setUserData={setUserData} />
+                        <Search userData={userData} />
+                    </>
+                    : <Redirect to="/" />
+            }
+        </div>
     )
 }
