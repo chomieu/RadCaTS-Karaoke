@@ -3,12 +3,12 @@
 ## Table of Contents
 1. [Description](#description)
 2. [Authors](#authors)
-3. [Installation](#installation)
-4. [Usage](#usage)
-5. [Contributing](#contributing)
-5. [Tests](#tests)
-6. [Questions](#questions)
-7. [License](#license)
+3. [Technologies](#technologies)
+4. [Installation](#installation)
+5. [Usage](#usage)
+6. [Contributing](#contributing)
+7. [Tests](#tests)
+8. [License](#license)
 ## Description
 A full-featured social karaoke app that dynamically loads content using the YouTube Music API, allows for custom lyric file generation, provides a hub for group sessions, and incorporates 3D elements. Built for the University of Washington's Winter 2020/21 Coding Bootcamp.
 
@@ -26,6 +26,18 @@ A full-featured social karaoke app that dynamically loads content using the YouT
 ![javascript](https://img.shields.io/badge/javascript-83.7%25-yellow)
 ![css](https://img.shields.io/badge/css-11.3%25-purple)
 ![html](https://img.shields.io/badge/html-5.0%25-orange)
+
+### Notable Dependencies
+- Axios: For querying the API backend.
+- Express: Runs the group session server.
+- jDataView: Simplifies binary file reading for audio signal processing.
+- Materialize: Front-end CSS framework.
+- Moment: For date and time objects.
+- React: Front-end framework/library
+- React Speech Recognition: Speech recognition API for scoring singer accuracy.
+- React Three Fiber: A rendering library to simplify React integration with 3D elements built with Three.js.
+- RXJS: Provides async functionality for the useMousePosition utility.
+- Three: NPM package for Three.js, a 3D graphics library for WebGL.
 
 ## Installation
 Clone from git into your chosen directory and install dependencies with npm i. Frontend and backend are located in separate repositories and should be installed on separate servers. The backend requires a local MongoDB installation. Both can be run with npm start.
