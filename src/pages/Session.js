@@ -41,17 +41,8 @@ export default function Session({ userData, setUserData, sessionData, setSession
                     mixed: data.data.karaokeSong.mixed,
                     sessionId: data.data._id,
                     songId: data.data.karaokeSong._id,
-                    lyrics: [`[ti:${data.data.karaokeSong.name}]`, `[ar:${data.data.karaokeSong.artist}]`]
                 })
                 return data;
-            }).then(data => {
-                API.getLyricsBySong(data.data.karaokeSong._id)
-                    .then(lrcFiles => {
-                        // setLyricsFile(lrcFiles.data)
-                    })
-                    .catch(err => {
-                        console.log(err)
-                    })
             })
             .catch(err => {
                 console.log(err)
@@ -120,7 +111,8 @@ export default function Session({ userData, setUserData, sessionData, setSession
                 <Redirect to="/" />
                 :
                 <>
-                    <Header userData={userData} setUserData={setUserData} />
+                    {console.log(sessionData)}
+                    < Header userData={userData} setUserData={setUserData} />
                     <Row>
                         <Col s={12} m={6}>
                             <AudioPlayer

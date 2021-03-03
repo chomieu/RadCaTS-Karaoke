@@ -138,7 +138,7 @@ export default function EditLyrics({ userData, sessionData, setSessionData }) {
                     .then(data => {
                         console.log("update lyrics", data)
                         console.log("lyrcis updated")
-                        applyLyrics(data.data.lyrics._id)
+                        applyLyrics(data.data._id)
                     })
                     .catch(err => {
                         console.log("lyrics update err:", err)
@@ -148,7 +148,7 @@ export default function EditLyrics({ userData, sessionData, setSessionData }) {
                     .then(data => {
                         console.log("upload lyrics", data)
                         console.log("lyrcis uploaded")
-                        applyLyrics(data.data.lyrics._id)
+                        applyLyrics(data.data._id)
                     })
                     .catch(err => {
                         console.log("lyrics upload err:", err)
@@ -162,10 +162,16 @@ export default function EditLyrics({ userData, sessionData, setSessionData }) {
             sessionId: sessionData.sessionId,
             lyricsId: lyricsId
         }
+        console.log("apply lyrics:", data)
         API.addLyricsToSession(data)
             .then(() => {
                 console.log("add lyrics to session")
-                setRedirectPage(<Redirect to={`/api/session/${sessionData.sessionId}`} />)
+                API.getLyricsById(lyricsId)
+                    .then(lyricsJSON => {
+                        const newLyrics = sessionData.lyrics.concat(lyricsJSON.data[0].lyrics.lines)
+                        setSessionData({ ...sessionData, lyrics: newLyrics })
+                        setRedirectPage(<Redirect to={`/api/session/${sessionData.sessionId}`} />)
+                    })
             })
             .catch(err => {
                 console.log(err)

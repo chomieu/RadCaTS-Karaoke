@@ -38,6 +38,9 @@ const API = {
     getLyricsBySong: songId => {
         return axios.get(`${URL_PREFIX}/api/lyrics/${songId}`)
     },
+    getLyricsById: id => {
+        return axios.get(`${URL_PREFIX}/api/lyric/${id}`)
+    },
     uploadLyrics: lyrics => {
         return axios.post(`${URL_PREFIX}/api/lyrics`, lyrics)
     },
