@@ -46,7 +46,11 @@ function App() {
         <Route exact path="/">
           <div>
             <KittyHeader isPlaying={ isPlaying } />
-            <Landing userData={userData} setUserData={setUserData} />
+            <Landing 
+              userData={userData} 
+              setUserData={setUserData}
+              loginSuccess={loginSuccess}
+            />
           </div>
           {/* <Header userData={userData} setUserData={setUserData} /> */}
         </Route>
