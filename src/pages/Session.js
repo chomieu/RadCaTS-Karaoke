@@ -54,12 +54,12 @@ export default function Session({ userData, setUserData, sessionData, setSession
     }, [])
 
     // Live Session - Starts
-    const [memberInfo, setMemberInfo] = useState({
-        userId: userData.id || "1",
-        username: userData.username || "Chomie",
-        score: 0,
-        avatar: userData.profilePicture || "tbd" // placeholder for actual avatar
-    })
+    let hostInfo, memberInfo
+    userData.id === sessionData.host ?
+        hostInfo = userData : memberInfo = userData
+
+    const [member, setMember] = useState(hostInfo)
+
     const [allMembers, setAllMembers] = useState([])
     const [start, setStart] = useState(false)
     const [countdown, setCountdown] = useState()
@@ -68,9 +68,22 @@ export default function Session({ userData, setUserData, sessionData, setSession
         setAllMembers(users)
     }
 
+    // useEffect(() => {
+    //     setMemberInfo({
+    //         userId: userData.id,
+    //         username: userData.username,
+    //         score: 0,
+    //         avatar: userData.profilePicture // placeholder for actual avatar
+    //     })
+    //     return () => {
+    //         setMemberInfo({})
+    //     }
+    // }, [])
+
     useEffect(() => {
-        socket.emit("joinSession", id, memberInfo.userId, (users) => handleNewMembers(users))
-    }, [])
+        allMembers.filter(a => a.userId === memberInfo.id).length > 0 ? console.log("Member exists")
+            : socket.emit("joinSession", id, memberInfo.id, (users) => handleNewMembers(users))
+    }, [member, memberInfo])
 
     useEffect(() => {
         function recieveMsg(m) {
@@ -130,6 +143,8 @@ export default function Session({ userData, setUserData, sessionData, setSession
                         </Col>
                         <Col s={12} m={6}>
                             Leaderboard
+                            {console.log("all", allMembers)}
+                            {console.log("userData", userData)}
                         </Col>
                     </Row>
 
