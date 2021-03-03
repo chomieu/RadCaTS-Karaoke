@@ -1,4 +1,4 @@
-.logout_button {
+button.btn.logout_button {
     float: right;
     margin: 4px 0px 3px 0px;
     height: 32px;
