@@ -49,7 +49,7 @@ export default function Session({ userData, setUserData, sessionData, setSession
 
 
     return (
-        <>
+        <div className="pageContents">
             {!userData.isLoggedIn ? <Redirect to="/" /> : null}
             <Header userData={userData} setUserData={setUserData} />
 
@@ -78,6 +78,6 @@ export default function Session({ userData, setUserData, sessionData, setSession
             >Finish
             </Button>
 
-        </>
+        </div>
     )
 }

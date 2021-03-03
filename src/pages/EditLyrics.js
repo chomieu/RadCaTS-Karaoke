@@ -62,7 +62,7 @@ export default function EditLyrics({ userData, sessionData, setSessionData }) {
     }
 
     return (
-        <div>
+        <div className="pageContents">
             {!userData.isLoggedIn ? <Redirect to="/" /> : null}
 
             <br />
