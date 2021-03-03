@@ -1,7 +1,8 @@
 import React from 'react'
 import { Modal, Button } from 'react-materialize';
+import "./style.css";
 
-const trigger = <Button>logout</Button>;
+const trigger = <Button className="logout_button">logout</Button>;
 
 export default function logout({ userData, setUserData }) {
 

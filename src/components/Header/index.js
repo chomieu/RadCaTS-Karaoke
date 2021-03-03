@@ -9,8 +9,8 @@ function Header({ userData, setUserData }) {
     <>
       { userData.isLoggedIn
         ? <Row className="mb0">
-          <UserChip userData={userData} />
           <Logout userData={userData} setUserData={setUserData} />
+          <UserChip userData={userData} />
         </Row>
         : null
       }
