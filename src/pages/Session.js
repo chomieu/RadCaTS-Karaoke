@@ -7,12 +7,12 @@ import Header from "../components/Header";
 import API from "../utils/API";
 import "../App.css"
 
+
 // Live Session Dependencies
 import io from "socket.io-client"
-
 // Live Session Global Constants 
-// const socket = io.connect("http://localhost:3001")
-const socket = io.connect("http://radcats-karaoke-server.herokuapp.com")
+const socket = io.connect("http://localhost:3001")
+// const socket = io.connect("http://radcats-karaoke-server.herokuapp.com")
 const audio = new Audio()
 
 export default function Session({ userData, setUserData, sessionData, setSessionData, isPlaying, setIsPlaying }) {
@@ -20,9 +20,12 @@ export default function Session({ userData, setUserData, sessionData, setSession
     const [lyrics, setLyrics] = useState({ isLoaded: false })
     const { id } = useParams()
 
-    const handleFinish = () => {
-        setIsPlaying(false);
-        console.log('finish') // send PUT request to /api/session/:id
+    const handleFinish = (pts) => {
+        setIsPlaying(false)
+        const scoreData = { token: JSON.parse(localStorage.getItem('radcatsInfo')).token, score: pts }
+        API.finishSession(scoreData)
+            .then(data => { console.log(data) })
+            .catch(err => { console.log(err) })
     }
 
     const startSession = () => {
@@ -139,16 +142,16 @@ export default function Session({ userData, setUserData, sessionData, setSession
                         {console.log(start)}
                         <Col s={12} m={6}>
                             <AudioPlayer
-                                isPlaying={isPlaying}
-                                setIsPlaying={setIsPlaying}
-                                sessionData={sessionData}
-                                userData={userData}
-                                handlePlaySound={handlePlaySound}
-                                setStart={setStart}
-                                lyrics={lyrics}
-                                audio={audio}
                                 pts={pts}
+                                audio={audio}
+                                lyrics={lyrics}
                                 setPts={setPts}
+                                userData={userData}
+                                setStart={setStart}
+                                isPlaying={isPlaying}
+                                sessionData={sessionData}
+                                setIsPlaying={setIsPlaying}
+                                handlePlaySound={handlePlaySound}
                             />
                             <div className={countdown === "hide" ? "counter-layer hidden" : "counter-layer"}>
                                 {countdown}
@@ -157,7 +160,7 @@ export default function Session({ userData, setUserData, sessionData, setSession
                         </Col>
                         <Col s={12} m={6}>
                             <h4>Leaderboard</h4>
-                            {console.log( "session", sessionData, "leaderboard", leaderboard )}
+                            {console.log("session", sessionData, "leaderboard", leaderboard)}
                             <div>
                                 {leaderboard}
                             </div>
