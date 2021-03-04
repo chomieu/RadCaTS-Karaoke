@@ -4,7 +4,7 @@ import LyricsContainer from "../LyricsContainer/"
 import "./style.css"
 
 
-function KaraokeBox({ curTime, isPlaying, pts, setPts, language, sessionData, lyrics }) {
+function KaraokeBox({ curTime, isPlaying, pts, setPts, language, sessionData, lyrics, duration, formatDuration, handleStop }) {
 
     // store user mic inputs here with timestamp
     // Note: time is at time of printing, not time of recording start
@@ -67,9 +67,12 @@ function KaraokeBox({ curTime, isPlaying, pts, setPts, language, sessionData, ly
                         setPts={setPts}
                         lyrics={lyrics}
                         curTime={curTime}
+                        duration={duration}
                         isPlaying={isPlaying}
                         userInput={userInput}
+                        handleStop={handleStop}
                         sessionData={sessionData}
+                        formatDuration={formatDuration}
                     />
 
 

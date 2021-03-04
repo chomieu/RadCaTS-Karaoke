@@ -7,28 +7,35 @@ import Header from "../components/Header";
 import API from "../utils/API";
 import "../App.css"
 
+
 // Live Session Dependencies
 import io from "socket.io-client"
-
 // Live Session Global Constants 
-// const socket = io.connect("http://localhost:3001")
-const socket = io.connect("http://radcats-karaoke-server.herokuapp.com")
+const socket = io.connect("http://localhost:3001")
+// const socket = io.connect("http://radcats-karaoke-server.herokuapp.com")
 const audio = new Audio()
 
 export default function Session({ userData, setUserData, sessionData, setSessionData, isPlaying, setIsPlaying }) {
 
     const [lyrics, setLyrics] = useState({ isLoaded: false })
+    const [pts, setPts] = useState({ pts: 0 })
     const { id } = useParams()
 
     const handleFinish = () => {
-        setIsPlaying(false);
-        console.log('finish') // send PUT request to /api/session/:id
+        setIsPlaying(false)
+        const localData = localStorage.getItem('radcatsInfo')
+        const userObj = JSON.parse(localData)
+        console.log(userObj)
+        const scoreData = { token: userObj.token, score: pts }
+        console.log(scoreData)
+        API.finishSession(id, scoreData)
+            .then(data => { console.log(data) })
+            .catch(err => { console.log(err) })
     }
 
     const startSession = () => {
         API.startSession(id)
             .then((data) => {
-                // console.log("sessionAPIcall", data)
                 setSessionData({
                     ...sessionData,
                     hostId: data.data.host,
@@ -51,7 +58,6 @@ export default function Session({ userData, setUserData, sessionData, setSession
     }
 
     useEffect(() => {
-        // console.log('startSession', id)
         startSession();
     }, [])
 
@@ -61,7 +67,6 @@ export default function Session({ userData, setUserData, sessionData, setSession
     const [start, setStart] = useState(false)
     const [countdown, setCountdown] = useState()
     const [leaderboard, setLeaderboard] = useState()
-    const [pts, setPts] = useState({ pts: 0 })
 
     function handlePts(users) {
         users = users.sort((a, b) => (a.pts < b.pts) ? 1 : -1)
@@ -138,16 +143,19 @@ export default function Session({ userData, setUserData, sessionData, setSession
                 <Redirect to="/" />
                 :
                 <>
-                    {console.log(sessionData)}
                     < Header userData={userData} setUserData={setUserData} setIsPlaying={setIsPlaying} />
                     <Row style={{ marginTop: "5%" }}>
-                        {console.log(start)}
                         <Col s={12} m={6}>
                             <AudioPlayer
-                                isPlaying={isPlaying}
-                                setIsPlaying={setIsPlaying}
-                                sessionData={sessionData}
+                                pts={pts}
+                                audio={audio}
+                                lyrics={lyrics}
+                                setPts={setPts}
                                 userData={userData}
+                                setStart={setStart}
+                                isPlaying={isPlaying}
+                                sessionData={sessionData}
+                                setIsPlaying={setIsPlaying}
                                 handlePlaySound={handlePlaySound}
                                 setStart={setStart}
                                 lyrics={lyrics}

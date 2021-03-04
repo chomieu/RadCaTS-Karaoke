@@ -4,6 +4,7 @@ import momentDurationFormatSetup from "moment-duration-format";
 import useAudioPlayer from "./useAudioPlayer";
 import AudioBottom from "./AudioBottom";
 import KaraokeBox from "../KaraokeBox";
+import Bar from "./Bar"
 import AudioTop from "./AudioTop";
 import moment from "moment";
 import "./style.css"
@@ -20,15 +21,17 @@ function AudioPlayer({ sessionData, isPlaying, setIsPlaying, handlePlaySound, se
             .format("mm:ss", { trim: false });
     }
 
-    useEffect(() => {
-
-        console.log(pts.pts)
-
-    }, [])
-
     const handlePlay = () => {
-        console.log('play')
+
+        console.log('isPlaying', true)
         setIsPlaying(true)
+    }
+
+    const handleStop = () => {
+
+        console.log('isPlaying', false)
+        setIsPlaying(false)
+
     }
 
     return (
@@ -38,25 +41,28 @@ function AudioPlayer({ sessionData, isPlaying, setIsPlaying, handlePlaySound, se
                 sessionData={sessionData}
             />
 
-            {/* <FileDrop isPlaying={ isPlaying } /> */}
-
             <KaraokeBox
                 pts={pts}
                 lyrics={lyrics}
                 setPts={setPts}
                 curTime={curTime}
-                isPlaying={isPlaying}
+                duration={duration}
                 language={language}
+                isPlaying={isPlaying}
+                handleStop={handleStop}
                 sessionData={sessionData}
+                formatDuration={formatDuration}
             />
 
             {/* <Bar curTime={curTime} duration={duration} onTimeUpdate={(time) => setClickedTime(time)} /> */}
+            {/* <span className="bar__time">{formatDuration(curTime)} / {formatDuration(duration)}</span> */}
+
             <AudioBottom
-                formatDuration={formatDuration}
+                handlePlaySound={handlePlaySound}
                 sessionData={sessionData}
                 handlePlay={handlePlay}
-                duration={duration}
                 isPlaying={isPlaying}
+                setStart={setStart}
                 curTime={curTime}
                 pts={pts}
                 handlePlaySound={handlePlaySound}

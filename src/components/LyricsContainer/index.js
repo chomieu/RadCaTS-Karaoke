@@ -4,7 +4,7 @@ import "./style.css"
 
 
 
-function LyricsContainer({ curTime, isPlaying, lyrics, pts, setPts, userInput }) {
+function LyricsContainer({ curTime, isPlaying, lyrics, pts, setPts, userInput, duration, formatDuration, handleStop }) {
 
     // track the index location of the current lyrics object
     const [lrcIdx, setLrcIdx] = useState(0)
@@ -12,8 +12,6 @@ function LyricsContainer({ curTime, isPlaying, lyrics, pts, setPts, userInput })
     const [lrcObj0, setLrcObj0] = useState({ time: 0, text: '' })
     // container for the current index lyric object
     const [lrcObj1, setLrcObj1] = useState({ time: 0, text: '' })
-    // container for the next index lyric object 
-    const [lrcObj2, setLrcObj2] = useState({ time: 0, text: '' })
 
     const [displayLyrics, setDisplayLyrics] = useState([])
 
@@ -27,7 +25,9 @@ function LyricsContainer({ curTime, isPlaying, lyrics, pts, setPts, userInput })
 
     useEffect(() => {
 
-        if (lyrics.isLoaded && curTime && displayLyrics) {
+        if (Math.floor(curTime) === Math.floor(duration)) { handleStop() }
+
+        if (lyrics.isLoaded && curTime) {
 
             // if session is active and curTime is 0, start the first set of lyrics
             if (curTime === 0) {
@@ -37,14 +37,11 @@ function LyricsContainer({ curTime, isPlaying, lyrics, pts, setPts, userInput })
 
                 // if session is active & curTime matches the time of the next object, access the nested conditional.
             } else if (Math.floor(curTime) === Math.floor(lrcObj1.time)) {
-                console.log('match')
-
 
                 setLrcObj0(displayLyrics[lrcIdx])
                 setLrcObj1(displayLyrics[lrcIdx + 1])
                 setLrcIdx(lrcIdx + 1)
-                // setLrcObj2(displayLyrics[lrcIdx + 3])
-                // }
+
             }
 
             if (lrcIdx === displayLyrics.length - 1) {
@@ -71,11 +68,9 @@ function LyricsContainer({ curTime, isPlaying, lyrics, pts, setPts, userInput })
             const microphoneInput = userInput[userInput.length - 2].text.split(' ')
             const micInputEndTime = userInput[userInput.length - 1].time
             var points = pts.pts
-            console.log('points', pts)
 
             var possibleLyrics = []
             var idxIncrement = 0
-            console.log(micInputEndTime)
 
             displayLyrics.map((line, idx) => {
 
@@ -92,28 +87,24 @@ function LyricsContainer({ curTime, isPlaying, lyrics, pts, setPts, userInput })
             })
 
             setPtsIdx({ idx: idxIncrement })
+
             console.log(possibleLyrics)
             console.log(microphoneInput)
-
 
             // Possible solution to "cheat" issue with repeated words racking up points.
             // Test when Chomie and Rita have sessions working.
             possibleLyrics.map(word => {
                 let index = microphoneInput.indexOf(word);
                 if (index > -1) {
+                    console.log(`Matched: ${word} === ${microphoneInput[index]} || Points: ${points + 1}`)
                     microphoneInput.splice(index, 1);
                     points++;
                 }
             })
 
-
             setPts({ pts: points })
         }
     }, [userInput])
-
-
-
-
 
     return (
         <div className="center-align">

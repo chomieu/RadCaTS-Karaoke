@@ -12,15 +12,19 @@ export default function Play({ handleClick, handlePlaySound, setStart, hidePlayB
 
     return (
         <div>
+
             <button onClick={() => setStart(true)}>Ready</button>
+
             <button
-                style={{display: hidePlayBtn}}
+                style={{ display: hidePlayBtn }}
                 className="player__button"
                 onClick={clickEvent}>
                 <PlayCircleFilled
                     style={{ fontSize: 70 }}
                 />
+
             </button>
+
         </div>
     );
 }

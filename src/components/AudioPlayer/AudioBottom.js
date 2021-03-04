@@ -16,11 +16,10 @@ function AudioBottom({ pts, isPlaying, handlePause, handlePlay, handlePlaySound,
 
 
                 <div className="col s8 m9 l10 right-align">
-                    {/* <span className="bar__time">{formatDuration(curTime)} / {formatDuration(duration)}</span> */}
 
                     <div className="right-align">
-                        <Play 
-                            handleClick={handlePlay} 
+                        <Play
+                            handleClick={handlePlay}
                             handlePlaySound={handlePlaySound}
                             setStart={setStart}
                             hidePlayBtn={hidePlayBtn}
