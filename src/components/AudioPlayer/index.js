@@ -10,7 +10,7 @@ import moment from "moment";
 import "./style.css"
 
 
-function AudioPlayer({ sessionData, isPlaying, setIsPlaying, handlePlaySound, start, setStart, audio, pts, setPts, lyrics, hidePlayBtn }) {
+function AudioPlayer({ sessionData, isPlaying, setIsPlaying, handleFinish, handlePlaySound, start, setStart, audio, pts, setPts, lyrics, hidePlayBtn }) {
 
     const { curTime, duration, setClickedTime } = useAudioPlayer(isPlaying, setIsPlaying, audio);
     const [language, setLanguage] = useState('en-Us')
@@ -52,21 +52,18 @@ function AudioPlayer({ sessionData, isPlaying, setIsPlaying, handlePlaySound, st
                 formatDuration={formatDuration}
             />
 
-            {/* <Bar curTime={curTime} duration={duration} onTimeUpdate={(time) => setClickedTime(time)} /> */}
-            {/* <span className="bar__time">{formatDuration(curTime)} / {formatDuration(duration)}</span> */}
-
             <AudioBottom
                 handlePlaySound={handlePlaySound}
+                setIsPlaying={setIsPlaying}
+                handleFinish={handleFinish}
                 sessionData={sessionData}
+                hidePlayBtn={hidePlayBtn}
                 handlePlay={handlePlay}
                 isPlaying={isPlaying}
-                setIsPlaying={setIsPlaying}
-                curTime={curTime}
-                pts={pts}
-                handlePlaySound={handlePlaySound}
-                start={start}
                 setStart={setStart}
-                hidePlayBtn={hidePlayBtn}
+                curTime={curTime}
+                start={start}
+                pts={pts}
             />
 
         </div>

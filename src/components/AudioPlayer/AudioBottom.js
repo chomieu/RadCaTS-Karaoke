@@ -4,11 +4,11 @@ import Play from "./Play";
 import { Row, Col, Button } from "react-materialize";
 import Pause from "./Pause";
 
-function AudioBottom({ pts, isPlaying, setIsPlaying, handlePause, handlePlay, handlePlaySound, start, setStart, hidePlayBtn }) {
+function AudioBottom({ pts, isPlaying, setIsPlaying, handleFinish, handlePlay, handlePlaySound, start, setStart, hidePlayBtn }) {
 
-    const handleFinish = () => {
-        setIsPlaying(false);
-    }
+    // const handleFinish = () => {
+    //     setIsPlaying(false);
+    // }
 
     const handleStart = () => {
         setStart(true);

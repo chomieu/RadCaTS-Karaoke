@@ -5,13 +5,15 @@ import UserChip from '../UserChip';
 import Logout from "../Logout";
 import "./style.css"
 
-function Header({ userData, setUserData, setIsPlaying }) {
+function Header({ audio, userData, setUserData, setIsPlaying }) {
 
   const [redirect, setRedirect] = useState()
 
   const handleHome = () => {
     setIsPlaying(false)
+    audio.src = ''
     setRedirect(<Redirect to="/" />)
+    // window.location.reload()
 
   }
 
