@@ -33,7 +33,7 @@ export default function EditLyrics({ sessionData, setSessionData }) {
                 API.getLyricsBySong(data.data.karaokeSong._id)
                     .then(lrcFiles => {
                         setLyricsFile({ file: lrcFiles.data, len: lrcFiles.data.length })
-                        console.log(lrcFiles.data)
+                        // console.log(lrcFiles.data)
                     })
                     .catch(err => {
                         console.log(err)
@@ -49,7 +49,7 @@ export default function EditLyrics({ sessionData, setSessionData }) {
     }
 
     useEffect(() => {
-        console.log('startSession', id)
+        // console.log('startSession', id)
         startSession();
     }, [])
 
@@ -157,10 +157,10 @@ export default function EditLyrics({ sessionData, setSessionData }) {
             sessionId: id,
             lyricsId: lyricsId
         }
-        console.log("apply lyrics:", data)
+        // console.log("apply lyrics:", data)
         API.addLyricsToSession(data)
             .then(() => {
-                console.log("add lyrics to session")
+                // console.log("add lyrics to session")
                 setRedirectPage(<Redirect to={`/api/session/${id}`} />)
             })
             .catch(err => {
@@ -190,7 +190,7 @@ export default function EditLyrics({ sessionData, setSessionData }) {
                     <>
                         <h1>Lyrics Editor Tool</h1>
                         <div>
-                            <Textarea name="lyrics" onChange={handleLyricsChange} placeholder="type or paste lyrics here" s={12} style={{ maxHeight: "100px", overflowY: "scroll" }} />
+                            <Textarea name="lyrics" onChange={handleLyricsChange} placeholder="type or paste lyrics here" s={12} style={{ color: "white", maxHeight: "100px", overflowY: "scroll" }} />
                         </div>
                         <div>
                             <audio src={audioSrc} ref={audio} controls></audio>

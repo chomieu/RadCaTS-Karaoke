@@ -16,18 +16,18 @@ const audio = new Audio()
 
 export default function Session({ userData, setUserData, sessionData, setSessionData, isPlaying, setIsPlaying }) {
 
+    const [lyrics, setLyrics] = useState({ isLoaded: false })
     const { id } = useParams()
-    // const [sessionData, setSessionData] = useState()
 
     const handleFinish = () => {
-        // setIsPlaying(false) 
+        setIsPlaying(false)
         console.log('finish') // send PUT request to /api/session/:id
     }
 
     const startSession = () => {
         API.startSession(id)
             .then((data) => {
-                console.log("sessionAPIcall", data)
+                // console.log("sessionAPIcall", data)
                 setSessionData({
                     ...sessionData,
                     hostId: data.data.host,
@@ -38,7 +38,7 @@ export default function Session({ userData, setUserData, sessionData, setSession
                     songId: data.data.karaokeSong._id,
                     lyrics: data.data.karaokeLyrics
                 })
-                // data.data.karaokeSong.mixed;
+                setLyrics({ lyrics: data.data.karaokeLyrics.lyrics.lines, isLoaded: true })
             })
             .catch(err => {
                 console.log('session response error', err)
@@ -46,7 +46,7 @@ export default function Session({ userData, setUserData, sessionData, setSession
     }
 
     useEffect(() => {
-        console.log('startSession', id)
+        // console.log('startSession', id)
         startSession();
     }, [])
 
@@ -59,8 +59,8 @@ export default function Session({ userData, setUserData, sessionData, setSession
     const [leaderboard, setLeaderboard] = useState()
     const [score, setScore] = useState(0)
 
-    console.log("member", member)
-    console.log("userData", userData)
+    // console.log("member", member)
+    // console.log("userData", userData)
 
     function handleNewMembers(users) {
         setAllMembers(users)
@@ -122,10 +122,10 @@ export default function Session({ userData, setUserData, sessionData, setSession
                 <Redirect to="/" />
                 :
                 <>
-                    {console.log(sessionData)}
+                    {/* {console.log(sessionData)} */}
                     < Header userData={userData} setUserData={setUserData} />
                     <Row>
-                        {console.log(start)}
+                        {/* {console.log(start)} */}
                         <Col s={12} m={6}>
                             <AudioPlayer
                                 isPlaying={isPlaying}
@@ -134,6 +134,7 @@ export default function Session({ userData, setUserData, sessionData, setSession
                                 userData={userData}
                                 handlePlaySound={handlePlaySound}
                                 setStart={setStart}
+                                lyrics={lyrics}
                                 audio={audio}
                             />
                             {countdown}
@@ -141,7 +142,7 @@ export default function Session({ userData, setUserData, sessionData, setSession
                         </Col>
                         <Col s={12} m={6}>
                             Leaderboard
-                            {console.log("session", sessionData)}
+                            {/* {console.log("session", sessionData)} */}
                             <div>
                                 {leaderboard}
                             </div>
