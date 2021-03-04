@@ -170,6 +170,10 @@ export default function Session({ userData, setUserData, sessionData, setSession
                         </Col>
                         <Col s={12} m={6}>
                             <h4>Leaderboard</h4>
+<<<<<<< HEAD
+=======
+                            {console.log("session", sessionData, "leaderboard", leaderboard)}
+>>>>>>> dev2
                             <div>
                                 {leaderboard}
                             </div>

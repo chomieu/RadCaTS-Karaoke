@@ -64,7 +64,7 @@ export default function UserChip({ userData }) {
 
             <label>New Profile Picture URL:</label>
             <input type="text" id="pfp" name="pfp" />
-            <Button id="pfpBtn" onClick={newProfilePicture}>submit</Button>
+            <Button className="btn_purple" id="pfpBtn" onClick={newProfilePicture}>submit</Button>
 
         </Modal >
     )
