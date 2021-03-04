@@ -61,7 +61,6 @@ export default function UserChip({ userData }) {
                                 <span type="text">Login!</span>
                             </>
                     }
-                    {console.log(userData)}
                 </Chip >
             }>
 
