@@ -23,7 +23,6 @@ export default function Session({ userData, setUserData, sessionData, setSession
     const startSession = () => {
         API.startSession(id)
             .then((data) => {
-                // console.log("sessionAPIcall", data)
                 setSessionData({
                     ...sessionData,
                     hostId: data.data.host,
@@ -42,7 +41,6 @@ export default function Session({ userData, setUserData, sessionData, setSession
     }
 
     useEffect(() => {
-        // console.log('startSession', id)
         startSession();
     }, [])
 
@@ -128,10 +126,8 @@ export default function Session({ userData, setUserData, sessionData, setSession
                 <Redirect to="/" />
                 :
                 <>
-                    {console.log(sessionData)}
                     < Header userData={userData} setUserData={setUserData} setIsPlaying={setIsPlaying} />
                     <Row className="content_row">
-                        {console.log(start)}
                         <Col s={12} m={6}>
                             <AudioPlayer
                                 isPlaying={isPlaying}
@@ -153,7 +149,6 @@ export default function Session({ userData, setUserData, sessionData, setSession
                         </Col>
                         <Col s={12} m={6}>
                             <h4>Leaderboard</h4>
-                            {console.log("session", sessionData, "leaderboard", leaderboard)}
                             <div>
                                 {leaderboard}
                             </div>
