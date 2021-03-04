@@ -11,19 +11,14 @@ import "../App.css"
 import io from "socket.io-client"
 
 // Live Session Global Constants 
-const socket = io.connect("http://localhost:3001")
-// const socket = io.connect("http://radcats-karaoke-server.herokuapp.com")
+// const socket = io.connect("http://localhost:3001")
+const socket = io.connect("http://radcats-karaoke-server.herokuapp.com")
 const audio = new Audio()
 
 export default function Session({ userData, setUserData, sessionData, setSessionData, isPlaying, setIsPlaying }) {
 
     const [lyrics, setLyrics] = useState({ isLoaded: false })
     const { id } = useParams()
-
-    const handleFinish = () => {
-        setIsPlaying(false);
-        console.log('finish') // send PUT request to /api/session/:id
-    }
 
     const startSession = () => {
         API.startSession(id)
@@ -72,7 +67,6 @@ export default function Session({ userData, setUserData, sessionData, setSession
     }
 
     function handlePlaySound() {
-        {setPts({pts: 5})}
         socket.emit("play", id, { path: sessionData.mixed })
     }
 
@@ -136,7 +130,7 @@ export default function Session({ userData, setUserData, sessionData, setSession
                 <>
                     {console.log(sessionData)}
                     < Header userData={userData} setUserData={setUserData} setIsPlaying={setIsPlaying} />
-                    <Row style={{ marginTop: "5%" }}>
+                    <Row className="content_row">
                         {console.log(start)}
                         <Col s={12} m={6}>
                             <AudioPlayer
@@ -145,6 +139,7 @@ export default function Session({ userData, setUserData, sessionData, setSession
                                 sessionData={sessionData}
                                 userData={userData}
                                 handlePlaySound={handlePlaySound}
+                                start={start}
                                 setStart={setStart}
                                 lyrics={lyrics}
                                 audio={audio}
@@ -155,11 +150,10 @@ export default function Session({ userData, setUserData, sessionData, setSession
                             <div className={countdown === "hide" ? "counter-layer hidden" : "counter-layer"}>
                                 {countdown}
                             </div>
-                            <Button onClick={handleFinish}>Finish</Button>
                         </Col>
                         <Col s={12} m={6}>
                             <h4>Leaderboard</h4>
-                            {console.log("session", sessionData)}
+                            {console.log( "session", sessionData, "leaderboard", leaderboard )}
                             <div>
                                 {leaderboard}
                             </div>

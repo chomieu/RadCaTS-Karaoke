@@ -162,23 +162,23 @@ export default function EditLyrics({ userData, setUserData, sessionData, setSess
     }
 
     return (
-        <Container className="pageContents">
-            <Header userData={userData} setUserData={setUserData} setIsPlaying={setIsPlaying} />
+        <Container className="pageContents lyrics">
+            <Header userData={userData} setUserData={setUserData} />
             {lyricsFile.len === 0 ?
                 <div>
                     <h1>Lyrics List</h1>
                     <Container>
                         <h2>No lyrics avaliable</h2>
                     </Container>
-                    <Button onClick={() => (setLyricsFile({ ...lyricsFile, len: -1 }))}>Make My Own Lyrics</Button>
+                    <Button className="btn_purple" onClick={() => (setLyricsFile({ ...lyricsFile, len: -1 }))}>Make My Own Lyrics</Button>
                 </div>
                 : lyricsFile.len > 0 ?
                     <div>
                         <h1>Lyrics List</h1>
-                        <Container style={{ height: "400px", overflowY: "scroll" }}>
-                            {lyricsFile.file.map((file, i) => (<Button key={i} data-lrc={file._id} onClick={(e) => applyLyrics(e.target.dataset.lrc)}>{file.associatedSong.name} - {file.associatedSong.artist} BY {file.creator.username}</Button>))}
+                        <Container style={{ height: "200px", overflowY: "scroll" }}>
+                            {lyricsFile.file.map((file, i) => (<Button className="btn_blue" key={i} data-lrc={file._id} onClick={(e) => applyLyrics(e.target.dataset.lrc)}>{file.associatedSong.name} - {file.associatedSong.artist} BY {file.creator.username}</Button>))}
                         </Container>
-                        <Button onClick={() => (setLyricsFile({ ...lyricsFile, len: -1 }))}>Make My Own Lyrics</Button>
+                        <Button className="btn_purple" onClick={() => (setLyricsFile({ ...lyricsFile, len: -1 }))}>Make My Own Lyrics</Button>
                     </div>
                     : lyricsFile.len === -1 ?
                         <div>
@@ -187,21 +187,21 @@ export default function EditLyrics({ userData, setUserData, sessionData, setSess
                                 <Textarea name="lyrics" onChange={handleLyricsChange} placeholder="type or paste lyrics here" s={12} style={{ maxHeight: "80px", overflowY: "scroll" }} />
                             </div>
 
-                            <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "40px" }}>
+                            <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
                                 <audio src={audioSrc} ref={audio} controls></audio>
-                                <Button className="btns-lyrics" onClick={() => handleAudioPace("-")}>&lt;&lt; 2.0s</Button>
-                                <Button className="btns-lyrics" onClick={() => handleAudioPace("+")}>&gt;&gt; 2.0s</Button>
+                                <Button className="btns-lyrics btn_purple" onClick={() => handleAudioPace("-")}>&lt;&lt; 2.0s</Button>
+                                <Button className="btns-lyrics btn_purple" onClick={() => handleAudioPace("+")}>&gt;&gt; 2.0s</Button>
                             </div>
                             <div>
-                                <Button className="btns-lyrics" onClick={() => editTimestamp("add")}>add timestamp</Button>
-                                <Button className="btns-lyrics" onClick={() => editTimestamp("remove")}>remove timestamp</Button>
-                                <Button className="btns-lyrics" onClick={() => setIndex(index > 0 ? index = index - 1 : index = 0)}>previous line</Button>
-                                <Button className="btns-lyrics" onClick={() => setIndex(index = index + 1)}>next line</Button>
-                                <Button className="btns-lyrics" onClick={clearAll}>clear all timestamps</Button>
+                                <Button className="btns-lyrics btn_purple" onClick={() => editTimestamp("add")}>add timestamp</Button>
+                                <Button className="btns-lyrics btn_purple" onClick={() => editTimestamp("remove")}>remove timestamp</Button>
+                                <Button className="btns-lyrics btn_purple" onClick={() => setIndex(index > 0 ? index = index - 1 : index = 0)}>previous line</Button>
+                                <Button className="btns-lyrics btn_purple" onClick={() => setIndex(index = index + 1)}>next line</Button>
+                                <Button className="btns-lyrics btn_purple" onClick={clearAll}>clear all timestamps</Button>
                             </div>
-                            <div style={{ overflowY: "scroll", height: "250px" }}>{lyrics.map((lyrics, i) => i === index ? <p key={i} style={{ backgroundColor: "beige" }}>{lyrics}</p> : <p key={i}>{lyrics}</p>)}</div>
-                            <Button className="btns-lyrics" onClick={handleSkip}>Skip</Button>
-                            <Button className="btns-lyrics" onClick={uploadFile}> Upload and Start Session</Button>
+                            <div style={{ overflowY: "scroll", height: "250px", overflow: "-moz-scrollbars-none" }}>{lyrics.map((lyrics, i) => i === index ? <p key={i} style={{ backgroundColor: "beige" }}>{lyrics}</p> : <p key={i}>{lyrics}</p>)}</div>
+                            <Button className="btns-lyrics btn_purple" onClick={handleSkip}>Skip</Button>
+                            <Button className="btns-lyrics btn_purple" onClick={uploadFile}> Upload and Start Session</Button>
                             <Button
                                 onClick={() => (setLyricsFile({ ...lyricsFile, len: lyricsFile.file.length }))}
                             > Back to Lyrics List</Button>
