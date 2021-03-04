@@ -146,6 +146,9 @@
 
 .ready_button, .finish_button {
   margin: 0;
+  width: 100%;
+  text-align: center;
+  padding: 0;
 }
 
 /* @media screen and (max-width: 800px) {
