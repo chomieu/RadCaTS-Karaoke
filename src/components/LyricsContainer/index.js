@@ -27,7 +27,7 @@ function LyricsContainer({ curTime, isPlaying, lyrics, pts, setPts, userInput })
 
     useEffect(() => {
 
-        if (lyrics.isLoaded && curTime) {
+        if (lyrics.isLoaded && curTime && displayLyrics) {
 
             // if session is active and curTime is 0, start the first set of lyrics
             if (curTime === 0) {
@@ -51,7 +51,7 @@ function LyricsContainer({ curTime, isPlaying, lyrics, pts, setPts, userInput })
                 setLrcObj0({ text: 'Thanks for playin\'' })
                 setLrcObj1({ text: 'End lyrics' })
             }
-        }
+        } else { setPts({ pts: 10 }) }
 
     }, [isPlaying, curTime])
 
@@ -64,7 +64,7 @@ function LyricsContainer({ curTime, isPlaying, lyrics, pts, setPts, userInput })
     useEffect(() => {
 
 
-        if (userInput.length > 1) {
+        if (userInput.length > 1 && displayLyrics) {
             console.log(userInput)
 
             // const lastMicInputTime = userInput[userInput.length - 2].time
@@ -119,13 +119,13 @@ function LyricsContainer({ curTime, isPlaying, lyrics, pts, setPts, userInput })
         <div className="center-align">
 
             <div className="row">
-                <h4>{displayLyrics ? lrcObj0.text : '-'}</h4>
+                <h4>{displayLyrics ? lrcObj0.text : 'Have fun!'}</h4>
             </div>
 
             <div className="divider"></div>
 
             <div className="row">
-                <h6 className="muted">{displayLyrics ? lrcObj1.text : '-'}</h6>
+                <h6 className="muted">{displayLyrics ? lrcObj1.text : 'earn more points by adding lyrics!'}</h6>
             </div>
 
         </div>

@@ -39,7 +39,11 @@ export default function Session({ userData, setUserData, sessionData, setSession
                     songId: data.data.karaokeSong._id,
                     lyrics: data.data.karaokeLyrics
                 })
-                setLyrics({ lyrics: data.data.karaokeLyrics.lyrics.lines, isLoaded: true })
+                let lyricsPath = data.data.karaokeLyrics.lyrics.lines
+                if (lyricsPath) {
+                    setLyrics({ lyrics: data.data.karaokeLyrics.lyrics.lines, isLoaded: true })
+                } else { setLyrics({ lyrics: null, isLoaded: true }) }
+
             })
             .catch(err => {
                 console.log('session response error', err)
@@ -72,7 +76,7 @@ export default function Session({ userData, setUserData, sessionData, setSession
     }
 
     function handlePlaySound() {
-        {setPts({pts: 5})}
+        { setPts({ pts: 5 }) }
         socket.emit("play", id, { path: sessionData.mixed })
     }
 
@@ -159,7 +163,7 @@ export default function Session({ userData, setUserData, sessionData, setSession
                         </Col>
                         <Col s={12} m={6}>
                             <h4>Leaderboard</h4>
-                            {console.log( "session", sessionData, "leaderboard", leaderboard )}
+                            {console.log("session", sessionData, "leaderboard", leaderboard)}
                             <div>
                                 {leaderboard}
                             </div>

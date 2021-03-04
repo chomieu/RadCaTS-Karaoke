@@ -30,10 +30,6 @@ function AudioPlayer({ sessionData, isPlaying, setIsPlaying, handlePlaySound, se
         console.log('play')
         setIsPlaying(true)
     }
-    // const handlePause = () => {
-    //     console.log('pause');
-    //     setIsPlaying(false)
-    // }
 
     return (
         <div className="container">
