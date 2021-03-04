@@ -4,7 +4,7 @@ import "./style.css"
 
 
 
-function LyricsContainer({ curTime, isPlaying, lyrics, pts, setPts, userInput }) {
+function LyricsContainer({ curTime, isPlaying, lyrics, pts, setPts, userInput, duration, formatDuration }) {
 
     // track the index location of the current lyrics object
     const [lrcIdx, setLrcIdx] = useState(0)
@@ -26,6 +26,8 @@ function LyricsContainer({ curTime, isPlaying, lyrics, pts, setPts, userInput })
     }, [lyrics.isLoaded])
 
     useEffect(() => {
+
+        if (Math.floor(curTime) === Math.floor(duration)) { }
 
         if (lyrics.isLoaded && curTime) {
 
@@ -106,14 +108,9 @@ function LyricsContainer({ curTime, isPlaying, lyrics, pts, setPts, userInput })
                 }
             })
 
-
             setPts({ pts: points })
         }
     }, [userInput])
-
-
-
-
 
     return (
         <div className="center-align">
