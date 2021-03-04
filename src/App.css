@@ -30,12 +30,14 @@ header {
   margin: 20px;
 }
 
-h1 {
-  margin-top: 5vh;
+button.btn_purple {
+  margin-bottom: 0;
+  background-color: rgb(89, 41, 167);
+  border-radius: .5rem;
 }
 
-.btn {
-  background-color: rgb(89, 41, 167) !important;
+h1 {
+  margin-top: 5vh;
 }
 
 .btn:hover {
@@ -45,4 +47,74 @@ h1 {
 footer {
   text-align: center;
   padding-bottom: 10px;
+}
+
+textarea.materialize-textarea:focus:not([readonly]),
+input[type=text]:not(.browser-default):focus:not([readonly]),
+input[type=password]:not(.browser-default):focus:not([readonly]) {
+  border-bottom: 1px solid rgb(89, 41, 167);
+  box-shadow: 0 1px 0 0 rgb(89, 41, 167);
+}
+
+input[type=text]:not(.browser-default):focus:not([readonly])+label,
+input[type=password]:not(.browser-default):focus:not([readonly])+label {
+  color: rgb(89, 41, 167);
+}
+
+.counter-layer {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  transform: translate(-50%, 30%);
+  font-size: 5rem;
+}
+
+.btns-lyrics {
+  margin: 1rem 0.7rem !important;
+}
+
+.hidden {
+  display: none;
+}
+
+textarea {
+  color: rgba(255, 255, 255, 0.815);
+}
+
+.finish_button {
+  margin-top: 0px;
+}
+
+.lyrics .helper-text {
+  display: none;
+}
+
+@media screen and (max-width: 600px) {
+  .lyrics h1 {
+    font-size: 2rem;
+  }
+
+  .lyrics textarea {
+    max-height: 50px;
+    width: 80%;
+  }
+
+  .btns-lyrics {
+    font-size: 10px;
+    white-space: nowrap;
+    margin: 0.7rem 1px 0 1px !important;
+  }
+
+  .lyrics audio {
+    height: 40px;
+  }
+
+  .pageContents.lyrics {
+    padding: 0 10px;
+  }
+
+  .btn {
+    margin: 1rem;
+  }
 }

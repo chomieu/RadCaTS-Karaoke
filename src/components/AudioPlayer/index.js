@@ -4,16 +4,16 @@ import momentDurationFormatSetup from "moment-duration-format";
 import useAudioPlayer from "./useAudioPlayer";
 import AudioBottom from "./AudioBottom";
 import KaraokeBox from "../KaraokeBox";
+import Bar from "./Bar"
 import AudioTop from "./AudioTop";
 import moment from "moment";
 import "./style.css"
 
 
-function AudioPlayer({ sessionData, isPlaying, setIsPlaying, handlePlaySound, setStart, audio }) {
+function AudioPlayer({ sessionData, isPlaying, setIsPlaying, handlePlaySound, start, setStart, audio, pts, setPts, lyrics, hidePlayBtn }) {
 
-    const { curTime, duration, setClickedTime } = useAudioPlayer( isPlaying, setIsPlaying, audio );
+    const { curTime, duration, setClickedTime } = useAudioPlayer(isPlaying, setIsPlaying, audio);
     const [language, setLanguage] = useState('en-Us')
-    const [pts, setPts] = useState({ pts: 0 })
 
     const formatDuration = (duration) => {
         return moment
@@ -22,13 +22,17 @@ function AudioPlayer({ sessionData, isPlaying, setIsPlaying, handlePlaySound, se
     }
 
     const handlePlay = () => {
-        console.log('play')
+
+        console.log('isPlaying', true)
         setIsPlaying(true)
     }
-    // const handlePause = () => {
-    //     console.log('pause');
-    //     setIsPlaying(false)
-    // }
+
+    const handleStop = () => {
+
+        console.log('isPlaying', false)
+        setIsPlaying(false)
+
+    }
 
     return (
         <div className="container">
@@ -37,28 +41,34 @@ function AudioPlayer({ sessionData, isPlaying, setIsPlaying, handlePlaySound, se
                 sessionData={sessionData}
             />
 
-            {/* <FileDrop isPlaying={ isPlaying } /> */}
-
             <KaraokeBox
                 pts={pts}
+                lyrics={lyrics}
                 setPts={setPts}
                 curTime={curTime}
-                isPlaying={isPlaying}
+                duration={duration}
                 language={language}
+                isPlaying={isPlaying}
+                handleStop={handleStop}
                 sessionData={sessionData}
+                formatDuration={formatDuration}
             />
 
             {/* <Bar curTime={curTime} duration={duration} onTimeUpdate={(time) => setClickedTime(time)} /> */}
+            {/* <span className="bar__time">{formatDuration(curTime)} / {formatDuration(duration)}</span> */}
+
             <AudioBottom
-                formatDuration={formatDuration}
+                handlePlaySound={handlePlaySound}
                 sessionData={sessionData}
                 handlePlay={handlePlay}
-                duration={duration}
                 isPlaying={isPlaying}
+                setIsPlaying={setIsPlaying}
                 curTime={curTime}
                 pts={pts}
                 handlePlaySound={handlePlaySound}
+                start={start}
                 setStart={setStart}
+                hidePlayBtn={hidePlayBtn}
             />
 
         </div>
