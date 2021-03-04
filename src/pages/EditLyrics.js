@@ -5,7 +5,7 @@ import Header from "../components/Header";
 import API from "../utils/API";
 import "../App.css"
 
-export default function EditLyrics({ userData, setUserData, sessionData, setSessionData }) {
+export default function EditLyrics({ userData, setUserData, sessionData, setSessionData, setIsPlaying }) {
 
     const [message, setMessage] = useState(`loading . . .`)
     const [loading, setLoading] = useState(true)
@@ -163,7 +163,7 @@ export default function EditLyrics({ userData, setUserData, sessionData, setSess
 
     return (
         <Container className="pageContents">
-            <Header userData={userData} setUserData={setUserData} />
+            <Header userData={userData} setUserData={setUserData} setIsPlaying={setIsPlaying} />
             {lyricsFile.len === 0 ?
                 <div>
                     <h1>Lyrics List</h1>

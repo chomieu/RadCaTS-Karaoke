@@ -21,7 +21,7 @@ export default function Session({ userData, setUserData, sessionData, setSession
     // const [sessionData, setSessionData] = useState()
 
     const handleFinish = () => {
-        // setIsPlaying(false) 
+        setIsPlaying( false );
         console.log('finish') // send PUT request to /api/session/:id
     }
 
@@ -136,7 +136,7 @@ export default function Session({ userData, setUserData, sessionData, setSession
                 :
                 <>
                     {console.log(sessionData)}
-                    < Header userData={userData} setUserData={setUserData} />
+                    < Header userData={userData} setUserData={setUserData} setIsPlaying={setIsPlaying} />
                     <Row style={{ marginTop: "5%" }}>
                         {console.log(start)}
                         <Col s={12} m={6}>
