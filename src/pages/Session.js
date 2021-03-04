@@ -105,8 +105,8 @@ export default function Session({ userData, setUserData, sessionData, setSession
                     }
                 }, 1000)
                 setTimeout(() => {
-                    setIsPlaying(true)
                     audio.src = m.path
+                    setIsPlaying(true)
                     audio.play()
                 }, 5000)
             }
