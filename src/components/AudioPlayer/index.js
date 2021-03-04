@@ -9,9 +9,9 @@ import moment from "moment";
 import "./style.css"
 
 
-function AudioPlayer({ userData, setUserData, sessionData }) {
+function AudioPlayer({ sessionData, isPlaying, setIsPlaying, handlePlaySound, setStart, audio }) {
 
-    const { curTime, duration, playing, setPlaying, setClickedTime } = useAudioPlayer();
+    const { curTime, duration, setClickedTime } = useAudioPlayer( isPlaying, setIsPlaying, audio );
     const [language, setLanguage] = useState('en-Us')
     const [pts, setPts] = useState({ pts: 0 })
 
@@ -21,12 +21,14 @@ function AudioPlayer({ userData, setUserData, sessionData }) {
             .format("mm:ss", { trim: false });
     }
 
-
-    const handlePlay = () => { setPlaying(true) }
-    const handlePause = () => { setPlaying(false) }
-
-
-
+    const handlePlay = () => {
+        console.log('play')
+        setIsPlaying(true)
+    }
+    // const handlePause = () => {
+    //     console.log('pause');
+    //     setIsPlaying(false)
+    // }
 
     return (
         <div className="container">
@@ -35,31 +37,29 @@ function AudioPlayer({ userData, setUserData, sessionData }) {
                 sessionData={sessionData}
             />
 
-            {/* <FileDrop playing={ playing } /> */}
+            {/* <FileDrop isPlaying={ isPlaying } /> */}
 
             <KaraokeBox
                 pts={pts}
                 setPts={setPts}
                 curTime={curTime}
-                playing={playing}
+                isPlaying={isPlaying}
                 language={language}
                 sessionData={sessionData}
             />
 
             {/* <Bar curTime={curTime} duration={duration} onTimeUpdate={(time) => setClickedTime(time)} /> */}
             <AudioBottom
-
                 formatDuration={formatDuration}
                 sessionData={sessionData}
-                handlePause={handlePause}
                 handlePlay={handlePlay}
                 duration={duration}
-                playing={playing}
+                isPlaying={isPlaying}
                 curTime={curTime}
                 pts={pts}
-
+                handlePlaySound={handlePlaySound}
+                setStart={setStart}
             />
-
 
         </div>
     );

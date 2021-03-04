@@ -5,6 +5,7 @@ import Header from "../components/Header";
 import "../App.css"
 
 export default function SearchPage({ userData, setUserData }) {
+
     return (
         <div className="pageContents">
             {

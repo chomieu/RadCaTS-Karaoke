@@ -4,7 +4,7 @@ import "./style.css"
 
 
 
-function LyricsContainer({ curTime, playing, userInput, pts, setPts }) {
+function LyricsContainer({ curTime, isPlaying, userInput, pts, setPts }) {
 
     // track the index location of the current lyrics object
     const [lrcIdx, setLrcIdx] = useState({ idx: 1 })
@@ -23,12 +23,12 @@ function LyricsContainer({ curTime, playing, userInput, pts, setPts }) {
     useEffect(() => {
 
         // if session is active and curTime is 0, start the first set of lyrics
-        if (playing && curTime === 0) {
+        if (isPlaying && curTime === 0) {
             setLrcObj1(track[lrcIdx.idx])
             setLrcObj2(track[lrcIdx.idx + 1])
 
             // if session is active & curTime matches the time of the next object, access the nested conditional.
-        } else if (playing && Math.floor(curTime) === lrcObj2.time) {
+        } else if (isPlaying && Math.floor(curTime) === lrcObj2.time) {
             // Note: the last set of lyrics are set to null.
             // if there are lyrics, load them.
             if (lrcObj2.lyrics) {
@@ -40,7 +40,7 @@ function LyricsContainer({ curTime, playing, userInput, pts, setPts }) {
             }
         }
 
-    }, [playing, curTime])
+    }, [isPlaying, curTime])
 
 
     // update points based on new user input
@@ -79,13 +79,23 @@ function LyricsContainer({ curTime, playing, userInput, pts, setPts }) {
             console.log(possibleLyrics)
             console.log(microphoneInput)
 
-            possibleLyrics.map(word => {
-                microphoneInput.map(input => {
-                    if (word === input) {
-                        points++
-                    }
-                })
+            possibleLyrics.map( word => {
+                let index = microphoneInput.indexOf( word );
+                if ( index > -1 ) {
+                    microphoneInput.splice( index, 1 );
+                    points++;
+                }
             })
+
+            // Possible solution to "cheat" issue with repeated words racking up points.
+            // Test when Chomie and Rita have sessions working.
+            // possibleLyrics.map( word => {
+            //     let index = microphoneInput.indexOf( word );
+            //     if ( index > -1 ) {
+            //         microphoneInput.splice( index, 1 );
+            //         points++;
+            //     }
+            // })
 
 
             setPts({ pts: points })
@@ -100,13 +110,13 @@ function LyricsContainer({ curTime, playing, userInput, pts, setPts }) {
         <div className="center-align">
 
             <div className="row">
-                <h4>{playing ? lrcObj1.lyrics : '-'}</h4>
+                <h4>{isPlaying ? lrcObj1.lyrics : '-'}</h4>
             </div>
 
             <div className="divider"></div>
 
             <div className="row">
-                <h6 className="muted">{playing ? lrcObj2.lyrics : '-'}</h6>
+                <h6 className="muted">{isPlaying ? lrcObj2.lyrics : '-'}</h6>
             </div>
 
         </div>

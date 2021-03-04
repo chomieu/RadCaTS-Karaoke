@@ -10,22 +10,14 @@ import "./style.css"
 function Search({ userData }) {
 
     const [formInputs, setFormInputs] = useState({ label: '', value: '', })
-    const [loading, setLoading] = useState(false)
-    const [redirectPage, setRedirectPage] = useState()
     const [message, setMessage] = useState(`What's your favorite song?`)
+    const [redirectPage, setRedirectPage] = useState()
     const [search, setSearch] = useState(['search'])
+    const [loading, setLoading] = useState(false)
 
-    // useEffect(() => { getSongs() }, [])
+    useEffect(() => { getSongs() }, [])
 
-    useEffect(() => {
-        if (loading) {
-            setMessage('searching')
-        }
-    }, [loading])
-
-    useEffect(() => {
-        getSongs()
-    }, [])
+    useEffect(() => { if (loading) { setMessage('searching') } }, [loading])
 
 
     const handleInputChange = e => {
@@ -115,8 +107,8 @@ function Search({ userData }) {
 
                     {formInputs.value
 
-                        ? <Button onClick={handleLyrics}>Setup Lyrics</Button>
-                        : <Button disabled>...</Button>
+                        ? <Button onClick={handleLyrics}>Get started!</Button>
+                        : <Button disabled>Select a song</Button>
 
                     }
 
