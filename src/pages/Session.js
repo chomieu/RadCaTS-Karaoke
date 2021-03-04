@@ -60,6 +60,7 @@ export default function Session({ userData, setUserData, sessionData, setSession
     const [pts, setPts] = useState({ pts: 0 })
 
     function handlePts(users) {
+        users = users.sort((a, b) => (a.pts < b.pts) ? 1 : -1)
         setLeaderboard(users.map(u => {
             return <MemberCard
                 key={u.userId}
@@ -67,11 +68,11 @@ export default function Session({ userData, setUserData, sessionData, setSession
                 username={u.username}
                 pts={u.pts}
             />
-        }
-        ))
+        }))
     }
 
     function handlePlaySound() {
+        {setPts({pts: 5})}
         socket.emit("play", id, { path: sessionData.mixed })
     }
 
