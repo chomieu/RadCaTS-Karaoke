@@ -54,32 +54,44 @@ export default function Session({ userData, setUserData, sessionData, setSession
     // Live Session - Start
 
     const [member, setMember] = useState(userData)
-    const [allMembers, setAllMembers] = useState([])
+    // const [allMembers, setAllMembers] = useState([])
+    // const [role, setRole] = useState()
     const [start, setStart] = useState(false)
     const [countdown, setCountdown] = useState()
     const [leaderboard, setLeaderboard] = useState()
-    const [pts, setPts] = useState(0)
+    const [pts, setPts] = useState({ pts: 0 })
 
     console.log("member", member)
     console.log("userData", userData)
 
-    function handleNewMembers(users) {
-        setAllMembers(users)
-        setLeaderboard(users.map(u => { 
-            return <MemberCard 
-                key={u.userId} 
-                pfp={u.pfp} 
-                username={u.username} 
-                pts={u.pts}  
-                /> 
-            }
+    // function handleNewMembers(users) {
+    //     // setAllMembers(users)
+    //     setLeaderboard(users.map(u => { 
+    //         return <MemberCard 
+    //             key={u.userId} 
+    //             pfp={u.pfp} 
+    //             username={u.username} 
+    //             pts={u.pts}  
+    //             /> 
+    //         }
+    //     ))
+    // }
+
+    function handlePts(users) {
+        setLeaderboard(users.map(u => {
+            return <MemberCard
+                key={u.userId}
+                pfp={u.pfp}
+                username={u.username}
+                pts={u.pts}
+            />
+        }
         ))
     }
 
     function handlePlaySound() {
-        console.log("handleplaysound")
-        console.log(sessionData.mixed)
-        socket.emit("start", id, { path: sessionData.mixed })
+        setPts({ pts: 1 })
+        socket.emit("play", id, { path: sessionData.mixed })
     }
 
     useEffect(() => {
@@ -89,32 +101,27 @@ export default function Session({ userData, setUserData, sessionData, setSession
             member.username,
             member.profilePicture,
             pts,
-            (users) => handleNewMembers(users)
+            (users) => handlePts(users)
         )
     }, [userData])
 
     useEffect(() => {
         function recieveMsg(m) {
-            console.log("recieved msg", m)
-            console.log(start)
-            if (start) {
-                let time = 3
-                setCountdown(time)
-                const timer = setInterval(() => {
-                    console.log(time)
-                    if (time === 0) {
-                        clearInterval(timer)
-                        setCountdown("Start")
-                    } else {
-                        time = time - 1
-                        setCountdown(time)
-                    }
-                }, 1000)
-                setTimeout(() => {
-                    audio.src = m.path
-                    audio.play()
-                }, 5000)
-            }
+            let time = 3
+            setCountdown(time)
+            const timer = setInterval(() => {
+                if (time === 0) {
+                    clearInterval(timer)
+                    setCountdown("Start")
+                } else {
+                    time = time - 1
+                    setCountdown(time)
+                }
+            }, 1000)
+            setTimeout(() => {
+            audio.src = m.path
+            audio.play()
+            }, 5000)
         }
         socket.on("play", recieveMsg)
 
@@ -122,6 +129,14 @@ export default function Session({ userData, setUserData, sessionData, setSession
             socket.off("play", recieveMsg)
         }
     }, [start])
+
+    useEffect(() => {
+        socket.emit("points", id, member.id, pts, (users) => handlePts(users))
+    }, [pts])
+
+    useEffect(() => {
+        socket.on("leaderboard", handlePts)
+    }, [pts])
 
     // Live Session - Ends
 
@@ -134,7 +149,6 @@ export default function Session({ userData, setUserData, sessionData, setSession
                     {console.log(sessionData)}
                     < Header userData={userData} setUserData={setUserData} />
                     <Row>
-                        {console.log(start)}
                         <Col s={12} m={6}>
                             <AudioPlayer
                                 isPlaying={isPlaying}
@@ -144,6 +158,8 @@ export default function Session({ userData, setUserData, sessionData, setSession
                                 handlePlaySound={handlePlaySound}
                                 setStart={setStart}
                                 audio={audio}
+                                pts={pts}
+                                setPts={setPts}
                             />
                             {countdown}
                             <Button onClick={handleFinish}>Finish</Button>
