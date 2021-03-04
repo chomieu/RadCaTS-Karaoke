@@ -81,7 +81,7 @@ export default function Session({ userData, setUserData, sessionData, setSession
     }
 
     function handlePlaySound() {
-        { setPts({ pts: 5 }) }
+        { setPts({ pts: 0 }) }
         socket.emit("play", id, { path: sessionData.mixed })
     }
 
@@ -157,6 +157,7 @@ export default function Session({ userData, setUserData, sessionData, setSession
                                 sessionData={sessionData}
                                 setIsPlaying={setIsPlaying}
                                 handlePlaySound={handlePlaySound}
+                                start={start}
                                 setStart={setStart}
                                 lyrics={lyrics}
                                 audio={audio}
@@ -167,7 +168,6 @@ export default function Session({ userData, setUserData, sessionData, setSession
                             <div className={countdown === "hide" ? "counter-layer hidden" : "counter-layer"}>
                                 {countdown}
                             </div>
-                            <Button className="finish_button" onClick={handleFinish}>Finish</Button>
                         </Col>
                         <Col s={12} m={6}>
                             <h4>Leaderboard</h4>
