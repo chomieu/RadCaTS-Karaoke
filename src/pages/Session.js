@@ -156,7 +156,7 @@ export default function Session({ userData, setUserData, sessionData, setSession
                         </Col>
                         <Col s={12} m={6}>
                             <h4>Leaderboard</h4>
-                            {console.log("session", sessionData)}
+                            {console.log( "session", sessionData, "leaderboard", leaderboard )}
                             <div>
                                 {leaderboard}
                             </div>
