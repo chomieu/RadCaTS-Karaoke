@@ -50,12 +50,12 @@ function AudioPlayer({ sessionData, isPlaying, setIsPlaying, handlePlaySound, se
                 duration={duration}
                 language={language}
                 isPlaying={isPlaying}
+                handleStop={handleStop}
                 sessionData={sessionData}
                 formatDuration={formatDuration}
-                handleStop={handleStop}
             />
 
-            <Bar curTime={curTime} duration={duration} onTimeUpdate={(time) => setClickedTime(time)} />
+            {/* <Bar curTime={curTime} duration={duration} onTimeUpdate={(time) => setClickedTime(time)} /> */}
             {/* <span className="bar__time">{formatDuration(curTime)} / {formatDuration(duration)}</span> */}
 
             <AudioBottom
