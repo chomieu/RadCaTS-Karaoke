@@ -55,6 +55,7 @@ export default function Session({ userData, setUserData, sessionData, setSession
     const [pts, setPts] = useState({ pts: 0 })
 
     function handlePts(users) {
+        users = users.sort((a, b) => (a.pts < b.pts) ? 1 : -1)
         setLeaderboard(users.map(u => {
             return <MemberCard
                 key={u.userId}
@@ -62,8 +63,7 @@ export default function Session({ userData, setUserData, sessionData, setSession
                 username={u.username}
                 pts={u.pts}
             />
-        }
-        ))
+        }))
     }
 
     function handlePlaySound() {
@@ -99,8 +99,8 @@ export default function Session({ userData, setUserData, sessionData, setSession
                     }
                 }, 1000)
                 setTimeout(() => {
-                    setIsPlaying(true)
                     audio.src = m.path
+                    setIsPlaying(true)
                     audio.play()
                 }, 5000)
             }
@@ -145,6 +145,7 @@ export default function Session({ userData, setUserData, sessionData, setSession
                                 audio={audio}
                                 pts={pts}
                                 setPts={setPts}
+                                hidePlayBtn={member.id !== sessionData.hostId ? "none" : "contents"}
                             />
                             <div className={countdown === "hide" ? "counter-layer hidden" : "counter-layer"}>
                                 {countdown}

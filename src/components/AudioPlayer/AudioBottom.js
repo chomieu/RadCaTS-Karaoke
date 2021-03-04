@@ -4,7 +4,7 @@ import Play from "./Play";
 import { Row, Col, Button } from "react-materialize";
 import Pause from "./Pause";
 
-function AudioBottom({ pts, isPlaying, setIsPlaying, handlePause, handlePlay, handlePlaySound, start, setStart }) {
+function AudioBottom({ pts, isPlaying, setIsPlaying, handlePause, handlePlay, handlePlaySound, start, setStart, hidePlayBtn }) {
 
     const handleFinish = () => {
         setIsPlaying(false);
@@ -39,6 +39,7 @@ function AudioBottom({ pts, isPlaying, setIsPlaying, handlePause, handlePlay, ha
                         setStart={setStart}
                         isPlaying={isPlaying}
                         setIsPlaying={setIsPlaying}
+                        hidePlayBtn={hidePlayBtn}
                     />
                 </Col>
             </Row>
