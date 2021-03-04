@@ -41,7 +41,7 @@ export default function EditLyrics({ sessionData, setSessionData }) {
             })
             .catch(err => {
                 console.log('session response error')
-                setMessage('were sorry, \nsomething went wrong  :\'(')
+                setMessage('we\'re sorry, \nsomething went wrong  :\'(')
                 setLoading(false)
                 setError(true)
                 console.log(err)

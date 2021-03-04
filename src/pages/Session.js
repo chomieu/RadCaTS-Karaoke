@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Redirect } from "react-router-dom";
-import AudioPlayer from "../components/AudioPlayer"
-import { Button, Row, Col } from "react-materialize"
+import AudioPlayer from "../components/AudioPlayer";
+import MemberCard from "../components/MemberCard";
+import { Button, Row, Col } from "react-materialize";
 import Header from "../components/Header";
 import API from "../utils/API";
 import "../App.css"
@@ -22,12 +23,6 @@ export default function Session({ userData, setUserData, sessionData, setSession
     const handleFinish = () => {
         // setIsPlaying(false) 
         console.log('finish') // send PUT request to /api/session/:id
-    }
-
-
-    const handleBack = () => {
-        console.log('back')
-        // setIsPlaying(false) 
     }
 
     const startSession = () => {
@@ -70,7 +65,7 @@ export default function Session({ userData, setUserData, sessionData, setSession
 
     function handleNewMembers(users) {
         setAllMembers(users)
-        setLeaderboard(users.map(u => { return <Row key={u.userId}><Col><img src={`${u.pfp}`} /></Col><Col>{u.username} {u.score}</Col></Row> }))
+        setLeaderboard(users.map(u => { <MemberCard props={u} /> }))
     }
 
     function handlePlaySound() {
@@ -143,7 +138,6 @@ export default function Session({ userData, setUserData, sessionData, setSession
                                 audio={audio}
                             />
                             {countdown}
-                            <Button onClick={handleBack}>Back</Button>
                             <Button onClick={handleFinish}>Finish</Button>
                         </Col>
                         <Col s={12} m={6}>

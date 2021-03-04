@@ -19,14 +19,11 @@ function AudioBottom({ pts, isPlaying, handlePause, handlePlay, handlePlaySound,
                     {/* <span className="bar__time">{formatDuration(curTime)} / {formatDuration(duration)}</span> */}
 
                     <div className="right-align">
-                        {isPlaying
-                            ? <Pause handleClick={handlePause} />
-                            : <Play 
-                                handleClick={handlePlay} 
-                                handlePlaySound={handlePlaySound}
-                                setStart={setStart}
-                            />
-                        }
+                        <Play 
+                            handleClick={handlePlay} 
+                            handlePlaySound={handlePlaySound}
+                            setStart={setStart}
+                        />
                     </div>
                 </div>
             </div>
