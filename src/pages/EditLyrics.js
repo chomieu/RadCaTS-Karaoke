@@ -1,13 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useParams, Redirect } from "react-router-dom";
 import { Button, Container, Textarea } from 'react-materialize';
-import Preloader from '../components/Preloader'
 import API from "../utils/API";
 import "../App.css"
 
-
-
-export default function EditLyrics({ userData, sessionData, setSessionData }) {
+export default function EditLyrics({ sessionData, setSessionData }) {
 
     const [message, setMessage] = useState(`loading . . .`)
     const [loading, setLoading] = useState(true)
@@ -220,5 +217,4 @@ export default function EditLyrics({ userData, sessionData, setSessionData }) {
             {redirectPage}
         </Container >
     )
-
 }
