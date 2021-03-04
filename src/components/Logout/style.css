@@ -4,4 +4,6 @@ button.btn.logout_button {
     height: 32px;
     padding-top: 0px;
     font-size: 12px;
+    background-color: transparent !important;
+    box-shadow: none !important;
 }

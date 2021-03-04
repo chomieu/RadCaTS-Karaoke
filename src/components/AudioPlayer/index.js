@@ -9,11 +9,10 @@ import moment from "moment";
 import "./style.css"
 
 
-function AudioPlayer({ userData, setUserData, sessionData, isPlaying, setIsPlaying, handlePlaySound, setStart, audio }) {
+function AudioPlayer({ sessionData, isPlaying, setIsPlaying, handlePlaySound, start, setStart, audio, pts, setPts, lyrics, hidePlayBtn }) {
 
-    const { curTime, duration, setClickedTime } = useAudioPlayer( isPlaying, setIsPlaying, audio );
+    const { curTime, duration, setClickedTime } = useAudioPlayer(isPlaying, setIsPlaying, audio);
     const [language, setLanguage] = useState('en-Us')
-    const [pts, setPts] = useState({ pts: 0 })
 
     const formatDuration = (duration) => {
         return moment
@@ -21,14 +20,20 @@ function AudioPlayer({ userData, setUserData, sessionData, isPlaying, setIsPlayi
             .format("mm:ss", { trim: false });
     }
 
+    useEffect(() => {
+
+        console.log(pts.pts)
+
+    }, [])
+
     const handlePlay = () => {
         console.log('play')
         setIsPlaying(true)
     }
-    const handlePause = () => {
-        console.log('pause');
-        setIsPlaying(false)
-    }
+    // const handlePause = () => {
+    //     console.log('pause');
+    //     setIsPlaying(false)
+    // }
 
     return (
         <div className="container">
@@ -41,6 +46,7 @@ function AudioPlayer({ userData, setUserData, sessionData, isPlaying, setIsPlayi
 
             <KaraokeBox
                 pts={pts}
+                lyrics={lyrics}
                 setPts={setPts}
                 curTime={curTime}
                 isPlaying={isPlaying}
@@ -52,14 +58,16 @@ function AudioPlayer({ userData, setUserData, sessionData, isPlaying, setIsPlayi
             <AudioBottom
                 formatDuration={formatDuration}
                 sessionData={sessionData}
-                handlePause={handlePause}
                 handlePlay={handlePlay}
                 duration={duration}
                 isPlaying={isPlaying}
+                setIsPlaying={setIsPlaying}
                 curTime={curTime}
                 pts={pts}
                 handlePlaySound={handlePlaySound}
+                start={start}
                 setStart={setStart}
+                hidePlayBtn={hidePlayBtn}
             />
 
         </div>

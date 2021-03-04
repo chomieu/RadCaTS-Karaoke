@@ -107,8 +107,8 @@ function Search({ userData }) {
 
                     {formInputs.value
 
-                        ? <Button onClick={handleLyrics}>Setup Lyrics</Button>
-                        : <Button disabled>...</Button>
+                        ? <Button className="btn_purple" onClick={handleLyrics}>Get started!</Button>
+                        : <Button className="btn_purple" disabled>Select a song</Button>
 
                     }
 

@@ -1,73 +1,57 @@
-# Getting Started with Create React App
+# RadCaTS Karaoke
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Table of Contents
+1. [Description](#description)
+2. [Authors](#authors)
+3. [Technologies](#technologies)
+4. [Installation](#installation)
+5. [Usage](#usage)
+6. [Contributing](#contributing)
+7. [Tests](#tests)
+8. [License](#license)
+## Description
+A full-featured social karaoke app that dynamically loads content using the YouTube Music API, allows for custom lyric file generation, provides a hub for group sessions, and incorporates 3D elements. Built for the University of Washington's Winter 2020/21 Coding Bootcamp.
 
-## Available Scripts
+## Authors
 
-In the project directory, you can run:
+| Name | Email  | Github  | LinkedIn |
+| :--: | :----: | :-----: | :------: |
+| Samuel Fox | -- | [![Github](./assets/github.png)](https://github.com/samuelfox1) | [![LinkedIn](./assets/linkedin.png)](https://www.linkedin.com/in/samuel-fox-tacoma/) |
+| Timothy M. Keller | -- | [![Github](./assets/github.png)](https://github.com/tmkeller) | [![LinkedIn](./assets/linkedin.png)](https://linkedin.com/in/tim-keller-3ab55bb1/) |
+| Chomie Usaneerungrueng | -- | [![Github](./assets/github.png)](https://github.com/chomieu) | [![LinkedIn](./assets/linkedin.png)](https://www.linkedin.com/in/chomieu/) |
+| Rita Zhu | -- | [![Github](./assets/github.png)](https://github.com/zhuxiaoyu1019) | [![LinkedIn](./assets/linkedin.png)](https://www.linkedin.com/in/rita-z-2495b01a1//) |
+<br>
 
-### `npm start`
+## Technologies
+![javascript](https://img.shields.io/badge/javascript-83.7%25-yellow)
+![css](https://img.shields.io/badge/css-11.3%25-purple)
+![html](https://img.shields.io/badge/html-5.0%25-orange)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### Notable Dependencies
+- Axios: For querying the API backend.
+- Express: Runs the group session server.
+- jDataView: Simplifies binary file reading for audio signal processing.
+- Materialize: Front-end CSS framework.
+- Moment: For date and time objects.
+- React: Front-end framework/library
+- React Speech Recognition: Speech recognition API for scoring singer accuracy.
+- React Three Fiber: A rendering library to simplify React integration with 3D elements built with Three.js.
+- RXJS: Provides async functionality for the useMousePosition utility.
+- Three: NPM package for Three.js, a 3D graphics library for WebGL.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Installation
+Clone from git into your chosen directory and install dependencies with npm i. Frontend and backend are located in separate repositories and should be installed on separate servers. The backend requires a local MongoDB installation. Both can be run with npm start.
+[Frontend Repository](https://github.com/chomieu/RadCaTS-Karaoke)
+[Backend Repository](https://github.com/chomieu/RadCaTS-Karaoke-API)
 
-### `npm test`
+## Usage
+The landing page will prompt the user to create or sign in with login credentials. Next you will be prompted to find a song. This page searches our Cloudinary storage for matches to the user input, then loads it or attempts to download it if not there. Next, you will be prompted to generate a lyrics file if one is not present using our lyrics file generator. Finally, the user moves to the actual session where the play button controls music playback and lyrics are displayed onscreen. Other users can join this session by entering the session URL, and the site provides functionality to share URLs with other users through email.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Contributing
+Fork our git, and contact the repository owner about pull requests.
 
-### `npm run build`
+## Tests
+No testing suite is designated at this time.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-
-
-.
+## License
+No license is provided for this software

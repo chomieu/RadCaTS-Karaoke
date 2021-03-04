@@ -4,7 +4,7 @@ import LyricsContainer from "../LyricsContainer/"
 import "./style.css"
 
 
-function KaraokeBox({ curTime, isPlaying, pts, setPts, language, sessionData }) {
+function KaraokeBox({ curTime, isPlaying, pts, setPts, language, sessionData, lyrics }) {
 
     // store user mic inputs here with timestamp
     // Note: time is at time of printing, not time of recording start
@@ -39,9 +39,9 @@ function KaraokeBox({ curTime, isPlaying, pts, setPts, language, sessionData }) 
             // make copy of 'userInput', collect new data object and add to copy.
             var copy = [...userInput]
             var thisInput = {}
-            copy[copy.length - 1].vocals = finalTranscript
+            copy[copy.length - 1].text = finalTranscript
             thisInput.time = Math.floor(curTime)
-            thisInput.vocals = null
+            thisInput.text = null
             copy.push(thisInput)
             // set updated copy as new state
             setUserInput(copy)
@@ -61,13 +61,17 @@ function KaraokeBox({ curTime, isPlaying, pts, setPts, language, sessionData }) 
             <div className="row player left-align">
                 <div className="col s12">
 
+
                     <LyricsContainer
-                        pts={pts.pts}
+                        pts={pts}
                         setPts={setPts}
+                        lyrics={lyrics}
                         curTime={curTime}
                         isPlaying={isPlaying}
                         userInput={userInput}
+                        sessionData={sessionData}
                     />
+
 
                 </div>
             </div>

@@ -1,18 +1,16 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useParams, Redirect } from "react-router-dom";
 import { Button, Container, Textarea } from 'react-materialize';
-import Preloader from '../components/Preloader'
+import Header from "../components/Header";
 import API from "../utils/API";
 import "../App.css"
 
-
-
-export default function EditLyrics({ userData, sessionData, setSessionData }) {
+export default function EditLyrics({ userData, setUserData, sessionData, setSessionData, setIsPlaying }) {
 
     const [message, setMessage] = useState(`loading . . .`)
-    const [redirectPage, setRedirectPage] = useState()
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(false)
+    const [redirectPage, setRedirectPage] = useState()
     const { id } = useParams();
     const [lyrics, setLyrics] = useState([]);
     const [audioSrc, setAudioSrc] = useState();
@@ -25,6 +23,7 @@ export default function EditLyrics({ userData, sessionData, setSessionData }) {
             .then((data) => {
                 setSessionData({
                     ...sessionData,
+                    hostId: data.data.host,
                     mixed: data.data.karaokeSong.mixed,
                     songId: data.data.karaokeSong._id,
                     lyrics: [`[ti:${data.data.karaokeSong.name}]`, `[ar:${data.data.karaokeSong.artist}]`]
@@ -35,7 +34,7 @@ export default function EditLyrics({ userData, sessionData, setSessionData }) {
                 API.getLyricsBySong(data.data.karaokeSong._id)
                     .then(lrcFiles => {
                         setLyricsFile({ file: lrcFiles.data, len: lrcFiles.data.length })
-                        console.log(lrcFiles.data)
+                        // console.log(lrcFiles.data)
                     })
                     .catch(err => {
                         console.log(err)
@@ -43,7 +42,7 @@ export default function EditLyrics({ userData, sessionData, setSessionData }) {
             })
             .catch(err => {
                 console.log('session response error')
-                setMessage('were sorry, \nsomething went wrong  :\'(')
+                setMessage('we\'re sorry, \nsomething went wrong  :\'(')
                 setLoading(false)
                 setError(true)
                 console.log(err)
@@ -51,12 +50,12 @@ export default function EditLyrics({ userData, sessionData, setSessionData }) {
     }
 
     useEffect(() => {
-        console.log('startSession', id)
         startSession();
+        setLyrics([]);
     }, [])
 
     const handleSkip = () => {
-        setRedirectPage(<Redirect to={`/api/session/${sessionData.sessionId}`} />)
+        setRedirectPage(<Redirect to={`/api/session/${id}`} />)
     }
 
     const handleLyricsChange = (e) => {
@@ -125,24 +124,19 @@ export default function EditLyrics({ userData, sessionData, setSessionData }) {
             lyrics: fullLyricStr
         }
         if (lyricsFile.length !== 0) {
-            console.log(lyricsFile)
             const creatorFile = lyricsFile.file.find(file => file.creator._id === sessionData.hostId)
-            console.log(creatorFile)
             if (creatorFile) {
                 API.updateLyrics(lyricsData)
                     .then(data => {
-                        console.log("update lyrics", data)
-                        console.log("lyrcis updated")
                         applyLyrics(data.data._id)
                     })
                     .catch(err => {
                         console.log("lyrics update err:", err)
                     })
             } else {
+                console.log("144 else")
                 API.uploadLyrics(lyricsData)
                     .then(data => {
-                        console.log("upload lyrics", data)
-                        console.log("lyrcis uploaded")
                         applyLyrics(data.data._id)
                     })
                     .catch(err => {
@@ -154,19 +148,13 @@ export default function EditLyrics({ userData, sessionData, setSessionData }) {
 
     const applyLyrics = (lyricsId) => {
         const data = {
-            sessionId: sessionData.sessionId,
+            sessionId: id,
             lyricsId: lyricsId
         }
-        console.log("apply lyrics:", data)
         API.addLyricsToSession(data)
             .then(() => {
-                console.log("add lyrics to session")
-                API.getLyricsById(lyricsId)
-                    .then(lyricsJSON => {
-                        const newLyrics = sessionData.lyrics.concat(lyricsJSON.data[0].lyrics.lines)
-                        setSessionData({ ...sessionData, lyrics: newLyrics })
-                        setRedirectPage(<Redirect to={`/api/session/${id}`} />)
-                    })
+                // console.log("add lyrics to session")
+                setRedirectPage(<Redirect to={`/api/session/${id}`} />)
             })
             .catch(err => {
                 console.log(err)
@@ -174,53 +162,53 @@ export default function EditLyrics({ userData, sessionData, setSessionData }) {
     }
 
     return (
-        <Container className="pageContents">
+        <Container className="pageContents lyrics">
+            <Header userData={userData} setUserData={setUserData} />
             {lyricsFile.len === 0 ?
-                <>
+                <div>
                     <h1>Lyrics List</h1>
                     <Container>
                         <h2>No lyrics avaliable</h2>
                     </Container>
-                    <Button onClick={() => (setLyricsFile({ ...lyricsFile, len: -1 }))}>Make My Own Lyrics</Button>
-                </>
+                    <Button className="btn_purple" onClick={() => (setLyricsFile({ ...lyricsFile, len: -1 }))}>Make My Own Lyrics</Button>
+                </div>
                 : lyricsFile.len > 0 ?
-                    <>
+                    <div>
                         <h1>Lyrics List</h1>
-                        <Container style={{ height: "500px", overflowY: "scroll" }}>
-                            {lyricsFile.file.map((file, i) => (<Button key={i} data-lrc={file._id} onClick={(e) => applyLyrics(e.target.dataset.lrc)}>{file.associatedSong.name} - {file.associatedSong.artist} BY {file.creator.username}</Button>))}
+                        <Container style={{ height: "200px", overflowY: "scroll" }}>
+                            {lyricsFile.file.map((file, i) => (<Button className="btn_blue" key={i} data-lrc={file._id} onClick={(e) => applyLyrics(e.target.dataset.lrc)}>{file.associatedSong.name} - {file.associatedSong.artist} BY {file.creator.username}</Button>))}
                         </Container>
-                        <Button onClick={() => (setLyricsFile({ ...lyricsFile, len: -1 }))}>Make My Own Lyrics</Button>
-                    </>
-                    :
-                    <>
-                        <h1>Lyrics Editor Tool</h1>
+                        <Button className="btn_purple" onClick={() => (setLyricsFile({ ...lyricsFile, len: -1 }))}>Make My Own Lyrics</Button>
+                    </div>
+                    : lyricsFile.len === -1 ?
                         <div>
-                            <Textarea name="lyrics" onChange={handleLyricsChange} placeholder="type or paste lyrics here" s={12} style={{ maxHeight: "100px", overflowY: "scroll" }} />
+                            <h1>Lyrics Editor Tool</h1>
+                            <div>
+                                <Textarea name="lyrics" onChange={handleLyricsChange} placeholder="type or paste lyrics here" s={12} style={{ maxHeight: "80px", overflowY: "scroll" }} />
+                            </div>
+
+                            <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+                                <audio src={audioSrc} ref={audio} controls></audio>
+                                <Button className="btns-lyrics btn_purple" onClick={() => handleAudioPace("-")}>&lt;&lt; 2.0s</Button>
+                                <Button className="btns-lyrics btn_purple" onClick={() => handleAudioPace("+")}>&gt;&gt; 2.0s</Button>
+                            </div>
+                            <div>
+                                <Button className="btns-lyrics btn_purple" onClick={() => editTimestamp("add")}>add timestamp</Button>
+                                <Button className="btns-lyrics btn_purple" onClick={() => editTimestamp("remove")}>remove timestamp</Button>
+                                <Button className="btns-lyrics btn_purple" onClick={() => setIndex(index > 0 ? index = index - 1 : index = 0)}>previous line</Button>
+                                <Button className="btns-lyrics btn_purple" onClick={() => setIndex(index = index + 1)}>next line</Button>
+                                <Button className="btns-lyrics btn_purple" onClick={clearAll}>clear all timestamps</Button>
+                            </div>
+                            <div style={{ overflowY: "scroll", height: "250px", overflow: "-moz-scrollbars-none" }}>{lyrics.map((lyrics, i) => i === index ? <p key={i} style={{ backgroundColor: "beige" }}>{lyrics}</p> : <p key={i}>{lyrics}</p>)}</div>
+                            <Button className="btns-lyrics btn_purple" onClick={handleSkip}>Skip</Button>
+                            <Button className="btns-lyrics btn_purple" onClick={uploadFile}> Upload and Start Session</Button>
+                            <Button
+                                onClick={() => (setLyricsFile({ ...lyricsFile, len: lyricsFile.file.length }))}
+                            > Back to Lyrics List</Button>
                         </div>
-                        <div>
-                            <audio src={audioSrc} ref={audio} controls></audio>
-                        </div>
-                        <div style={{ height: "50px" }}>
-                            <Button onClick={() => handleAudioPace("-")}>&lt;&lt; 2.0s</Button>
-                            <Button onClick={() => handleAudioPace("+")}>&gt;&gt; 2.0s</Button>
-                        </div>
-                        <div>
-                            <Button onClick={() => editTimestamp("add")}>add timestamp</Button>
-                            <Button onClick={() => editTimestamp("remove")}>remove timestamp</Button>
-                            <Button onClick={() => setIndex(index > 0 ? index = index - 1 : index = 0)}>previous line</Button>
-                            <Button onClick={() => setIndex(index = index + 1)}>next line</Button>
-                            <Button onClick={clearAll}>clear all timestamps</Button>
-                        </div>
-                        <div style={{ overflowY: "scroll", height: "250px" }}>{lyrics.map((lyrics, i) => i === index ? <p key={i} style={{ backgroundColor: "beige" }}>{lyrics}</p> : <p key={i}>{lyrics}</p>)}</div>
-                        <Button onClick={() => setRedirectPage(<Redirect to={`/api/session/${id}`} />)}>Skip</Button>
-                        <Button onClick={uploadFile}> Upload and Start Session</Button>
-                        <Button
-                            onClick={() => (setLyricsFile({ ...lyricsFile, len: lyricsFile.file.length }))}
-                        > Back to Lyrics List</Button>
-                    </>
+                        : ""
             }
             {redirectPage}
         </Container >
     )
-
 }

@@ -1,6 +1,9 @@
 const axios = require("axios")
 
+
 const URL_PREFIX = 'https://radcats-karaoke-api.herokuapp.com'
+
+
 // const URL_PREFIX = 'https://radcats-karaoke-backend.herokuapp.com'
 // const URL_PREFIX = 'http://localhost:8080';
 
@@ -48,7 +51,10 @@ const API = {
         return axios.put(`${URL_PREFIX}/api/lyrics`, lyrics)
     },
     addLyricsToSession: data => {
-        return axios.put(`${URL_PREFIX}/api/session/lyrics/${data.sessionId}`, data.lyricsId)
+        return axios.put(`${URL_PREFIX}/api/session/lyrics/${data.sessionId}`, data)
+    },
+    updateProfilePicture: data => {
+        return axios.put(`${URL_PREFIX}/api/pfp/${data.id}`, data)
     }
 }
 
