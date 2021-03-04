@@ -5,7 +5,6 @@ import { PlayCircleFilled } from "@material-ui/icons";
 
 export default function Play({ handleClick, handlePlaySound, setStart }) {
     const clickEvent = (e) => {
-        // e.preventDefault()
         handleClick()
         handlePlaySound()
         console.log("clicked")

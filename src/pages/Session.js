@@ -92,7 +92,7 @@ export default function Session({ userData, setUserData, sessionData, setSession
 
     useEffect(() => {
         function recieveMsg(m) {
-            console.log(m)
+            console.log("recieved msg", m)
             console.log(start)
             if (start) {
                 let time = 3
