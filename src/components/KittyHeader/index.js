@@ -1,27 +1,9 @@
 import React, { Suspense, useState } from "react";
 import { Canvas, useThree } from "react-three-fiber";
-import { CubeTextureLoader } from "three";
-// import { OrbitControls } from "@react-three/drei";
 import './KittyHeader.css';
 import Kitty from "../3D/Kitty";
 import ManageLights from "../3D/ManageLights";
-// import { OrbitControls } from "@react-three/drei"
-
-function SkyBox() {
-  const { scene } = useThree();
-  const loader = new CubeTextureLoader();
-
-  const texture = loader.load([
-    "/3d/tronbg.png",
-    "/3d/tronbg.png",
-    "/3d/tronbg.png",
-    "/3d/tronbg.png",
-    "/3d/tronbg.png",
-    "/3d/tronbg.png"
-  ])
-  scene.background = texture;
-  return null;
-}
+// import { OrbitControls } from "@react-three/drei";
 
 function KittyHeader( { isPlaying } ) {
 
