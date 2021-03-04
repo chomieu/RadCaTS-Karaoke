@@ -9,9 +9,9 @@ import moment from "moment";
 import "./style.css"
 
 
-function AudioPlayer({ userData, setUserData, sessionData, setSessionData, isPlaying, setIsPlaying }) {
+function AudioPlayer({ sessionData, isPlaying, setIsPlaying, handlePlaySound, setStart, audio }) {
 
-    const { curTime, duration, setClickedTime } = useAudioPlayer(isPlaying, setIsPlaying);
+    const { curTime, duration, setClickedTime } = useAudioPlayer( isPlaying, setIsPlaying, audio );
     const [language, setLanguage] = useState('en-Us')
     const [pts, setPts] = useState({ pts: 0 })
 
@@ -51,7 +51,6 @@ function AudioPlayer({ userData, setUserData, sessionData, setSessionData, isPla
 
             {/* <Bar curTime={curTime} duration={duration} onTimeUpdate={(time) => setClickedTime(time)} /> */}
             <AudioBottom
-
                 formatDuration={formatDuration}
                 sessionData={sessionData}
                 handlePlay={handlePlay}
@@ -59,7 +58,8 @@ function AudioPlayer({ userData, setUserData, sessionData, setSessionData, isPla
                 isPlaying={isPlaying}
                 curTime={curTime}
                 pts={pts}
-
+                handlePlaySound={handlePlaySound}
+                setStart={setStart}
             />
 
         </div>

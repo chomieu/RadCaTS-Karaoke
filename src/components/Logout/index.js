@@ -10,8 +10,8 @@ export default function logout({ userData, setUserData }) {
     // remove token from local storage
     // reset userData
     const logoutUser = () => {
-        localStorage.removeItem("token");
-        setUserData({ isLoggedIn: false, email: '', token: '', id: '' })
+        localStorage.removeItem("radcatsInfo");
+        setUserData({})
     }
 
     return (

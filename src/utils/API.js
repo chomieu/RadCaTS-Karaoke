@@ -1,10 +1,8 @@
 const axios = require("axios")
 
-const URL_PREFIX = 'https://radcats-karaoke-api.herokuapp.com' //Chomie
-
-
-// const URL_PREFIX = 'https://radcats-karaoke-backend.herokuapp.com' //Rita deploy
-// const URL_PREFIX = 'http://localhost:8080'
+const URL_PREFIX = 'https://radcats-karaoke-api.herokuapp.com'
+// const URL_PREFIX = 'https://radcats-karaoke-backend.herokuapp.com'
+// const URL_PREFIX = 'http://localhost:8080';
 
 
 
@@ -37,6 +35,21 @@ const API = {
             }
         })
     },
+    getLyricsBySong: songId => {
+        return axios.get(`${URL_PREFIX}/api/lyrics/${songId}`)
+    },
+    getLyricsById: id => {
+        return axios.get(`${URL_PREFIX}/api/lyric/${id}`)
+    },
+    uploadLyrics: lyrics => {
+        return axios.post(`${URL_PREFIX}/api/lyrics`, lyrics)
+    },
+    updateLyrics: lyrics => {
+        return axios.put(`${URL_PREFIX}/api/lyrics`, lyrics)
+    },
+    addLyricsToSession: data => {
+        return axios.put(`${URL_PREFIX}/api/session/lyrics/${data.sessionId}`, data)
+    }
 }
 
 export default API

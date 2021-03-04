@@ -3,7 +3,7 @@ import React from "react";
 import Play from "./Play";
 import Pause from "./Pause";
 
-function AudioBottom({ pts, isPlaying, handlePlay, sessionData }) {
+function AudioBottom({ pts, isPlaying, handlePause, handlePlay, handlePlaySound, setStart }) {
 
     return (
         <>
@@ -19,9 +19,14 @@ function AudioBottom({ pts, isPlaying, handlePlay, sessionData }) {
                     {/* <span className="bar__time">{formatDuration(curTime)} / {formatDuration(duration)}</span> */}
 
                     <div className="right-align">
-
-                        {!isPlaying && !sessionData.isActive ? <Play handleClick={handlePlay} /> : null}
-
+                        {isPlaying
+                            ? <Pause handleClick={handlePause} />
+                            : <Play 
+                                handleClick={handlePlay} 
+                                handlePlaySound={handlePlaySound}
+                                setStart={setStart}
+                            />
+                        }
                     </div>
                 </div>
             </div>

@@ -6,8 +6,7 @@ import SignUp from '../components/SignUp';
 import LogIn from '../components/LogIn';
 import "../App.css"
 
-export default function Landing({ loginSuccess, userData, setUserData }) {
-
+export default function Landing({ userData, setUserData, loginSuccess }) {
     return (
         <div className="pageContents">
             {userData.isLoggedIn ? <Redirect to="/search" /> : null}
