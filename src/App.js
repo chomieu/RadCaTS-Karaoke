@@ -60,7 +60,7 @@ function App() {
 
       <KittyHeader isPlaying={isPlaying} />
       <Switch>
-        {/* < Header userData={userData} setUserData={setUserData} /> */}
+
         <Route exact path="/">
           <Landing
             userData={userData}
@@ -93,6 +93,13 @@ function App() {
             setUserData={setUserData}
             sessionData={sessionData}
             setSessionData={setSessionData}
+          />
+        </Route>
+
+        <Route exact path="/api/user/:id">
+          <Session
+            userData={userData}
+            setUserData={setUserData}
           />
         </Route>
 

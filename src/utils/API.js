@@ -52,6 +52,9 @@ const API = {
     },
     addLyricsToSession: data => {
         return axios.put(`${URL_PREFIX}/api/session/lyrics/${data.sessionId}`, data)
+    },
+    updateProfilePicture: url => {
+        return axios.put(`${URL_PREFIX}/api/pfp/:id`, url)
     }
 }
 
