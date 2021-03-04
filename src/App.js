@@ -73,6 +73,7 @@ function App() {
           <SearchPage
             userData={userData}
             setUserData={setUserData}
+            setIsPlaying={setIsPlaying}
           />
         </Route>
 
