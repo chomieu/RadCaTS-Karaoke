@@ -3,7 +3,7 @@ import React from "react";
 import Play from "./Play";
 import Pause from "./Pause";
 
-function AudioBottom({ pts, isPlaying, handlePause, handlePlay, handlePlaySound, setStart }) {
+function AudioBottom({ pts, isPlaying, setIsPlaying, handlePause, handlePlay, handlePlaySound, setStart }) {
 
     return (
         <>
@@ -23,6 +23,7 @@ function AudioBottom({ pts, isPlaying, handlePause, handlePlay, handlePlaySound,
                             handleClick={handlePlay} 
                             handlePlaySound={handlePlaySound}
                             setStart={setStart}
+                            setIsPlaying={setIsPlaying}
                         />
                     </div>
                 </div>

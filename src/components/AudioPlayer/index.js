@@ -61,6 +61,7 @@ function AudioPlayer({ sessionData, isPlaying, setIsPlaying, handlePlaySound, se
                 handlePlay={handlePlay}
                 duration={duration}
                 isPlaying={isPlaying}
+                setIsPlaying={setIsPlaying}
                 curTime={curTime}
                 pts={pts}
                 handlePlaySound={handlePlaySound}
