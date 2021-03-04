@@ -149,7 +149,7 @@ export default function Session({ userData, setUserData, sessionData, setSession
                             <Button onClick={handleFinish}>Finish</Button>
                         </Col>
                         <Col s={12} m={6}>
-                            Leaderboard
+                            <h4>Leaderboard</h4>
                             {console.log("session", sessionData)}
                             <div>
                                 {leaderboard}
