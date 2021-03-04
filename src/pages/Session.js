@@ -144,7 +144,8 @@ export default function Session({ userData, setUserData, sessionData, setSession
                 :
                 <>
                     < Header userData={userData} setUserData={setUserData} setIsPlaying={setIsPlaying} />
-                    <Row style={{ marginTop: "5%" }}>
+                    <Row className="content_row">
+                        {console.log(start)}
                         <Col s={12} m={6}>
                             <AudioPlayer
                                 pts={pts}

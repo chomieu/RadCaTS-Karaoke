@@ -25,9 +25,15 @@ function AudioBottom({ pts, isPlaying, setIsPlaying, handlePause, handlePlay, ha
                 </Col>
 
                 <Col className="s4" >
+<<<<<<< HEAD
                     {isPlaying ?
                         <Button className="finish_button" onClick={handleFinish}>Finish</Button>
                         : <Button className="ready_button btn_purple" style={start ? { backgroundColor: "red" } : null} onClick={handleStart}>Ready</Button>
+=======
+                    { isPlaying ? 
+                        <Button className="finish_button btn_blue" onClick={handleFinish}>Finish</Button>
+                        : <Button className="ready_button btn_purple" style={ start ? { backgroundColor: "red" } : null } onClick={handleStart}>Ready</Button>
+>>>>>>> dev2
                     }
                 </Col>
 

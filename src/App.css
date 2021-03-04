@@ -18,6 +18,10 @@ body {
   transform: translate(-50%, 0%);
 }
 
+.content_row {
+  margin-top: 5px;
+}
+
 header {
   padding-top: 3vh;
   font-family: "Rock Salt", cursive;
@@ -34,6 +38,10 @@ button.btn_purple {
   margin-bottom: 0;
   background-color: rgb(89, 41, 167);
   border-radius: .5rem;
+}
+
+button.btn_blue {
+  background-color: #36618c;
 }
 
 h1 {
