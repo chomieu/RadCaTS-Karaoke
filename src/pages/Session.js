@@ -129,7 +129,8 @@ export default function Session({ userData, setUserData, sessionData, setSession
                 <>
                     {console.log(sessionData)}
                     < Header userData={userData} setUserData={setUserData} />
-                    <Row>
+                    <Row style={{ marginTop: "5%" }}>
+                        {console.log(start)}
                         <Col s={12} m={6}>
                             <AudioPlayer
                                 isPlaying={isPlaying}
@@ -142,7 +143,9 @@ export default function Session({ userData, setUserData, sessionData, setSession
                                 pts={pts}
                                 setPts={setPts}
                             />
-                            {countdown}
+                            <div className={countdown === "hide" ? "counter-layer hidden" : "counter-layer"}>
+                                {countdown}
+                            </div>
                             <Button onClick={handleFinish}>Finish</Button>
                         </Col>
                         <Col s={12} m={6}>
