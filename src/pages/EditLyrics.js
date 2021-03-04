@@ -133,7 +133,7 @@ export default function EditLyrics({ userData, sessionData, setSessionData }) {
                     .then(data => {
                         console.log("update lyrics", data)
                         console.log("lyrcis updated")
-                        applyLyrics(data.data.lyrics._id)
+                        applyLyrics(data.data._id)
                     })
                     .catch(err => {
                         console.log("lyrics update err:", err)
@@ -143,7 +143,7 @@ export default function EditLyrics({ userData, sessionData, setSessionData }) {
                     .then(data => {
                         console.log("upload lyrics", data)
                         console.log("lyrcis uploaded")
-                        applyLyrics(data.data.lyrics._id)
+                        applyLyrics(data.data._id)
                     })
                     .catch(err => {
                         console.log("lyrics upload err:", err)
@@ -157,10 +157,16 @@ export default function EditLyrics({ userData, sessionData, setSessionData }) {
             sessionId: sessionData.sessionId,
             lyricsId: lyricsId
         }
+        console.log("apply lyrics:", data)
         API.addLyricsToSession(data)
             .then(() => {
                 console.log("add lyrics to session")
-                setRedirectPage(<Redirect to={`/api/session/${sessionData.sessionId}`} />)
+                API.getLyricsById(lyricsId)
+                    .then(lyricsJSON => {
+                        const newLyrics = sessionData.lyrics.concat(lyricsJSON.data[0].lyrics.lines)
+                        setSessionData({ ...sessionData, lyrics: newLyrics })
+                        setRedirectPage(<Redirect to={`/api/session/${id}`} />)
+                    })
             })
             .catch(err => {
                 console.log(err)
@@ -169,21 +175,21 @@ export default function EditLyrics({ userData, sessionData, setSessionData }) {
 
     return (
         <Container className="pageContents">
-            {lyricsFile.len > 0 ?
+            {lyricsFile.len === 0 ?
                 <>
                     <h1>Lyrics List</h1>
-                    <Container style={{ height: "500px", overflowY: "scroll" }}>
-                        {lyricsFile.file.map((file, i) => (<Button key={i} data-lrc={file._id} onClick={(e) => applyLyrics(e.target.dataset.lrc)}>{file.associatedSong.name} - {file.associatedSong.artist} BY {file.creator.username}</Button>))}
+                    <Container>
+                        <h2>No lyrics avaliable</h2>
                     </Container>
-                    <Button onClick={() => (setLyricsFile({ ...lyricsFile, len: -1 }))}>Made My Own Lyrics</Button>
+                    <Button onClick={() => (setLyricsFile({ ...lyricsFile, len: -1 }))}>Make My Own Lyrics</Button>
                 </>
-                : lyricsFile.len === 0 ?
+                : lyricsFile.len > 0 ?
                     <>
                         <h1>Lyrics List</h1>
-                        <Container>
-                            <h2>No lyrics avaliable</h2>
+                        <Container style={{ height: "500px", overflowY: "scroll" }}>
+                            {lyricsFile.file.map((file, i) => (<Button key={i} data-lrc={file._id} onClick={(e) => applyLyrics(e.target.dataset.lrc)}>{file.associatedSong.name} - {file.associatedSong.artist} BY {file.creator.username}</Button>))}
                         </Container>
-                        <Button onClick={() => (setLyricsFile({ ...lyricsFile, len: -1 }))}>Made My Own Lyrics</Button>
+                        <Button onClick={() => (setLyricsFile({ ...lyricsFile, len: -1 }))}>Make My Own Lyrics</Button>
                     </>
                     :
                     <>

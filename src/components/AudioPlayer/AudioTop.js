@@ -9,7 +9,7 @@ function AudioTop({ sessionData }) {
     return (
         <div className="row player top">
             <div className="col s12">
-                <SongInfo songName={sessionData.name} songArtist={sessionData.artist} />
+                <SongInfo songName={sessionData.songName} songArtist={sessionData.artist} />
             </div>
         </div>
     );

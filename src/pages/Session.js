@@ -13,10 +13,10 @@ import io from "socket.io-client"
 const socket = io.connect("http://localhost:3001")
 const audio = new Audio()
 
-export default function Session({ userData, setUserData, isPlaying, setIsPlaying }) {
+export default function Session({ userData, setUserData, sessionData, setSessionData, isPlaying, setIsPlaying }) {
 
     const { id } = useParams()
-    const [sessionData, setSessionData] = useState()
+    // const [sessionData, setSessionData] = useState()
 
     const handleFinish = () => {
         // setIsPlaying(false) 
@@ -32,6 +32,7 @@ export default function Session({ userData, setUserData, isPlaying, setIsPlaying
     const startSession = () => {
         API.startSession(id)
             .then((data) => {
+                console.log("sessionAPIcall", data)
                 setSessionData({
                     ...sessionData,
                     hostId: data.data.host,
@@ -42,7 +43,6 @@ export default function Session({ userData, setUserData, isPlaying, setIsPlaying
                     songId: data.data.karaokeSong._id,
                     lyrics: data.data.karaokeLyrics.lyrics
                 })
-                console.log("sessionAPIcall", data)
                 // data.data.karaokeSong.mixed;
             })
             .catch(err => {
@@ -127,7 +127,8 @@ export default function Session({ userData, setUserData, isPlaying, setIsPlaying
                 <Redirect to="/" />
                 :
                 <>
-                    <Header userData={userData} setUserData={setUserData} />
+                    {console.log(sessionData)}
+                    < Header userData={userData} setUserData={setUserData} />
                     <Row>
                         {console.log(start)}
                         <Col s={12} m={6}>
