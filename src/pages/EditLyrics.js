@@ -25,6 +25,7 @@ export default function EditLyrics({ userData, sessionData, setSessionData }) {
             .then((data) => {
                 setSessionData({
                     ...sessionData,
+                    hostId: data.data.host,
                     mixed: data.data.karaokeSong.mixed,
                     songId: data.data.karaokeSong._id,
                     lyrics: [`[ti:${data.data.karaokeSong.name}]`, `[ar:${data.data.karaokeSong.artist}]`]
@@ -124,6 +125,7 @@ export default function EditLyrics({ userData, sessionData, setSessionData }) {
             associatedSong: sessionData.songId,
             lyrics: fullLyricStr
         }
+        console.log(lyricsData)
         if (lyricsFile.length !== 0) {
             console.log(lyricsFile)
             const creatorFile = lyricsFile.file.find(file => file.creator._id === sessionData.hostId)
