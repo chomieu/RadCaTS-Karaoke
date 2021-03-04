@@ -5,7 +5,7 @@ import SearchPage from "./pages/SearchPage";
 import EditLyrics from "./pages/EditLyrics"
 import Session from "./pages/Session";
 import Landing from "./pages/Landing";
-import API from "./utils/API"
+import API from "./utils/API";
 import './App.css';
 
 function App() {
@@ -60,12 +60,13 @@ function App() {
 
       <KittyHeader isPlaying={isPlaying} />
       <Switch>
+
         <Route exact path="/">
-            <Landing
-              userData={userData}
-              setUserData={setUserData}
-              loginSuccess={loginSuccess}
-            />
+          <Landing
+            userData={userData}
+            setUserData={setUserData}
+            loginSuccess={loginSuccess}
+          />
         </Route>
 
         <Route exact path="/search">
@@ -92,6 +93,13 @@ function App() {
             setUserData={setUserData}
             sessionData={sessionData}
             setSessionData={setSessionData}
+          />
+        </Route>
+
+        <Route exact path="/api/user/:id">
+          <Session
+            userData={userData}
+            setUserData={setUserData}
           />
         </Route>
 

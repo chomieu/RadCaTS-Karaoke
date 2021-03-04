@@ -17,18 +17,13 @@ const audio = new Audio()
 
 export default function Session({ userData, setUserData, sessionData, setSessionData, isPlaying, setIsPlaying }) {
 
+    const [lyrics, setLyrics] = useState({ isLoaded: false })
     const { id } = useParams()
-    // const [sessionData, setSessionData] = useState()
-
-    const handleFinish = () => {
-        // setIsPlaying(false) 
-        console.log('finish') // send PUT request to /api/session/:id
-    }
 
     const startSession = () => {
         API.startSession(id)
             .then((data) => {
-                console.log("sessionAPIcall", data)
+                // console.log("sessionAPIcall", data)
                 setSessionData({
                     ...sessionData,
                     hostId: data.data.host,
@@ -39,7 +34,7 @@ export default function Session({ userData, setUserData, sessionData, setSession
                     songId: data.data.karaokeSong._id,
                     lyrics: data.data.karaokeLyrics
                 })
-                // data.data.karaokeSong.mixed;
+                setLyrics({ lyrics: data.data.karaokeLyrics.lyrics.lines, isLoaded: true })
             })
             .catch(err => {
                 console.log('session response error', err)
@@ -47,31 +42,32 @@ export default function Session({ userData, setUserData, sessionData, setSession
     }
 
     useEffect(() => {
-        console.log('startSession', id)
+        // console.log('startSession', id)
         startSession();
     }, [])
 
     // Live Session - Start
 
     const [member, setMember] = useState(userData)
-    const [allMembers, setAllMembers] = useState([])
     const [start, setStart] = useState(false)
     const [countdown, setCountdown] = useState()
     const [leaderboard, setLeaderboard] = useState()
-    const [score, setScore] = useState(0)
+    const [pts, setPts] = useState({ pts: 0 })
 
-    console.log("member", member)
-    console.log("userData", userData)
-
-    function handleNewMembers(users) {
-        setAllMembers(users)
-        setLeaderboard(users.map(u => { <MemberCard props={u} /> }))
+    function handlePts(users) {
+        users = users.sort((a, b) => (a.pts < b.pts) ? 1 : -1)
+        setLeaderboard(users.map(u => {
+            return <MemberCard
+                key={u.userId}
+                pfp={u.pfp}
+                username={u.username}
+                pts={u.pts}
+            />
+        }))
     }
 
     function handlePlaySound() {
-        console.log("handleplaysound")
-        console.log(sessionData.mixed)
-        socket.emit("start", id, { path: sessionData.mixed })
+        socket.emit("play", id, { path: sessionData.mixed })
     }
 
     useEffect(() => {
@@ -80,23 +76,23 @@ export default function Session({ userData, setUserData, sessionData, setSession
             member.id,
             member.username,
             member.profilePicture,
-            score,
-            (users) => handleNewMembers(users)
+            pts,
+            (users) => handlePts(users)
         )
     }, [userData])
 
     useEffect(() => {
         function recieveMsg(m) {
-            console.log("recieved msg", m)
-            console.log(start)
             if (start) {
                 let time = 3
                 setCountdown(time)
                 const timer = setInterval(() => {
-                    console.log(time)
-                    if (time === 0) {
-                        clearInterval(timer)
+                    if (time === 1) {
+                        time = time - 1
                         setCountdown("Start")
+                    } else if (time === 0) {
+                        clearInterval(timer)
+                        setCountdown("hide")
                     } else {
                         time = time - 1
                         setCountdown(time)
@@ -104,6 +100,7 @@ export default function Session({ userData, setUserData, sessionData, setSession
                 }, 1000)
                 setTimeout(() => {
                     audio.src = m.path
+                    setIsPlaying(true)
                     audio.play()
                 }, 5000)
             }
@@ -115,6 +112,14 @@ export default function Session({ userData, setUserData, sessionData, setSession
         }
     }, [start])
 
+    useEffect(() => {
+        socket.emit("points", id, member.id, pts, (users) => handlePts(users))
+    }, [pts])
+
+    useEffect(() => {
+        socket.on("leaderboard", handlePts)
+    }, [pts])
+
     // Live Session - Ends
 
     return (
@@ -124,8 +129,8 @@ export default function Session({ userData, setUserData, sessionData, setSession
                 :
                 <>
                     {console.log(sessionData)}
-                    < Header userData={userData} setUserData={setUserData} />
-                    <Row>
+                    < Header userData={userData} setUserData={setUserData} setIsPlaying={setIsPlaying} />
+                    <Row className="content_row">
                         {console.log(start)}
                         <Col s={12} m={6}>
                             <AudioPlayer
@@ -134,15 +139,21 @@ export default function Session({ userData, setUserData, sessionData, setSession
                                 sessionData={sessionData}
                                 userData={userData}
                                 handlePlaySound={handlePlaySound}
+                                start={start}
                                 setStart={setStart}
+                                lyrics={lyrics}
                                 audio={audio}
+                                pts={pts}
+                                setPts={setPts}
+                                hidePlayBtn={member.id !== sessionData.hostId ? "none" : "contents"}
                             />
-                            {countdown}
-                            <Button onClick={handleFinish}>Finish</Button>
+                            <div className={countdown === "hide" ? "counter-layer hidden" : "counter-layer"}>
+                                {countdown}
+                            </div>
                         </Col>
                         <Col s={12} m={6}>
-                            Leaderboard
-                            {console.log("session", sessionData)}
+                            <h4>Leaderboard</h4>
+                            {console.log( "session", sessionData, "leaderboard", leaderboard )}
                             <div>
                                 {leaderboard}
                             </div>
