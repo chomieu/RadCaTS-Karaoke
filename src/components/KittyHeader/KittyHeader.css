@@ -4,4 +4,6 @@ canvas {
     left: 0;
     width: auto !important;
     height: 100vh !important;
+    background: url('assets/tronbg.png') no-repeat center center;
+    background-size: cover;
 }

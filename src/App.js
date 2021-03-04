@@ -41,23 +41,20 @@ function App() {
 
   return (
     <Router>
-      <Switch>
 
+      <KittyHeader isPlaying={isPlaying} />
+      <Switch>
         <Route exact path="/">
-          <div>
-            <KittyHeader isPlaying={isPlaying} />
-            <Landing
-              userData={userData}
-              setUserData={setUserData}
-              loginSuccess={loginSuccess}
-            />
-          </div>
+          <Landing
+            userData={userData}
+            setUserData={setUserData}
+            loginSuccess={loginSuccess}
+          />
           {/* <Header userData={userData} setUserData={setUserData} /> */}
         </Route>
 
         <Route exact path="/search">
           {/* <Header userData={userData} setUserData={setUserData} /> */}
-          <KittyHeader isPlaying={isPlaying} />
           <SearchPage
             userData={userData}
             setUserData={setUserData}
@@ -66,7 +63,6 @@ function App() {
         </Route>
 
         <Route exact path="/lyrics/:id">
-          <KittyHeader isPlaying={isPlaying} />
           <EditLyrics
             userData={userData}
             setUserData={setUserData}
@@ -77,7 +73,6 @@ function App() {
         </Route>
 
         <Route exact path="/api/session/:id">
-          <KittyHeader isPlaying={isPlaying} />
           <Session
             isPlaying={isPlaying}
             setIsPlaying={setIsPlaying}

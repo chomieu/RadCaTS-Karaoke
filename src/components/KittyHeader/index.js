@@ -37,7 +37,6 @@ function KittyHeader( { isPlaying } ) {
         {/* <OrbitControls /> */}
         <Suspense fallback={null} >
           <Kitty isPlaying={isPlaying} position={[0, -2, 0]} />
-          <SkyBox />
         </Suspense>
       </Canvas>
     </>
