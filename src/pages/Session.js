@@ -150,6 +150,7 @@ export default function Session({ userData, setUserData, sessionData, setSession
                                 audio={audio}
                                 pts={pts}
                                 setPts={setPts}
+                                hidePlayBtn={member.id !== sessionData.hostId ? "none" : "contents"}
                             />
                             <div className={countdown === "hide" ? "counter-layer hidden" : "counter-layer"}>
                                 {countdown}

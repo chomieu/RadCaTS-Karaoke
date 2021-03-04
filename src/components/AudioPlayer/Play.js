@@ -3,7 +3,7 @@ import React from "react";
 import { PlayCircleFilled } from "@material-ui/icons";
 
 
-export default function Play({ handleClick, handlePlaySound, setStart }) {
+export default function Play({ handleClick, handlePlaySound, setStart, hidePlayBtn }) {
     const clickEvent = (e) => {
         handleClick()
         handlePlaySound()
@@ -14,6 +14,7 @@ export default function Play({ handleClick, handlePlaySound, setStart }) {
         <div>
             <button onClick={() => setStart(true)}>Ready</button>
             <button
+                style={{display: hidePlayBtn}}
                 className="player__button"
                 onClick={clickEvent}>
                 <PlayCircleFilled
