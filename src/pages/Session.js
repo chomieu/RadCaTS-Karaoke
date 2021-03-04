@@ -11,8 +11,8 @@ import "../App.css"
 import io from "socket.io-client"
 
 // Live Session Global Constants 
-const socket = io.connect("http://localhost:3001")
-// const socket = io.connect("http://radcats-karaoke-server.herokuapp.com")
+// const socket = io.connect("http://localhost:3001")
+const socket = io.connect("http://radcats-karaoke-server.herokuapp.com")
 const audio = new Audio()
 
 export default function Session({ userData, setUserData, sessionData, setSessionData, isPlaying, setIsPlaying }) {
@@ -58,17 +58,17 @@ export default function Session({ userData, setUserData, sessionData, setSession
     const [leaderboard, setLeaderboard] = useState()
     const [pts, setPts] = useState({ pts: 0 })
 
-    // function handlePts(users) {
-    //     setLeaderboard(users.map(u => {
-    //         return <MemberCard
-    //             key={u.userId}
-    //             pfp={u.pfp}
-    //             username={u.username}
-    //             pts={u.pts}
-    //         />
-    //     }
-    //     ))
-    // }
+    function handlePts(users) {
+        setLeaderboard(users.map(u => {
+            return <MemberCard
+                key={u.userId}
+                pfp={u.pfp}
+                username={u.username}
+                pts={u.pts}
+            />
+        }
+        ))
+    }
 
     function handlePlaySound() {
         socket.emit("play", id, { path: sessionData.mixed })
@@ -81,8 +81,7 @@ export default function Session({ userData, setUserData, sessionData, setSession
             member.username,
             member.profilePicture,
             pts,
-            (users) => console.log("handlePts")
-            // handlePts(users)
+            (users) => handlePts(users)
         )
     }, [userData])
 
@@ -91,9 +90,12 @@ export default function Session({ userData, setUserData, sessionData, setSession
             let time = 3
             setCountdown(time)
             const timer = setInterval(() => {
-                if (time === 0) {
-                    clearInterval(timer)
+                if (time === 1) {
+                    time = time - 1
                     setCountdown("Start")
+                } else if (time === 0) {
+                    clearInterval(timer)
+                    setCountdown("hide")
                 } else {
                     time = time - 1
                     setCountdown(time)
@@ -111,13 +113,13 @@ export default function Session({ userData, setUserData, sessionData, setSession
         }
     }, [start])
 
-    // useEffect(() => {
-    //     socket.emit("points", id, member.id, pts, (users) => handlePts(users))
-    // }, [pts])
+    useEffect(() => {
+        socket.emit("points", id, member.id, pts, (users) => handlePts(users))
+    }, [pts])
 
-    // useEffect(() => {
-    //     socket.on("leaderboard", handlePts)
-    // }, [pts])
+    useEffect(() => {
+        socket.on("leaderboard", handlePts)
+    }, [pts])
 
     // Live Session - Ends
 
