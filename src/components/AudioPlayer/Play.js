@@ -8,7 +8,6 @@ export default function Play({ handleClick, handlePlaySound, setStart, isPlaying
     const clickEvent = (e) => {
         handleClick()
         handlePlaySound()
-        console.log("clicked")
     }
 
     return (

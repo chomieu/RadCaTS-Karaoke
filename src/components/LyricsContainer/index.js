@@ -62,7 +62,6 @@ function LyricsContainer({ curTime, isPlaying, lyrics, pts, setPts, userInput, d
 
 
         if (userInput.length > 1 && displayLyrics) {
-            console.log(userInput)
 
             // const lastMicInputTime = userInput[userInput.length - 2].time
             const microphoneInput = userInput[userInput.length - 2].text.split(' ')

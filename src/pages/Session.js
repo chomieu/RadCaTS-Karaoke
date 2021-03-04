@@ -25,9 +25,7 @@ export default function Session({ userData, setUserData, sessionData, setSession
         setIsPlaying(false)
         const localData = localStorage.getItem('radcatsInfo')
         const userObj = JSON.parse(localData)
-        console.log(userObj)
         const scoreData = { token: userObj.token, score: pts }
-        console.log(scoreData)
         API.finishSession(id, scoreData)
             .then(data => { console.log(data) })
             .catch(err => { console.log(err) })
@@ -145,7 +143,6 @@ export default function Session({ userData, setUserData, sessionData, setSession
                 <>
                     < Header userData={userData} setUserData={setUserData} setIsPlaying={setIsPlaying} />
                     <Row className="content_row">
-                        {console.log(start)}
                         <Col s={12} m={6}>
                             <AudioPlayer
                                 pts={pts}
@@ -172,7 +169,6 @@ export default function Session({ userData, setUserData, sessionData, setSession
                         </Col>
                         <Col s={12} m={6}>
                             <h4>Leaderboard</h4>
-                            {console.log("session", sessionData, "leaderboard", leaderboard)}
                             <div>
                                 {leaderboard}
                             </div>

@@ -23,13 +23,11 @@ function AudioPlayer({ sessionData, isPlaying, setIsPlaying, handlePlaySound, st
 
     const handlePlay = () => {
 
-        console.log('isPlaying', true)
         setIsPlaying(true)
     }
 
     const handleStop = () => {
 
-        console.log('isPlaying', false)
         setIsPlaying(false)
 
     }

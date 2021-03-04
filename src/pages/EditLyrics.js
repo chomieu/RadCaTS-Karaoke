@@ -34,18 +34,16 @@ export default function EditLyrics({ userData, setUserData, sessionData, setSess
                 API.getLyricsBySong(data.data.karaokeSong._id)
                     .then(lrcFiles => {
                         setLyricsFile({ file: lrcFiles.data, len: lrcFiles.data.length })
-                        // console.log(lrcFiles.data)
                     })
                     .catch(err => {
                         console.log(err)
                     })
             })
             .catch(err => {
-                console.log('session response error')
+                console.log('session response error', err)
                 setMessage('we\'re sorry, \nsomething went wrong  :\'(')
                 setLoading(false)
                 setError(true)
-                console.log(err)
             })
     }
 
@@ -134,7 +132,6 @@ export default function EditLyrics({ userData, setUserData, sessionData, setSess
                         console.log("lyrics update err:", err)
                     })
             } else {
-                console.log("144 else")
                 API.uploadLyrics(lyricsData)
                     .then(data => {
                         applyLyrics(data.data._id)
@@ -153,7 +150,6 @@ export default function EditLyrics({ userData, setUserData, sessionData, setSess
         }
         API.addLyricsToSession(data)
             .then(() => {
-                // console.log("add lyrics to session")
                 setRedirectPage(<Redirect to={`/api/session/${id}`} />)
             })
             .catch(err => {

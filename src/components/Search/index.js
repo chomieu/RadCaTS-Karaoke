@@ -21,13 +21,11 @@ function Search({ userData }) {
 
 
     const handleInputChange = e => {
-        console.log(e)
         if (e) { setFormInputs({ ...formInputs, label: e.label, value: e.value, }) }
         else { setFormInputs({ ...formInputs, label: null, value: null, }) }
     }
 
     const handleSelectClick = () => {
-        console.log('clicked')
         getSongs()
     }
 
