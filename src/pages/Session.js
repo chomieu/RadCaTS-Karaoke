@@ -65,14 +65,14 @@ export default function Session({ userData, setUserData, sessionData, setSession
 
     function handleNewMembers(users) {
         setAllMembers(users)
-        setLeaderboard(users.map(u => { 
-            return <MemberCard 
-                key={u.userId} 
-                pfp={u.pfp} 
-                username={u.username} 
-                pts={u.pts}  
-                /> 
-            }
+        setLeaderboard(users.map(u => {
+            return <MemberCard
+                key={u.userId}
+                pfp={u.pfp}
+                username={u.username}
+                pts={u.pts}
+            />
+        }
         ))
     }
 
@@ -102,9 +102,13 @@ export default function Session({ userData, setUserData, sessionData, setSession
                 setCountdown(time)
                 const timer = setInterval(() => {
                     console.log(time)
-                    if (time === 0) {
-                        clearInterval(timer)
+                    if (time === 1) {
+                        // clearInterval(timer)
+                        time = time - 1
                         setCountdown("Start")
+                    } else if (time === 0) {
+                        clearInterval(timer)
+                        setCountdown("hide")
                     } else {
                         time = time - 1
                         setCountdown(time)
@@ -133,7 +137,7 @@ export default function Session({ userData, setUserData, sessionData, setSession
                 <>
                     {console.log(sessionData)}
                     < Header userData={userData} setUserData={setUserData} />
-                    <Row>
+                    <Row style={{ marginTop: "5%" }}>
                         {console.log(start)}
                         <Col s={12} m={6}>
                             <AudioPlayer
@@ -145,7 +149,9 @@ export default function Session({ userData, setUserData, sessionData, setSession
                                 setStart={setStart}
                                 audio={audio}
                             />
-                            {countdown}
+                            <div className={countdown === "hide" ? "counter-layer hidden" : "counter-layer"}>
+                                {countdown}
+                            </div>
                             <Button onClick={handleFinish}>Finish</Button>
                         </Col>
                         <Col s={12} m={6}>
