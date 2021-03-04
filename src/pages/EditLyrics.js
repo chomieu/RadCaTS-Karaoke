@@ -141,8 +141,8 @@ export default function EditLyrics({ userData, sessionData, setSessionData }) {
                         console.log("lyrics update err:", err)
                     })
             } else {
+                console.log("144 else")
                 API.uploadLyrics(lyricsData)
-                    console.log("else 143")
                     .then(data => {
                         console.log("upload lyrics", data)
                         console.log("lyrcis uploaded")
