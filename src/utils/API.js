@@ -48,7 +48,7 @@ const API = {
         return axios.put(`${URL_PREFIX}/api/lyrics`, lyrics)
     },
     addLyricsToSession: data => {
-        return axios.put(`${URL_PREFIX}/api/session/lyrics/${data.sessionId}`, data.lyricsId)
+        return axios.put(`${URL_PREFIX}/api/session/lyrics/${data.sessionId}`, data)
     }
 }
 
