@@ -27,7 +27,7 @@ function LyricsContainer({ curTime, isPlaying, lyrics, pts, setPts, userInput, d
 
         if (Math.floor(curTime) === Math.floor(duration)) { handleStop() }
 
-        if (lyrics.isLoaded && curTime) {
+        if (lyrics.isLoaded && curTime && displayLyrics) {
 
             // if session is active and curTime is 0, start the first set of lyrics
             if (curTime === 0) {
@@ -48,7 +48,7 @@ function LyricsContainer({ curTime, isPlaying, lyrics, pts, setPts, userInput, d
                 setLrcObj0({ text: 'Thanks for playin\'' })
                 setLrcObj1({ text: 'End lyrics' })
             }
-        } else { setPts({ pts: 10 }) }
+        }
 
     }, [isPlaying, curTime])
 
@@ -116,7 +116,7 @@ function LyricsContainer({ curTime, isPlaying, lyrics, pts, setPts, userInput, d
             <div className="divider"></div>
 
             <div className="row">
-                <h6 className="muted">{displayLyrics ? lrcObj1.text : 'earn more points by adding lyrics!'}</h6>
+                <h6 className="muted">{displayLyrics ? lrcObj1.text : '🎤 earn points by adding lyrics 🎤'}</h6>
             </div>
 
         </div>
