@@ -41,7 +41,6 @@ export default function Session({ userData, setUserData, sessionData, setSession
                     mixed: data.data.karaokeSong.mixed,
                     sessionId: data.data._id,
                     songId: data.data.karaokeSong._id,
-                    lyrics: data.data.karaokeLyrics.lyrics
                 })
                 // data.data.karaokeSong.mixed;
             })

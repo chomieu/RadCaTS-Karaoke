@@ -10,9 +10,9 @@ import "../App.css"
 export default function EditLyrics({ userData, sessionData, setSessionData }) {
 
     const [message, setMessage] = useState(`loading . . .`)
-    const [redirectPage, setRedirectPage] = useState()
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(false)
+    const [redirectPage, setRedirectPage] = useState()
     const { id } = useParams();
     const [lyrics, setLyrics] = useState([]);
     const [audioSrc, setAudioSrc] = useState();
@@ -56,7 +56,7 @@ export default function EditLyrics({ userData, sessionData, setSessionData }) {
     }, [])
 
     const handleSkip = () => {
-        setRedirectPage(<Redirect to={`/api/session/${sessionData.sessionId}`} />)
+        setRedirectPage(<Redirect to={`/api/session/${id}`} />)
     }
 
     const handleLyricsChange = (e) => {
@@ -140,6 +140,7 @@ export default function EditLyrics({ userData, sessionData, setSessionData }) {
                     })
             } else {
                 API.uploadLyrics(lyricsData)
+                    console.log("else 143")
                     .then(data => {
                         console.log("upload lyrics", data)
                         console.log("lyrcis uploaded")
@@ -154,19 +155,14 @@ export default function EditLyrics({ userData, sessionData, setSessionData }) {
 
     const applyLyrics = (lyricsId) => {
         const data = {
-            sessionId: sessionData.sessionId,
+            sessionId: id,
             lyricsId: lyricsId
         }
         console.log("apply lyrics:", data)
         API.addLyricsToSession(data)
             .then(() => {
                 console.log("add lyrics to session")
-                API.getLyricsById(lyricsId)
-                    .then(lyricsJSON => {
-                        const newLyrics = sessionData.lyrics.concat(lyricsJSON.data[0].lyrics.lines)
-                        setSessionData({ ...sessionData, lyrics: newLyrics })
-                        setRedirectPage(<Redirect to={`/api/session/${id}`} />)
-                    })
+                setRedirectPage(<Redirect to={`/api/session/${id}`} />)
             })
             .catch(err => {
                 console.log(err)
@@ -212,7 +208,7 @@ export default function EditLyrics({ userData, sessionData, setSessionData }) {
                             <Button onClick={clearAll}>clear all timestamps</Button>
                         </div>
                         <div style={{ overflowY: "scroll", height: "250px" }}>{lyrics.map((lyrics, i) => i === index ? <p key={i} style={{ backgroundColor: "beige" }}>{lyrics}</p> : <p key={i}>{lyrics}</p>)}</div>
-                        <Button onClick={() => setRedirectPage(<Redirect to={`/api/session/${id}`} />)}>Skip</Button>
+                        <Button onClick={handleSkip}>Skip</Button>
                         <Button onClick={uploadFile}> Upload and Start Session</Button>
                         <Button
                             onClick={() => (setLyricsFile({ ...lyricsFile, len: lyricsFile.file.length }))}
