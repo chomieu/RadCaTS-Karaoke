@@ -5,7 +5,7 @@ import UserChip from '../UserChip';
 import Logout from "../Logout";
 import "./style.css"
 
-function Header({ userData, setUserData }) {
+function Header({ userData, setUserData, setIsPlaying }) {
   return (
     <div className="header">
       { userData.isLoggedIn
@@ -14,7 +14,7 @@ function Header({ userData, setUserData }) {
             <Link to="/"><h6>Radcats Karaoke</h6></Link>
           </Col>
           <Col className="right">
-            <Logout userData={userData} setUserData={setUserData} />
+            <Logout userData={userData} setUserData={setUserData} setIsPlaying={setIsPlaying} />
             <UserChip userData={userData} />
           </Col>
         </Row>

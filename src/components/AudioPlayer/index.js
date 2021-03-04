@@ -9,9 +9,9 @@ import moment from "moment";
 import "./style.css"
 
 
-function AudioPlayer({ sessionData, isPlaying, setIsPlaying, handlePlaySound, setStart, audio, pts, setPts }) {
+function AudioPlayer({ sessionData, isPlaying, setIsPlaying, handlePlaySound, setStart, audio, pts, setPts, lyrics }) {
 
-    const { curTime, duration, setClickedTime } = useAudioPlayer( isPlaying, setIsPlaying, audio );
+    const { curTime, duration, setClickedTime } = useAudioPlayer(isPlaying, setIsPlaying, audio);
     const [language, setLanguage] = useState('en-Us')
 
     const formatDuration = (duration) => {
@@ -19,6 +19,12 @@ function AudioPlayer({ sessionData, isPlaying, setIsPlaying, handlePlaySound, se
             .duration(duration, "seconds")
             .format("mm:ss", { trim: false });
     }
+
+    useEffect(() => {
+
+        console.log(pts.pts)
+
+    }, [])
 
     const handlePlay = () => {
         console.log('play')
@@ -40,6 +46,7 @@ function AudioPlayer({ sessionData, isPlaying, setIsPlaying, handlePlaySound, se
 
             <KaraokeBox
                 pts={pts}
+                lyrics={lyrics}
                 setPts={setPts}
                 curTime={curTime}
                 isPlaying={isPlaying}

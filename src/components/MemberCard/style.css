@@ -1,0 +1,24 @@
+img.member_image {
+    width: 64px;
+    border-radius: 34px;
+    margin-top: 5px;
+}
+p.member_text {
+    margin-top: 20px;
+    font-size: 20px;
+}
+p.member_score {
+    padding: 13px;
+    margin-top: 8px;
+    margin-bottom: 0px;
+    font-size: 20px;
+    border: solid 2px orange;
+    border-radius: 35px;
+    background-color: purple;
+}
+.row.member_row {
+    background-color: black;
+    padding: 5px;
+    border-radius: 40px;
+    border: 2px solid white;
+}

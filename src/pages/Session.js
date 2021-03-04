@@ -17,18 +17,18 @@ const audio = new Audio()
 
 export default function Session({ userData, setUserData, sessionData, setSessionData, isPlaying, setIsPlaying }) {
 
+    const [lyrics, setLyrics] = useState({ isLoaded: false })
     const { id } = useParams()
-    // const [sessionData, setSessionData] = useState()
 
     const handleFinish = () => {
-        // setIsPlaying(false) 
+        setIsPlaying(false);
         console.log('finish') // send PUT request to /api/session/:id
     }
 
     const startSession = () => {
         API.startSession(id)
             .then((data) => {
-                console.log("sessionAPIcall", data)
+                // console.log("sessionAPIcall", data)
                 setSessionData({
                     ...sessionData,
                     hostId: data.data.host,
@@ -39,6 +39,7 @@ export default function Session({ userData, setUserData, sessionData, setSession
                     songId: data.data.karaokeSong._id,
                     lyrics: data.data.karaokeLyrics
                 })
+                setLyrics({ lyrics: data.data.karaokeLyrics.lyrics.lines, isLoaded: true })
             })
             .catch(err => {
                 console.log('session response error', err)
@@ -46,7 +47,7 @@ export default function Session({ userData, setUserData, sessionData, setSession
     }
 
     useEffect(() => {
-        console.log('startSession', id)
+        // console.log('startSession', id)
         startSession();
     }, [])
 
@@ -87,24 +88,27 @@ export default function Session({ userData, setUserData, sessionData, setSession
 
     useEffect(() => {
         function recieveMsg(m) {
-            let time = 3
-            setCountdown(time)
-            const timer = setInterval(() => {
-                if (time === 1) {
-                    time = time - 1
-                    setCountdown("Start")
-                } else if (time === 0) {
-                    clearInterval(timer)
-                    setCountdown("hide")
-                } else {
-                    time = time - 1
-                    setCountdown(time)
-                }
-            }, 1000)
-            setTimeout(() => {
-            audio.src = m.path
-            audio.play()
-            }, 5000)
+            if (start) {
+                let time = 3
+                setCountdown(time)
+                const timer = setInterval(() => {
+                    if (time === 1) {
+                        time = time - 1
+                        setCountdown("Start")
+                    } else if (time === 0) {
+                        clearInterval(timer)
+                        setCountdown("hide")
+                    } else {
+                        time = time - 1
+                        setCountdown(time)
+                    }
+                }, 1000)
+                setTimeout(() => {
+                    setIsPlaying(true)
+                    audio.src = m.path
+                    audio.play()
+                }, 5000)
+            }
         }
         socket.on("play", recieveMsg)
 
@@ -130,7 +134,7 @@ export default function Session({ userData, setUserData, sessionData, setSession
                 :
                 <>
                     {console.log(sessionData)}
-                    < Header userData={userData} setUserData={setUserData} />
+                    < Header userData={userData} setUserData={setUserData} setIsPlaying={setIsPlaying} />
                     <Row style={{ marginTop: "5%" }}>
                         {console.log(start)}
                         <Col s={12} m={6}>
@@ -141,6 +145,7 @@ export default function Session({ userData, setUserData, sessionData, setSession
                                 userData={userData}
                                 handlePlaySound={handlePlaySound}
                                 setStart={setStart}
+                                lyrics={lyrics}
                                 audio={audio}
                                 pts={pts}
                                 setPts={setPts}
@@ -151,7 +156,7 @@ export default function Session({ userData, setUserData, sessionData, setSession
                             <Button onClick={handleFinish}>Finish</Button>
                         </Col>
                         <Col s={12} m={6}>
-                            Leaderboard
+                            <h4>Leaderboard</h4>
                             {console.log("session", sessionData)}
                             <div>
                                 {leaderboard}
