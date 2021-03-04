@@ -24,12 +24,6 @@ export default function Session({ userData, setUserData, sessionData, setSession
         console.log('finish') // send PUT request to /api/session/:id
     }
 
-
-    const handleBackToSearch = () => {
-        setIsPlaying(false)
-        setRedirect(<Redirect to="/search" />)
-    }
-
     const startSession = () => {
         API.startSession(id)
             .then((data) => {
@@ -143,7 +137,6 @@ export default function Session({ userData, setUserData, sessionData, setSession
                                 audio={audio}
                             />
                             {countdown}
-                            <Button onClick={handleBack}>Back</Button>
                             <Button onClick={handleFinish}>Finish</Button>
                         </Col>
                         <Col s={12} m={6}>

@@ -23,7 +23,6 @@ function AudioPlayer({ sessionData, isPlaying, setIsPlaying, handlePlaySound, se
 
     const handlePlay = () => {
         console.log('play')
-        setSessionData({ ...sessionData, isActive: true })
         setIsPlaying(true)
     }
     // const handlePause = () => {
