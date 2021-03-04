@@ -6,8 +6,8 @@ export default function MemberCard(props) {
   return (
     <Row className="member_row">
       <Col className="s3"><img className="member_image" src={props.pfp} /></Col>
-      <Col className="s6"><p className="member_text">{props.username} {props.pts}</p></Col>
-      <Col className="s3"><p className="member_score">99</p></Col>
+      <Col className="s6"><p className="member_text">{props.username}</p></Col>
+      <Col className="s3"><p className="member_score">{props.pts}</p></Col>
     </Row> 
   )
 }
