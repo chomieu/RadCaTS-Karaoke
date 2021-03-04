@@ -4,7 +4,7 @@ import "./style.css"
 
 
 
-function LyricsContainer({ curTime, isPlaying, lyrics, pts, setPts, userInput }) {
+function LyricsContainer({ curTime, isPlaying, lyrics, pts, setPts, userInput, duration, handleStop }) {
 
     // track the index location of the current lyrics object
     const [lrcIdx, setLrcIdx] = useState(0)

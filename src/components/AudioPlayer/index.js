@@ -27,13 +27,11 @@ function AudioPlayer({ sessionData, isPlaying, setIsPlaying, handlePlaySound, st
     }, [])
 
     const handlePlay = () => {
-        console.log('play')
         setIsPlaying(true)
     }
-    // const handlePause = () => {
-    //     console.log('pause');
-    //     setIsPlaying(false)
-    // }
+    const handleStop = () => {
+        setIsPlaying(false)
+    }
 
     return (
         <div className="container">
@@ -50,6 +48,8 @@ function AudioPlayer({ sessionData, isPlaying, setIsPlaying, handlePlaySound, st
                 setPts={setPts}
                 curTime={curTime}
                 isPlaying={isPlaying}
+                handleStop={handleStop}
+                duration={duration}
                 language={language}
                 sessionData={sessionData}
             />
