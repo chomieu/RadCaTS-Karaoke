@@ -129,7 +129,7 @@ export default function Session({ userData, setUserData, sessionData, setSession
                 <Redirect to="/" />
                 :
                 <>
-                    < Header userData={userData} setUserData={setUserData} setIsPlaying={setIsPlaying} />
+                    < Header audio={audio} userData={userData} setUserData={setUserData} setIsPlaying={setIsPlaying} />
                     <Row className="content_row">
                         <Col s={12} m={6}>
                             <AudioPlayer

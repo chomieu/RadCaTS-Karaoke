@@ -201,7 +201,7 @@ export default function EditLyrics({ userData, setUserData, sessionData, setSess
                             <Button className="btns-lyrics btn_purple" onClick={handleSkip}>Skip</Button>
                             <Button className="btns-lyrics btn_purple" onClick={uploadFile}> Upload and Start Session</Button>
                             <Button
-                                onClick={() => (setLyricsFile({ ...lyricsFile, len: lyricsFile.file.length }))}
+                                className="btns-lyrics btn_purple" onClick={() => (setLyricsFile({ ...lyricsFile, len: lyricsFile.file.length }))}
                             > Back to Lyrics List</Button>
                         </div>
                         : ""
