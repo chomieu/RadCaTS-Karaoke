@@ -1,11 +1,11 @@
 import React from "react"
 import { Row, Col } from "react-materialize";
 
-export default function MemberCard({u}) {
+export default function MemberCard(props) {
   return (
-    <Row key={u.userId}>
-      <Col><img src={`${u.pfp}`} /></Col>
-      <Col>{u.username} {u.score}</Col>
+    <Row>
+      <Col><img src={props.pfp} /></Col>
+      <Col>{props.username} {props.pts}</Col>
     </Row> 
   )
 }

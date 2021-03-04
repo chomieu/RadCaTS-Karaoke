@@ -11,8 +11,8 @@ import "../App.css"
 import io from "socket.io-client"
 
 // Live Session Global Constants 
-// const socket = io.connect("http://localhost:3001")
-const socket = io.connect("http://radcats-karaoke-server.herokuapp.com")
+const socket = io.connect("http://localhost:3001")
+// const socket = io.connect("http://radcats-karaoke-server.herokuapp.com")
 const audio = new Audio()
 
 export default function Session({ userData, setUserData, sessionData, setSessionData, isPlaying, setIsPlaying }) {
@@ -58,14 +58,22 @@ export default function Session({ userData, setUserData, sessionData, setSession
     const [start, setStart] = useState(false)
     const [countdown, setCountdown] = useState()
     const [leaderboard, setLeaderboard] = useState()
-    const [score, setScore] = useState(0)
+    const [pts, setPts] = useState(0)
 
     console.log("member", member)
     console.log("userData", userData)
 
     function handleNewMembers(users) {
         setAllMembers(users)
-        setLeaderboard(users.map(u => { <MemberCard props={u} /> }))
+        setLeaderboard(users.map(u => { 
+            return <MemberCard 
+                key={u.userId} 
+                pfp={u.pfp} 
+                username={u.username} 
+                pts={u.pts}  
+                /> 
+            }
+        ))
     }
 
     function handlePlaySound() {
@@ -80,7 +88,7 @@ export default function Session({ userData, setUserData, sessionData, setSession
             member.id,
             member.username,
             member.profilePicture,
-            score,
+            pts,
             (users) => handleNewMembers(users)
         )
     }, [userData])
