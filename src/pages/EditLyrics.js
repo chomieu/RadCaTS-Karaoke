@@ -162,7 +162,7 @@ export default function EditLyrics({ userData, setUserData, sessionData, setSess
     }
 
     return (
-        <Container className="pageContents">
+        <Container className="pageContents lyrics">
             <Header userData={userData} setUserData={setUserData} />
             {lyricsFile.len === 0 ?
                 <div>
@@ -187,7 +187,7 @@ export default function EditLyrics({ userData, setUserData, sessionData, setSess
                                 <Textarea name="lyrics" onChange={handleLyricsChange} placeholder="type or paste lyrics here" s={12} style={{ maxHeight: "80px", overflowY: "scroll" }} />
                             </div>
 
-                            <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "40px" }}>
+                            <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
                                 <audio src={audioSrc} ref={audio} controls></audio>
                                 <Button className="btns-lyrics" onClick={() => handleAudioPace("-")}>&lt;&lt; 2.0s</Button>
                                 <Button className="btns-lyrics" onClick={() => handleAudioPace("+")}>&gt;&gt; 2.0s</Button>
@@ -199,10 +199,10 @@ export default function EditLyrics({ userData, setUserData, sessionData, setSess
                                 <Button className="btns-lyrics" onClick={() => setIndex(index = index + 1)}>next line</Button>
                                 <Button className="btns-lyrics" onClick={clearAll}>clear all timestamps</Button>
                             </div>
-                            <div style={{ overflowY: "scroll", height: "250px" }}>{lyrics.map((lyrics, i) => i === index ? <p key={i} style={{ backgroundColor: "beige" }}>{lyrics}</p> : <p key={i}>{lyrics}</p>)}</div>
+                            <div style={{ overflowY: "scroll", height: "250px", overflow: "-moz-scrollbars-none" }}>{lyrics.map((lyrics, i) => i === index ? <p key={i} style={{ backgroundColor: "beige" }}>{lyrics}</p> : <p key={i}>{lyrics}</p>)}</div>
                             <Button className="btns-lyrics" onClick={handleSkip}>Skip</Button>
                             <Button className="btns-lyrics" onClick={uploadFile}> Upload and Start Session</Button>
-                            <Button
+                            <Button className="btns-lyrics"
                                 onClick={() => (setLyricsFile({ ...lyricsFile, len: lyricsFile.file.length }))}
                             > Back to Lyrics List</Button>
                         </div>
