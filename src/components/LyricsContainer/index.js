@@ -87,6 +87,16 @@ function LyricsContainer({ curTime, isPlaying, userInput, pts, setPts }) {
                 })
             })
 
+            // Possible solution to "cheat" issue with repeated words racking up points.
+            // Test when Chomie and Rita have sessions working.
+            // possibleLyrics.map( word => {
+            //     let index = microphoneInput.indexOf( word );
+            //     if ( index > -1 ) {
+            //         microphoneInput.splice( index, 1 );
+            //         points++;
+            //     }
+            // })
+
 
             setPts({ pts: points })
         }
