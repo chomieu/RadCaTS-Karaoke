@@ -14,8 +14,6 @@ export default function Play({ handleClick, handlePlaySound, setStart, isPlaying
     return (
         <div>
 
-            <button onClick={() => setStart(true)}>Ready</button>
-
             <button
                 style={{ display: hidePlayBtn }}
                 className="player__button"

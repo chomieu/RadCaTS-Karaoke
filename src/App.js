@@ -66,6 +66,7 @@ function App() {
             userData={userData}
             setUserData={setUserData}
             loginSuccess={loginSuccess}
+            setIsPlaying={setIsPlaying}
           />
         </Route>
 
@@ -73,6 +74,7 @@ function App() {
           <SearchPage
             userData={userData}
             setUserData={setUserData}
+            setIsPlaying={setIsPlaying}
           />
         </Route>
 
@@ -81,6 +83,7 @@ function App() {
             userData={userData}
             setUserData={setUserData}
             sessionData={sessionData}
+            setIsPlaying={setIsPlaying}
             setSessionData={setSessionData}
           />
         </Route>
@@ -100,6 +103,7 @@ function App() {
           <Session
             userData={userData}
             setUserData={setUserData}
+            setIsPlaying={setIsPlaying}
           />
         </Route>
 
