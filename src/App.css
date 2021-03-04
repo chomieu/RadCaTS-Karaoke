@@ -15,7 +15,17 @@ body {
   top: 0;
   left: 50%;
   width: 100%;
+  height: 100%;
   transform: translate(-50%, 0%);
+  overflow: scroll;
+}
+
+html {
+  overflow: scroll;
+}
+::-webkit-scrollbar {
+    width: 0px;
+    background: transparent; /* make scrollbar transparent */
 }
 
 .content_row {
