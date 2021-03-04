@@ -6,9 +6,10 @@
 3. [Technologies](#technologies)
 4. [Installation](#installation)
 5. [Usage](#usage)
-6. [Contributing](#contributing)
-7. [Tests](#tests)
-8. [License](#license)
+6. [Deployed](#deployed)
+7. [Contributing](#contributing)
+8. [Tests](#tests)
+9. [License](#license)
 ## Description
 A full-featured social karaoke app that dynamically loads content using the YouTube Music API, allows for custom lyric file generation, provides a hub for group sessions, and incorporates 3D elements. Built for the University of Washington's Winter 2020/21 Coding Bootcamp.
 
@@ -67,6 +68,11 @@ Finally, the user moves to the actual session where the play button controls mus
 ![screenshot5](./assets/screen5.png)
 
 Other users can join this session by entering the session URL, and the site provides functionality to share URLs with other users through email.
+
+## Deployed
+- [Frontend (user) site](https://radcats-karaoke.herokuapp.com) 
+- [Backend API routes](https://radcats-karaoke-api.herokuapp.com)
+- [Socket.io server](http://radcats-karaoke-server.herokuapp.com/)
 
 ## Contributing
 Fork our git, and contact the repository owner about pull requests.
