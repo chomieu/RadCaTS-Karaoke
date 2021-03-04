@@ -152,7 +152,7 @@ export default function Session({ userData, setUserData, sessionData, setSession
                             <div className={countdown === "hide" ? "counter-layer hidden" : "counter-layer"}>
                                 {countdown}
                             </div>
-                            <Button onClick={handleFinish}>Finish</Button>
+                            <Button className="finish_button" onClick={handleFinish}>Finish</Button>
                         </Col>
                         <Col s={12} m={6}>
                             <h4>Leaderboard</h4>
