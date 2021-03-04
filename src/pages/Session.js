@@ -31,9 +31,12 @@ export default function Session({ userData, setUserData, sessionData, setSession
                     mixed: data.data.karaokeSong.mixed,
                     sessionId: data.data._id,
                     songId: data.data.karaokeSong._id,
-                    lyrics: data.data.karaokeLyrics
+                    // lyrics: data.data.karaokeLyrics
                 })
-                setLyrics({ lyrics: data.data.karaokeLyrics.lyrics.lines, isLoaded: true })
+                let lyricsPath = data.data.karaokeLyrics.lyrics.lines
+                if (lyricsPath) {
+                    setLyrics({ lyrics: data.data.karaokeLyrics.lyrics.lines, isLoaded: true })
+                } else { setLyrics({ lyrics: null, isLoaded: true }) }
             })
             .catch(err => {
                 console.log('session response error', err)
@@ -126,7 +129,7 @@ export default function Session({ userData, setUserData, sessionData, setSession
                 <Redirect to="/" />
                 :
                 <>
-                    < Header userData={userData} setUserData={setUserData} setIsPlaying={setIsPlaying} />
+                    < Header audio={audio} userData={userData} setUserData={setUserData} setIsPlaying={setIsPlaying} />
                     <Row className="content_row">
                         <Col s={12} m={6}>
                             <AudioPlayer
