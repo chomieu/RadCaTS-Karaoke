@@ -6,12 +6,12 @@ import SignUp from '../components/SignUp';
 import LogIn from '../components/LogIn';
 import "../App.css"
 
-export default function Landing({ userData, setUserData, loginSuccess }) {
+export default function Landing({ userData, setUserData, loginSuccess, setIsPlaying }) {
     return (
         <div className="pageContents">
             {userData.isLoggedIn ? <Redirect to="/search" /> : null}
             <h1 className="white-text mt-5">Radcats karaoke</h1>
-            <Header userData={userData} setUserData={setUserData} />
+            <Header userData={userData} setUserData={setUserData} setIsPlaying={setIsPlaying} />
 
             <SignUp loginSuccess={loginSuccess} />
 
