@@ -176,7 +176,7 @@ export default function EditLyrics({ userData, setUserData, sessionData, setSess
                     <div>
                         <h1>Lyrics List</h1>
                         <Container style={{ height: "200px", overflowY: "scroll" }}>
-                            {lyricsFile.file.map((file, i) => (<Button key={i} data-lrc={file._id} onClick={(e) => applyLyrics(e.target.dataset.lrc)}>{file.associatedSong.name} - {file.associatedSong.artist} BY {file.creator.username}</Button>))}
+                            {lyricsFile.file.map((file, i) => (<Button className="btn_blue" key={i} data-lrc={file._id} onClick={(e) => applyLyrics(e.target.dataset.lrc)}>{file.associatedSong.name} - {file.associatedSong.artist} BY {file.creator.username}</Button>))}
                         </Container>
                         <Button className="btn_purple" onClick={() => (setLyricsFile({ ...lyricsFile, len: -1 }))}>Make My Own Lyrics</Button>
                     </div>

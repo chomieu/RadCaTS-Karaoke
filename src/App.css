@@ -40,6 +40,10 @@ button.btn_purple {
   border-radius: .5rem;
 }
 
+button.btn_blue {
+  background-color: #36618c;
+}
+
 h1 {
   margin-top: 5vh;
 }
