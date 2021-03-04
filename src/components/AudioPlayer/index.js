@@ -58,13 +58,13 @@ function AudioPlayer({ sessionData, isPlaying, setIsPlaying, handlePlaySound, se
             {/* <span className="bar__time">{formatDuration(curTime)} / {formatDuration(duration)}</span> */}
 
             <AudioBottom
+                handlePlaySound={handlePlaySound}
                 sessionData={sessionData}
                 handlePlay={handlePlay}
                 isPlaying={isPlaying}
+                setStart={setStart}
                 curTime={curTime}
                 pts={pts}
-                handlePlaySound={handlePlaySound}
-                setStart={setStart}
             />
 
         </div>

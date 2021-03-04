@@ -48,7 +48,6 @@ export default function UserChip({ userData }) {
                     }
                 </Chip >
             }>
-            { console.log(userData)}
         </Modal >
     )
 }

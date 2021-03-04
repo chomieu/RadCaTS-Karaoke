@@ -18,12 +18,17 @@ const audio = new Audio()
 export default function Session({ userData, setUserData, sessionData, setSessionData, isPlaying, setIsPlaying }) {
 
     const [lyrics, setLyrics] = useState({ isLoaded: false })
+    const [pts, setPts] = useState({ pts: 0 })
     const { id } = useParams()
 
-    const handleFinish = (pts) => {
+    const handleFinish = () => {
         setIsPlaying(false)
-        const scoreData = { token: JSON.parse(localStorage.getItem('radcatsInfo')).token, score: pts }
-        API.finishSession(scoreData)
+        const localData = localStorage.getItem('radcatsInfo')
+        const userObj = JSON.parse(localData)
+        console.log(userObj)
+        const scoreData = { token: userObj.token, score: pts }
+        console.log(scoreData)
+        API.finishSession(id, scoreData)
             .then(data => { console.log(data) })
             .catch(err => { console.log(err) })
     }
@@ -31,7 +36,6 @@ export default function Session({ userData, setUserData, sessionData, setSession
     const startSession = () => {
         API.startSession(id)
             .then((data) => {
-                // console.log("sessionAPIcall", data)
                 setSessionData({
                     ...sessionData,
                     hostId: data.data.host,
@@ -50,7 +54,6 @@ export default function Session({ userData, setUserData, sessionData, setSession
     }
 
     useEffect(() => {
-        // console.log('startSession', id)
         startSession();
     }, [])
 
@@ -60,7 +63,6 @@ export default function Session({ userData, setUserData, sessionData, setSession
     const [start, setStart] = useState(false)
     const [countdown, setCountdown] = useState()
     const [leaderboard, setLeaderboard] = useState()
-    const [pts, setPts] = useState({ pts: 0 })
 
     function handlePts(users) {
         setLeaderboard(users.map(u => {
@@ -136,10 +138,8 @@ export default function Session({ userData, setUserData, sessionData, setSession
                 <Redirect to="/" />
                 :
                 <>
-                    {console.log(sessionData)}
                     < Header userData={userData} setUserData={setUserData} setIsPlaying={setIsPlaying} />
                     <Row style={{ marginTop: "5%" }}>
-                        {console.log(start)}
                         <Col s={12} m={6}>
                             <AudioPlayer
                                 pts={pts}
@@ -160,7 +160,6 @@ export default function Session({ userData, setUserData, sessionData, setSession
                         </Col>
                         <Col s={12} m={6}>
                             <h4>Leaderboard</h4>
-                            {console.log("session", sessionData, "leaderboard", leaderboard)}
                             <div>
                                 {leaderboard}
                             </div>
