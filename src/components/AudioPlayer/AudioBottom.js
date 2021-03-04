@@ -4,15 +4,10 @@ import Play from "./Play";
 import { Row, Col, Button } from "react-materialize";
 import Pause from "./Pause";
 
-function AudioBottom({ pts, isPlaying, setIsPlaying, handlePause, handlePlay, handlePlaySound, start, setStart, hidePlayBtn }) {
-
-    const handleFinish = () => {
-        setIsPlaying(false);
-        console.log('finish') // send PUT request to /api/session/:id
-    }
+function AudioBottom({ pts, isPlaying, setIsPlaying, handleFinish, handlePlay, handlePlaySound, start, setStart, hidePlayBtn }) {
 
     const handleStart = () => {
-        setStart( true );
+        setStart(true);
     }
 
     return (
@@ -25,16 +20,16 @@ function AudioBottom({ pts, isPlaying, setIsPlaying, handlePause, handlePlay, ha
                 </Col>
 
                 <Col className="s4" >
-                    { isPlaying ? 
+                    {isPlaying ?
                         <Button className="finish_button btn_blue" onClick={handleFinish}>Finish</Button>
-                        : <Button className="ready_button btn_purple" style={ start ? { backgroundColor: "red" } : null } onClick={handleStart}>Ready</Button>
+                        : <Button className="ready_button btn_purple" style={start ? { backgroundColor: "red" } : null} onClick={handleStart}>Ready</Button>
                     }
                 </Col>
 
                 <Col className="s4">
                     {/* <span className="bar__time">{formatDuration(curTime)} / {formatDuration(duration)}</span> */}
-                    <Play 
-                        handleClick={handlePlay} 
+                    <Play
+                        handleClick={handlePlay}
                         handlePlaySound={handlePlaySound}
                         setStart={setStart}
                         isPlaying={isPlaying}

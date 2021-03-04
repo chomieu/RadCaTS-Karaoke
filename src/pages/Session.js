@@ -18,7 +18,20 @@ const audio = new Audio()
 export default function Session({ userData, setUserData, sessionData, setSessionData, isPlaying, setIsPlaying }) {
 
     const [lyrics, setLyrics] = useState({ isLoaded: false })
+    const [pts, setPts] = useState({ pts: 0 })
     const { id } = useParams()
+
+
+    const handleFinish = () => {
+        setIsPlaying(false);
+
+        const localData = JSON.parse(localStorage.getItem("radcatsInfo"))
+        const dataObj = { token: localData.token, score: pts.pts }
+
+        API.finishSession(id, dataObj)
+            .then(data => { console.log(data) })
+            .catch(err => { console.log(err) })
+    }
 
     const startSession = () => {
         API.startSession(id)
@@ -53,7 +66,7 @@ export default function Session({ userData, setUserData, sessionData, setSession
     const [start, setStart] = useState(false)
     const [countdown, setCountdown] = useState()
     const [leaderboard, setLeaderboard] = useState()
-    const [pts, setPts] = useState({ pts: 0 })
+
 
     function handlePts(users) {
         users = users.sort((a, b) => (a.pts < b.pts) ? 1 : -1)
@@ -138,6 +151,7 @@ export default function Session({ userData, setUserData, sessionData, setSession
                                 sessionData={sessionData}
                                 userData={userData}
                                 handlePlaySound={handlePlaySound}
+                                handleFinish={handleFinish}
                                 start={start}
                                 setStart={setStart}
                                 lyrics={lyrics}
