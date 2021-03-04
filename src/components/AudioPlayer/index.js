@@ -9,7 +9,7 @@ import moment from "moment";
 import "./style.css"
 
 
-function AudioPlayer({ sessionData, isPlaying, setIsPlaying, handlePlaySound, setStart, audio, pts, setPts, lyrics }) {
+function AudioPlayer({ sessionData, isPlaying, setIsPlaying, handlePlaySound, setStart, audio, pts, setPts, lyrics, hidePlayBtn }) {
 
     const { curTime, duration, setClickedTime } = useAudioPlayer(isPlaying, setIsPlaying, audio);
     const [language, setLanguage] = useState('en-Us')
@@ -66,6 +66,7 @@ function AudioPlayer({ sessionData, isPlaying, setIsPlaying, handlePlaySound, se
                 pts={pts}
                 handlePlaySound={handlePlaySound}
                 setStart={setStart}
+                hidePlayBtn={hidePlayBtn}
             />
 
         </div>
