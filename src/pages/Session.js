@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Redirect } from "react-router-dom";
-import AudioPlayer from "../components/AudioPlayer"
-import { Button, Row, Col } from "react-materialize"
+import AudioPlayer from "../components/AudioPlayer";
+import MemberCard from "../components/MemberCard";
+import { Button, Row, Col } from "react-materialize";
 import Header from "../components/Header";
 import API from "../utils/API";
 import "../App.css"
@@ -20,7 +21,7 @@ export default function Session({ userData, setUserData, sessionData, setSession
     const { id } = useParams()
 
     const handleFinish = () => {
-        setIsPlaying(false)
+        setIsPlaying(false);
         console.log('finish') // send PUT request to /api/session/:id
     }
 
@@ -57,14 +58,22 @@ export default function Session({ userData, setUserData, sessionData, setSession
     const [start, setStart] = useState(false)
     const [countdown, setCountdown] = useState()
     const [leaderboard, setLeaderboard] = useState()
-    const [score, setScore] = useState(0)
+    const [pts, setPts] = useState(0)
 
     // console.log("member", member)
     // console.log("userData", userData)
 
     function handleNewMembers(users) {
         setAllMembers(users)
-        setLeaderboard(users.map(u => { return <Row key={u.userId}><Col><img src={`${u.pfp}`} /></Col><Col>{u.username} {u.score}</Col></Row> }))
+        setLeaderboard(users.map(u => {
+            return <MemberCard
+                key={u.userId}
+                pfp={u.pfp}
+                username={u.username}
+                pts={u.pts}
+            />
+        }
+        ))
     }
 
     function handlePlaySound() {
@@ -79,7 +88,7 @@ export default function Session({ userData, setUserData, sessionData, setSession
             member.id,
             member.username,
             member.profilePicture,
-            score,
+            pts,
             (users) => handleNewMembers(users)
         )
     }, [userData])
@@ -93,9 +102,13 @@ export default function Session({ userData, setUserData, sessionData, setSession
                 setCountdown(time)
                 const timer = setInterval(() => {
                     console.log(time)
-                    if (time === 0) {
-                        clearInterval(timer)
+                    if (time === 1) {
+                        // clearInterval(timer)
+                        time = time - 1
                         setCountdown("Start")
+                    } else if (time === 0) {
+                        clearInterval(timer)
+                        setCountdown("hide")
                     } else {
                         time = time - 1
                         setCountdown(time)
@@ -122,10 +135,10 @@ export default function Session({ userData, setUserData, sessionData, setSession
                 <Redirect to="/" />
                 :
                 <>
-                    {/* {console.log(sessionData)} */}
-                    < Header userData={userData} setUserData={setUserData} />
-                    <Row>
-                        {/* {console.log(start)} */}
+                    {console.log(sessionData)}
+                    < Header userData={userData} setUserData={setUserData} setIsPlaying={setIsPlaying} />
+                    <Row style={{ marginTop: "5%" }}>
+                        {console.log(start)}
                         <Col s={12} m={6}>
                             <AudioPlayer
                                 isPlaying={isPlaying}
@@ -137,12 +150,14 @@ export default function Session({ userData, setUserData, sessionData, setSession
                                 lyrics={lyrics}
                                 audio={audio}
                             />
-                            {countdown}
+                            <div className={countdown === "hide" ? "counter-layer hidden" : "counter-layer"}>
+                                {countdown}
+                            </div>
                             <Button onClick={handleFinish}>Finish</Button>
                         </Col>
                         <Col s={12} m={6}>
-                            Leaderboard
-                            {/* {console.log("session", sessionData)} */}
+                            <h4>Leaderboard</h4>
+                            {console.log("session", sessionData)}
                             <div>
                                 {leaderboard}
                             </div>
