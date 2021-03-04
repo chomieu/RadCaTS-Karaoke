@@ -5,7 +5,7 @@ import Header from "../components/Header";
 import API from "../utils/API";
 import "../App.css"
 
-export default function EditLyrics({ userData, setUserData, sessionData, setSessionData }) {
+export default function EditLyrics({ userData, setUserData, sessionData, setSessionData, setIsPlaying }) {
 
     const [message, setMessage] = useState(`loading . . .`)
     const [loading, setLoading] = useState(true)
@@ -34,7 +34,7 @@ export default function EditLyrics({ userData, setUserData, sessionData, setSess
                 API.getLyricsBySong(data.data.karaokeSong._id)
                     .then(lrcFiles => {
                         setLyricsFile({ file: lrcFiles.data, len: lrcFiles.data.length })
-                        console.log(lrcFiles.data)
+                        // console.log(lrcFiles.data)
                     })
                     .catch(err => {
                         console.log(err)
@@ -153,7 +153,7 @@ export default function EditLyrics({ userData, setUserData, sessionData, setSess
         }
         API.addLyricsToSession(data)
             .then(() => {
-                console.log("add lyrics to session")
+                // console.log("add lyrics to session")
                 setRedirectPage(<Redirect to={`/api/session/${id}`} />)
             })
             .catch(err => {
