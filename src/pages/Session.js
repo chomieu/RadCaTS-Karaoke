@@ -11,8 +11,8 @@ import "../App.css"
 import io from "socket.io-client"
 
 // Live Session Global Constants 
-const socket = io.connect("http://localhost:3001")
-// const socket = io.connect("http://radcats-karaoke-server.herokuapp.com")
+// const socket = io.connect("http://localhost:3001")
+const socket = io.connect("http://radcats-karaoke-server.herokuapp.com")
 const audio = new Audio()
 
 export default function Session({ userData, setUserData, sessionData, setSessionData, isPlaying, setIsPlaying }) {
