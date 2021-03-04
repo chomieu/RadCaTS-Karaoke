@@ -140,8 +140,12 @@
 }
 
 .points__label {
-    margin: 0 0 0 0 !important ;
-    font-size: 1.75rem;
+  margin: 0 0 0 0 !important ;
+  font-size: 1.75rem;
+}
+
+.ready_button, .finish_button {
+  margin: 0;
 }
 
 /* @media screen and (max-width: 800px) {

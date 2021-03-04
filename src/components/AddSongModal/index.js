@@ -7,7 +7,7 @@ import "./style.css";
 
 export default function AddSongModal({ setLoading, setMessage, userData, createNewSession }) {
 
-    const trigger = <Button>can't find your song?</Button>
+    const trigger = <Button className="btn_purple">can't find your song?</Button>
     const [inputs, setInputs] = useState({ title: '' })
 
     // control form inputs for search
@@ -67,7 +67,7 @@ export default function AddSongModal({ setLoading, setMessage, userData, createN
 
                     ? <Button
                         onClick={handleInputSubmit}
-                        className="login__btn"
+                        className="login__btn btn_purple"
                         type="submit"
                         modal="close"
                     >Search
