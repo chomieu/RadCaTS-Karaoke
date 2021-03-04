@@ -9,7 +9,7 @@ import "./style.css";
 
 function LogIn({ loginSuccess }) {
 
-    const trigger = <Button>Sign In</Button>
+    const trigger = <Button className="btn_purple">Sign In</Button>
     const [formInputs, setFormInputs] = useState({
         username: "",
         password: "",
@@ -66,14 +66,14 @@ function LogIn({ loginSuccess }) {
 
                 {formInputs.username && formInputs.password
                     ? <Button
-                        className="login__btn"
+                        className="btn_purple"
                         type="submit"
                         modal="close"
                         onClick={handleInputSubmit}
                     >Submit</Button>
                     : <Button
                         disabled
-                        className="login__btn"
+                        className="btn_purple"
                         type="submit"
                     >Submit</Button>
                 }
