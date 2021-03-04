@@ -20,11 +20,6 @@ export default function Session({ userData, setUserData, sessionData, setSession
     const [lyrics, setLyrics] = useState({ isLoaded: false })
     const { id } = useParams()
 
-    const handleFinish = () => {
-        setIsPlaying(false);
-        console.log('finish') // send PUT request to /api/session/:id
-    }
-
     const startSession = () => {
         API.startSession(id)
             .then((data) => {
@@ -144,6 +139,7 @@ export default function Session({ userData, setUserData, sessionData, setSession
                                 sessionData={sessionData}
                                 userData={userData}
                                 handlePlaySound={handlePlaySound}
+                                start={start}
                                 setStart={setStart}
                                 lyrics={lyrics}
                                 audio={audio}
@@ -153,7 +149,6 @@ export default function Session({ userData, setUserData, sessionData, setSession
                             <div className={countdown === "hide" ? "counter-layer hidden" : "counter-layer"}>
                                 {countdown}
                             </div>
-                            <Button className="finish_button" onClick={handleFinish}>Finish</Button>
                         </Col>
                         <Col s={12} m={6}>
                             <h4>Leaderboard</h4>
