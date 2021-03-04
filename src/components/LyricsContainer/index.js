@@ -79,12 +79,12 @@ function LyricsContainer({ curTime, isPlaying, userInput, pts, setPts }) {
             console.log(possibleLyrics)
             console.log(microphoneInput)
 
-            possibleLyrics.map(word => {
-                microphoneInput.map(input => {
-                    if (word === input) {
-                        points++
-                    }
-                })
+            possibleLyrics.map( word => {
+                let index = microphoneInput.indexOf( word );
+                if ( index > -1 ) {
+                    microphoneInput.splice( index, 1 );
+                    points++;
+                }
             })
 
             // Possible solution to "cheat" issue with repeated words racking up points.

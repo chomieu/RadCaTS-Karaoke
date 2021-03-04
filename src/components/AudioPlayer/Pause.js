@@ -3,7 +3,7 @@ import React from "react";
 import { PauseCircleFilled } from "@material-ui/icons";
 
 
-export default function Play(props) {
+export default function Pause(props) {
     const { handleClick } = props;
 
     return (

@@ -8,26 +8,42 @@ import Landing from "./pages/Landing";
 import API from "./utils/API"
 import './App.css';
 
-
 function App() {
 
-  const [userData, setUserData] = useState({ isLoggedIn: false })
-  const [sessionData, setSessionData] = useState({ isActive: false })
+  let status, token, id, username, profilePicture
+  const userInfo = JSON.parse(localStorage.getItem("radcatsInfo"))
+  if (userInfo) {
+    status = true
+    token = userInfo.token
+    id = userInfo.id
+    username = userInfo.username
+    profilePicture = userInfo.profilePicture
+  } else {
+    status = false
+  }
+
+  const [userData, setUserData] = useState({ isLoggedIn: status, token, id, username, profilePicture })
+  const [sessionData, setSessionData] = useState([])
   const [isPlaying, setIsPlaying] = useState(false)
 
   const authorizeUser = () => {
-    const token = localStorage.getItem("token")
-    if (token) {
-
+    if (userInfo) {
       API.checkWebToken(token)
         .then(res => { loginSuccess('checkWebToken', res) })
         .catch(err => { console.log("checkWebToken", err) })
     }
   }
-  useEffect(() => { authorizeUser() }, [])
+
+  useEffect(() => { authorizeUser() }, [token])
 
   const loginSuccess = (source, res) => {
-    localStorage.setItem("token", res.data.token)
+    const radcatsInfo = {
+      token: res.data.token,
+      id: res.data.user._id,
+      username: res.data.user.username,
+      profilePicture: res.data.user.profilePicture
+    }
+    localStorage.setItem("radcatsInfo", JSON.stringify(radcatsInfo))
     console.log(source, res)
 
     setUserData({
@@ -45,20 +61,17 @@ function App() {
       <KittyHeader isPlaying={isPlaying} />
       <Switch>
         <Route exact path="/">
-          <Landing
-            userData={userData}
-            setUserData={setUserData}
-            loginSuccess={loginSuccess}
-          />
-          {/* <Header userData={userData} setUserData={setUserData} /> */}
+            <Landing
+              userData={userData}
+              setUserData={setUserData}
+              loginSuccess={loginSuccess}
+            />
         </Route>
 
         <Route exact path="/search">
-          {/* <Header userData={userData} setUserData={setUserData} /> */}
           <SearchPage
             userData={userData}
             setUserData={setUserData}
-            loginSuccess={loginSuccess}
           />
         </Route>
 
@@ -67,7 +80,6 @@ function App() {
             userData={userData}
             setUserData={setUserData}
             sessionData={sessionData}
-            loginSuccess={loginSuccess}
             setSessionData={setSessionData}
           />
         </Route>
@@ -80,7 +92,6 @@ function App() {
             setUserData={setUserData}
             sessionData={sessionData}
             setSessionData={setSessionData}
-            loginSuccess={loginSuccess}
           />
         </Route>
 
