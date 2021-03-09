@@ -71,6 +71,8 @@ Other users can join this session by entering the session URL, and the site prov
 
 ## Deployed
 - [Frontend (user) site](https://radcats-karaoke.herokuapp.com) 
+- * username: radcat
+- * password: password
 - [Backend API routes](https://radcats-karaoke-api.herokuapp.com)
 - [Socket.io server](http://radcats-karaoke-server.herokuapp.com/)
 
