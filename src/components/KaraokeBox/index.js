@@ -61,7 +61,6 @@ function KaraokeBox({ curTime, isPlaying, pts, setPts, language, sessionData, ly
             <div className="row player left-align">
                 <div className="col s12">
 
-
                     <LyricsContainer
                         pts={pts}
                         setPts={setPts}

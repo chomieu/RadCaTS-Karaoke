@@ -1,7 +1,5 @@
 // source: https://codesandbox.io/s/5wwj02qy7k?file=/src/useAudioPlayer.js:0-1246
 import React from "react";
-import moment from "moment";
-import momentDurationFormatSetup from "moment-duration-format";
 
 export default function Bar({ duration, curTime, onTimeUpdate }) {
 
@@ -46,7 +44,6 @@ export default function Bar({ duration, curTime, onTimeUpdate }) {
                     style={{ left: `${curPercentage - 1}%` }}
                 />
             </div>
-
         </div>
     );
 }

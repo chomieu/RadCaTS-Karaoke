@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import API from "../utils/API";
+import React from 'react';
 import { Redirect } from 'react-router-dom';
 import Header from '../components/Header';
 import SignUp from '../components/SignUp';
 import LogIn from '../components/LogIn';
-import "../App.css"
+import "../App.css";
 
 export default function Landing({ userData, setUserData, loginSuccess, setIsPlaying }) {
     return (
@@ -16,7 +15,6 @@ export default function Landing({ userData, setUserData, loginSuccess, setIsPlay
             <SignUp loginSuccess={loginSuccess} />
 
             <LogIn loginSuccess={loginSuccess} />
-
         </div>
     )
 }

@@ -83,6 +83,7 @@ function App() {
             setUserData={setUserData}
             sessionData={sessionData}
             setSessionData={setSessionData}
+            setIsPlaying={setIsPlaying}
           />
         </Route>
 

@@ -1,11 +1,7 @@
-import React, { useEffect, useState } from "react"
-// import track from "../../utils/lyrics.json"
-import "./style.css"
-
-
+import React, { useEffect, useState } from "react";
+import "./style.css";
 
 function LyricsContainer({ curTime, isPlaying, lyrics, pts, setPts, userInput, duration, handleStop }) {
-
     // track the index location of the current lyrics object
     const [lrcIdx, setLrcIdx] = useState(0)
     // // container for the previous lyric object to check for pts
@@ -52,7 +48,6 @@ function LyricsContainer({ curTime, isPlaying, lyrics, pts, setPts, userInput, d
 
     }, [isPlaying, curTime])
 
-
     // update points based on new user input
     // make sure there are entries from user to avoid errors
     // create array of words from user input
@@ -60,9 +55,7 @@ function LyricsContainer({ curTime, isPlaying, lyrics, pts, setPts, userInput, d
 
     useEffect(() => {
 
-
         if (userInput.length > 1 && displayLyrics) {
-
 
             const microphoneInput = userInput[userInput.length - 2].text.split(' ')
             const micInputEndTime = userInput[userInput.length - 1].time
@@ -100,7 +93,6 @@ function LyricsContainer({ curTime, isPlaying, lyrics, pts, setPts, userInput, d
                     points++;
                 }
             })
-
 
             setPts({ pts: points })
         }

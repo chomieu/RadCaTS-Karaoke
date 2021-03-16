@@ -8,7 +8,6 @@ import API from '../../utils/API';
 import "./style.css"
 
 function Search({ userData }) {
-
     const [formInputs, setFormInputs] = useState({ label: '', value: '', })
     const [message, setMessage] = useState(`What's your favorite song?`)
     const [redirectPage, setRedirectPage] = useState()
@@ -21,13 +20,11 @@ function Search({ userData }) {
 
 
     const handleInputChange = e => {
-        console.log(e)
         if (e) { setFormInputs({ ...formInputs, label: e.label, value: e.value, }) }
         else { setFormInputs({ ...formInputs, label: null, value: null, }) }
     }
 
     const handleSelectClick = () => {
-        console.log('clicked')
         getSongs()
     }
 
@@ -45,15 +42,12 @@ function Search({ userData }) {
             .catch(err => { console.error(err) })
     }
 
-
-
     const handleLyrics = e => {
         e.preventDefault()
         const newSessionObj = { host: userData.id, karaokeSong: formInputs.value }
         createNewSession(newSessionObj)
 
     }
-
 
     const createNewSession = (newSessionObj => {
         API.createSession(newSessionObj)
@@ -63,7 +57,6 @@ function Search({ userData }) {
     })
 
     return (
-
         <Container className="center-align">
 
             <h4 className="search__title">{message}</h4>
@@ -102,8 +95,6 @@ function Search({ userData }) {
                         createNewSession={createNewSession}
 
                     />
-
-                    {/* <Button onClick={getSongs} >refresh results</Button> */}
 
                     {formInputs.value
 

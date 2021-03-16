@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Modal, Button } from 'react-materialize';
-import { Redirect } from 'react-router-dom';
 
 import API from "../../utils/API"
 import "./style.css";

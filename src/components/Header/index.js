@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Redirect } from "react-router-dom"
-import { Container, Row, Col, TextInput, Button, Icon } from 'react-materialize';
+import { Row, Col } from 'react-materialize';
 import UserChip from '../UserChip';
 import Logout from "../Logout";
-import "./style.css"
+import "./style.css";
 
 function Header({ audio, userData, setUserData, setIsPlaying }) {
 
@@ -11,10 +11,10 @@ function Header({ audio, userData, setUserData, setIsPlaying }) {
 
   const handleHome = () => {
     setIsPlaying(false)
-    audio.src = ''
+    if (audio) {
+      audio.src = ''
+    }
     setRedirect(<Redirect to="/" />)
-    // window.location.reload()
-
   }
 
   return (

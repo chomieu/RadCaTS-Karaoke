@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useParams, Redirect } from "react-router-dom";
 import AudioPlayer from "../components/AudioPlayer";
 import MemberCard from "../components/MemberCard";
-import { Button, Row, Col } from "react-materialize";
+import { Row, Col } from "react-materialize";
 import Header from "../components/Header";
+import Share from "../components/Share";
 import API from "../utils/API";
 import "../App.css"
 
@@ -16,7 +17,6 @@ const socket = io.connect("http://radcats-karaoke-server.herokuapp.com")
 const audio = new Audio()
 
 export default function Session({ userData, setUserData, sessionData, setSessionData, isPlaying, setIsPlaying }) {
-
     const [lyrics, setLyrics] = useState({ isLoaded: false })
     const [pts, setPts] = useState({ pts: 0 })
     const { id } = useParams()
@@ -44,7 +44,6 @@ export default function Session({ userData, setUserData, sessionData, setSession
                     mixed: data.data.karaokeSong.mixed,
                     sessionId: data.data._id,
                     songId: data.data.karaokeSong._id,
-                    // lyrics: data.data.karaokeLyrics
                 })
                 let lyricsPath = data.data.karaokeLyrics.lyrics.lines
                 if (lyricsPath) {
@@ -169,9 +168,11 @@ export default function Session({ userData, setUserData, sessionData, setSession
                             <div>
                                 {leaderboard}
                             </div>
+                            <div>
+                                <Share sessionUrl={`https://radcats-karaoke-api.herokuapp.com/api/session/${sessionData.sessionId}`} />
+                            </div>
                         </Col>
                     </Row>
-
                 </>
             }
         </div>

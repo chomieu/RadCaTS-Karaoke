@@ -1,6 +1,6 @@
-import React from "react"
-import { Row, Col, ProgressBar, Preloader } from 'react-materialize'
-import "./style.css"
+import React from "react";
+import { Row, Col, ProgressBar, Preloader } from 'react-materialize';
+import "./style.css";
 
 
 

@@ -1,12 +1,10 @@
-import React from 'react'
+import React from 'react';
 import { Modal, Button } from 'react-materialize';
 import "./style.css";
 
 const trigger = <Button className="logout_button btn_purple"><i className="material-icons">exit_to_app</i></Button>;
 
 export default function logout({ userData, setUserData }) {
-
-
     // remove token from local storage
     // reset userData
     const logoutUser = () => {
@@ -27,6 +25,5 @@ export default function logout({ userData, setUserData }) {
             >logout</Button>
 
         </Modal >
-
     )
 }

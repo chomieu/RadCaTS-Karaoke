@@ -132,7 +132,6 @@ export default function EditLyrics({ userData, setUserData, sessionData, setSess
                         console.log("lyrics update err:", err)
                     })
             } else {
-                console.log("144 else")
                 API.uploadLyrics(lyricsData)
                     .then(data => {
                         applyLyrics(data.data._id)
@@ -151,7 +150,6 @@ export default function EditLyrics({ userData, setUserData, sessionData, setSess
         }
         API.addLyricsToSession(data)
             .then(() => {
-                // console.log("add lyrics to session")
                 setRedirectPage(<Redirect to={`/api/session/${id}`} />)
             })
             .catch(err => {
@@ -161,7 +159,7 @@ export default function EditLyrics({ userData, setUserData, sessionData, setSess
 
     return (
         <Container className="pageContents lyrics">
-            <Header userData={userData} setUserData={setUserData} />
+            <Header userData={userData} setUserData={setUserData} setIsPlaying={setIsPlaying} />
             {lyricsFile.len === 0 ?
                 <div>
                     <h1>Lyrics List</h1>

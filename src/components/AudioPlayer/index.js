@@ -1,6 +1,5 @@
 // source: https://codesandbox.io/s/5wwj02qy7k?file=/src/useAudioPlayer.js:0-1246
 import React, { useState, useEffect } from "react";
-import momentDurationFormatSetup from "moment-duration-format";
 import useAudioPlayer from "./useAudioPlayer";
 import AudioBottom from "./AudioBottom";
 import KaraokeBox from "../KaraokeBox";
@@ -40,8 +39,6 @@ function AudioPlayer({ sessionData, isPlaying, setIsPlaying, handleFinish, handl
                 sessionData={sessionData}
             />
 
-            {/* <FileDrop isPlaying={ isPlaying } /> */}
-
             <KaraokeBox
                 pts={pts}
                 lyrics={lyrics}
@@ -54,7 +51,6 @@ function AudioPlayer({ sessionData, isPlaying, setIsPlaying, handleFinish, handl
                 sessionData={sessionData}
             />
 
-            {/* <Bar curTime={curTime} duration={duration} onTimeUpdate={(time) => setClickedTime(time)} /> */}
             <AudioBottom
                 formatDuration={formatDuration}
                 sessionData={sessionData}
@@ -70,7 +66,6 @@ function AudioPlayer({ sessionData, isPlaying, setIsPlaying, handleFinish, handl
                 setStart={setStart}
                 hidePlayBtn={hidePlayBtn}
             />
-
         </div>
     );
 }

@@ -7,7 +7,6 @@ function Song({ songName, songArtist }) {
     return (
         <div className="container">
             <div className="row mb1">
-
                 <div className="col s12 song">
                     <h1 className="song__title">{songName}</h1>
                     <div className="divider"></div>

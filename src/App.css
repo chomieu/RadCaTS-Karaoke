@@ -20,9 +20,6 @@ body {
   overflow: scroll;
 }
 
-html {
-  overflow: scroll;
-}
 ::-webkit-scrollbar {
     width: 0px;
     background: transparent; /* make scrollbar transparent */
@@ -106,6 +103,11 @@ textarea {
 
 .lyrics .helper-text {
   display: none;
+}
+
+#upload_widget {
+  display: flex;
+  margin: auto;
 }
 
 @media screen and (max-width: 600px) {

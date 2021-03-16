@@ -4,17 +4,12 @@ import { Chip, Icon, Modal, Button } from 'react-materialize';
 import API from "../../utils/API";
 
 export default function UserChip({ userData }) {
-
-    const axios = require("axios")
-
     const newProfilePicture = () => {
         const pfp = document.getElementById("pfp").value
-        console.log(pfp)
         const data = {
             id: userData.id,
             url: pfp
         }
-        console.log(data)
         API.updateProfilePicture(data)
             .then(() => {
                 window.location.reload()

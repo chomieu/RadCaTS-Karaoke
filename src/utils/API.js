@@ -1,11 +1,11 @@
 const axios = require("axios")
 
 
-const URL_PREFIX = 'https://radcats-karaoke-api.herokuapp.com'
+// const URL_PREFIX = 'https://radcats-karaoke-api.herokuapp.com'
 
 
 // const URL_PREFIX = 'https://radcats-karaoke-backend.herokuapp.com'
-// const URL_PREFIX = 'http://localhost:8080';
+const URL_PREFIX = 'http://localhost:8080';
 
 
 
@@ -55,6 +55,9 @@ const API = {
     },
     updateProfilePicture: data => {
         return axios.put(`${URL_PREFIX}/api/pfp/${data.id}`, data)
+    },
+    uploadSong: song => {
+        return axios.post(`${URL_PREFIX}/api/song`, song)
     }
 }
 

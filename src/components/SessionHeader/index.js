@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Container, Row, Col, TextInput, Button, Icon } from 'react-materialize';
+import React from 'react';
+import { Row, Col } from 'react-materialize';
 import UserChip from '../UserChip';
 import Logout from "../Logout";
 
