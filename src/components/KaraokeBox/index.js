@@ -52,8 +52,8 @@ function KaraokeBox({ curTime, isPlaying, pts, setPts, language, sessionData, ly
 
     // Note: Browser support is limited with WebSpeechAPI.
     // if the browser is not supported, alert user.
-    if (!SpeechRecognition.browserSupportsSpeechRecognition()) {
-        return (<h3>Your browser does not support speech recognition software! Sorry for the trouble, try Chrome desktop.</h3>)
+    if (SpeechRecognition.browserSupportsSpeechRecognition()) {
+        return (<h6>Your browser does not support speech recognition software! Please use <a href="https://www.google.com/chrome/" target="about_blank">Google Chrome</a> (desktop version only) thanks!.</h6>)
 
     } else {
 
