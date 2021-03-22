@@ -7,12 +7,12 @@ import Select from 'react-select';
 import API from '../../utils/API';
 import "./style.css"
 
-function Search({ userData }) {
+function Search({ userData, search, setSearch }) {
+
 
     const [formInputs, setFormInputs] = useState({ label: '', value: '', })
     const [message, setMessage] = useState(`What's your favorite song?`)
     const [redirectPage, setRedirectPage] = useState()
-    const [search, setSearch] = useState(['search'])
     const [loading, setLoading] = useState(false)
 
     useEffect(() => { getSongs() }, [])
@@ -44,7 +44,6 @@ function Search({ userData }) {
             })
             .catch(err => { console.error(err) })
     }
-
 
 
     const handleLyrics = e => {
