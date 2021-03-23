@@ -10,16 +10,13 @@ import "./style.css"
 
 function Search({ userData, search, setSearch }) {
 
-
     const [formInputs, setFormInputs] = useState({ label: '', value: '', })
     const [message, setMessage] = useState(`What's your favorite song?`)
     const [highScores, setHighScores] = useState({ loaded: false })
     const [redirectPage, setRedirectPage] = useState()
     const [loading, setLoading] = useState(false)
 
-
     useEffect(() => { getSongs() }, [userData])
-
     useEffect(() => { if (loading) { setMessage('searching') } }, [loading])
 
 
@@ -30,6 +27,7 @@ function Search({ userData, search, setSearch }) {
     }
 
     const handleSelectClick = () => { getSongs() }
+
 
     const getSongs = (e) => {
         if (e) { e.preventDefault() }
@@ -48,50 +46,38 @@ function Search({ userData, search, setSearch }) {
 
     const formatHighScores = (songs) => {
         if (userData.records) {
-            const thisUsersSessionScores = [] // store high scores for user here
-            userData.records.map(data => { // loop through session records for this user
-                const allUsersScores = data.scores // array of objects with userid:score key value pairs ex-> [{ userId: score }, { userId: score }, ...]
-                const thisSongsData = { // new object for each song id and score for the song
-                    songId: data.karaokeSong
-                }
 
-                if (data.scores) {
+            const userSessionData = [] // store high scores for user here
+            userData.records.map(data => { // loop through session records for this user
+                const thisSongsData = { // new object for each song id and score for the song
+                    songId: data.karaokeSong // id# of song
+                }
+                if (data.scores) { // array of objects with userid#:score, ex-> [{ userId: score }, { userId: score }, ...]
                     data.scores.map(x => {
                         if (x[userData.id] > 0) { // if object key matches this userId & is greater then 0
                             thisSongsData.score = x[userData.id] // add the score to thisSongsData
-                            thisUsersSessionScores.push(thisSongsData) // add the object to thisUsersSessionScores array
+                            userSessionData.push(thisSongsData) // add the object to userSessionData array
                         }
                     })
                 }
             })
-            const thisUsersHighScores = [thisUsersSessionScores[0]] // preload high scores with the first object
-            // loop through thisUsersSessionScores
-            // if song is not in thisUsersHighScores yet, add it
-            // if song is in thisUsersHighScores, compare scores
-            // if less then, skip
-            // if greater then, update it
-            thisUsersSessionScores.map((session, idx) => {
-                // loop through highscores
-                for (let i = 0; i < thisUsersHighScores.length; i++) {
-                    // if session id matches an id in high scores, compare scores
-                    // if stored score in high score is greater, exit the loop
-                    // if session score is greater, update high score with session score and exit the loop
-                    if (session.songId === thisUsersHighScores[i].songId) {
-                        if (session.score < thisUsersHighScores[i].score) { return }
+            const userHighestScores = [userSessionData[0]] // preload high scores with the first object
+            userSessionData.map((session, idx) => { // iterate through session scores
+                for (let i = 0; i < userHighestScores.length; i++) { // iterate through high scores
+                    if (session.songId === userHighestScores[i].songId) { // if matching id is found, compare scores
+                        if (session.score < userHighestScores[i].score) { return } // if current high score is greater, disreguard and exit the loop
                         else {
-                            thisUsersHighScores[i].score = session.score
+                            userHighestScores[i].score = session.score // if session score is greater, update high score with session score and exit the loop
                             return
                         }
                     }
                 }
-                // if loop wasn't exited above, no matching song was found, add this session data to high scores
-                thisUsersHighScores.push(session)
+                userHighestScores.push(session) // if no matches were found above, add session data to high scores
             })
-            // if highscores have loaded & searchdata has loaded
             // loop through high scores songs, compare to search data
             // when matching Id's are found, add the label data from search to the highscores objects
 
-            thisUsersHighScores.map((highScore) => {
+            userHighestScores.map((highScore) => {
                 songs.map(song => {
                     if (highScore) {
                         if (song._id === highScore.songId) {
@@ -102,9 +88,9 @@ function Search({ userData, search, setSearch }) {
                 })
             })
 
-            if (thisUsersHighScores.length > 1) {
+            if (userHighestScores.length > 1) {
                 setHighScores({
-                    scores: thisUsersHighScores,
+                    scores: userHighestScores,
                     loaded: true
                 })
             }
@@ -133,22 +119,16 @@ function Search({ userData, search, setSearch }) {
 
             <h5 className="search__title">{message}</h5>
 
-            { loading
-
-                ? <Preloader />
-                : null
-
-            }
+            { loading ? <Preloader /> : null}
 
             {highScores.loaded
-
-                ? <UserHighScores highScores={highScores} search={search} />
-                : <Preloader />
+                ? <UserHighScores
+                    highScores={highScores}
+                    search={search}
+                    userData={userData}
+                />
+                : null
             }
-
-
-
-
 
             <form className="search__container">
 
@@ -157,7 +137,6 @@ function Search({ userData, search, setSearch }) {
                     <p>What do you want to sing next?</p>
 
                     <Select
-
                         onChange={handleInputChange}
                         onClick={handleSelectClick}
                         classNamePrefix="select"
@@ -166,25 +145,20 @@ function Search({ userData, search, setSearch }) {
                         isClearable={true}
                         options={search}
                         name="searchBox"
-
                     />
 
                     <AddSongModal
-
                         userData={userData}
                         setLoading={setLoading}
                         setMessage={setMessage}
                         createNewSession={createNewSession}
-
                     />
 
                     {/* <Button onClick={getSongs} >refresh results</Button> */}
 
                     {formInputs.value
-
                         ? <Button className="btn_purple" onClick={handleLyrics}>Get started!</Button>
                         : <Button className="btn_purple" disabled>Select a song</Button>
-
                     }
 
                 </span>
