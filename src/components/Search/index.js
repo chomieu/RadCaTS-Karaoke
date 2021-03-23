@@ -10,11 +10,11 @@ import "./style.css"
 
 function Search({ userData, search, setSearch }) {
 
-    const [formInputs, setFormInputs] = useState({ label: '', value: '', })
-    const [message, setMessage] = useState(`What's your favorite song?`)
-    const [highScores, setHighScores] = useState({ available: false })
-    const [redirectPage, setRedirectPage] = useState()
     const [loading, setLoading] = useState({ search: false, highScores: true })
+    const [formInputs, setFormInputs] = useState({ label: '', value: '', })
+    const [highScores, setHighScores] = useState({ available: false })
+    const [message, setMessage] = useState({ search: `` })
+    const [redirectPage, setRedirectPage] = useState()
 
     useEffect(() => { getSongs() }, [userData])
     useEffect(() => { if (loading.search) { setMessage('searching') } }, [loading])
@@ -111,7 +111,7 @@ function Search({ userData, search, setSearch }) {
     return (
 
         <Container className="center-align">
-            { loading.search ? <Preloader /> : null}
+            { loading.search ? <Preloader /> : <h5 className="search__title">{message.search}</h5>}
 
             <Row>
                 {loading.highScores
@@ -124,7 +124,10 @@ function Search({ userData, search, setSearch }) {
                             userData={userData}
                         />
 
-                        : <h5 className="search__title">{message}</h5> // display if no scores are available
+                        : <>
+                            <h5>Welcome, {userData.username}! </h5>
+                            <h5>What's your favorite song?</h5>
+                        </>
                 }
 
             </Row>
@@ -146,13 +149,13 @@ function Search({ userData, search, setSearch }) {
                     />
 
                     <AddSongModal
+                        message={message}
+                        loading={loading}
                         userData={userData}
                         setLoading={setLoading}
                         setMessage={setMessage}
                         createNewSession={createNewSession}
                     />
-
-                    {/* <Button onClick={getSongs} >refresh results</Button> */}
 
                     {formInputs.value
                         ? <Button className="btn_purple" onClick={handleCreateSession}>Get started!</Button>
