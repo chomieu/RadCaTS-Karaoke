@@ -25,6 +25,7 @@ function LogIn({ loginSuccess, setLoadingUser, setMessage }) {
 
     const handleInputSubmit = e => {
         e.preventDefault();
+        setMessage('')
         setLoadingUser(true)
         setFormInputs({
             username: "",
