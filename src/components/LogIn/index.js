@@ -7,7 +7,7 @@ import "./style.css";
 
 
 
-function LogIn({ loginSuccess }) {
+function LogIn({ loginSuccess, setLoadingUser, setMessage }) {
 
     const trigger = <Button className="btn_purple">Sign In</Button>
     const [formInputs, setFormInputs] = useState({
@@ -25,6 +25,7 @@ function LogIn({ loginSuccess }) {
 
     const handleInputSubmit = e => {
         e.preventDefault();
+        setLoadingUser(true)
         setFormInputs({
             username: "",
             password: ""
@@ -32,7 +33,9 @@ function LogIn({ loginSuccess }) {
 
         API.login(formInputs)
             .then(res => {
-                loginSuccess('login', res)
+                setLoadingUser(false)
+                if (res.data.err) setMessage(`please try again`)
+                else loginSuccess('login', res)
             })
             .catch(err => { console.log(err) })
     }
