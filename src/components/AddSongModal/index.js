@@ -22,6 +22,7 @@ export default function AddSongModal({ setLoading, loading, setMessage, message,
     const handleInputSubmit = e => {
         e.preventDefault();
         setLoading({ ...loading, search: true })
+        setMessage({ ...message, search: 'Searching. . .' })
 
         // send title and artist search as one string with the key of name
         let data = { name: inputs.title }

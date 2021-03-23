@@ -88,7 +88,11 @@ function Search({ userData, search, setSearch }) {
                 setHighScores({ scores: userHighestScores, available: true }) // set high score data
                 setLoading({ ...loading, highScores: false }) // turn off preloader
 
-            } else setLoading({ ...loading, highScores: false }) // turn off preloader
+            } else {
+                setTimeout(() => {
+                    setLoading({ ...loading, highScores: false }) // turn off preloader
+                }, 2000)
+            }
         }
     }
 
@@ -114,8 +118,17 @@ function Search({ userData, search, setSearch }) {
             { loading.search ? <Preloader /> : <h5 className="search__title">{message.search}</h5>}
 
             <Row>
-                {loading.highScores
 
+                {!highScores.available && !loading.highScores
+                    ? <>
+                        <h5>Welcome, {userData.username}! </h5>
+                        <h5>What's your favorite song?</h5>
+                    </>
+                    : null
+                }
+
+
+                {loading.highScores
                     ? <Preloader /> // display while scores attempt to load
                     : highScores.available
                         ? <UserHighScores  // display if scores are available
@@ -124,13 +137,11 @@ function Search({ userData, search, setSearch }) {
                             userData={userData}
                         />
 
-                        : <>
-                            <h5>Welcome, {userData.username}! </h5>
-                            <h5>What's your favorite song?</h5>
-                        </>
+                        : null
                 }
 
             </Row>
+
             <form className="search__container">
 
                 <span className="searchInput">
