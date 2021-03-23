@@ -41,7 +41,6 @@ function LogIn({ loginSuccess, setLoadingUser, setMessage }) {
             .catch(err => { console.log(err) })
     }
 
-
     return (
         <Modal
             className="center-align"

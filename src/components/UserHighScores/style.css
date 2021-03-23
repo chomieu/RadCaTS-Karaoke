@@ -17,3 +17,7 @@ p {
     height: 10rem;
     overflow-y: scroll;
 }
+
+h5 {
+    color: rgb(235, 115, 72) !important;
+}

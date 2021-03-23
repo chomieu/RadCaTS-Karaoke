@@ -12,12 +12,12 @@ function Search({ userData, search, setSearch }) {
 
     const [formInputs, setFormInputs] = useState({ label: '', value: '', })
     const [message, setMessage] = useState(`What's your favorite song?`)
-    const [highScores, setHighScores] = useState({ loaded: false })
+    const [highScores, setHighScores] = useState({ available: false })
     const [redirectPage, setRedirectPage] = useState()
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState({ search: false, highScores: true })
 
     useEffect(() => { getSongs() }, [userData])
-    useEffect(() => { if (loading) { setMessage('searching') } }, [loading])
+    useEffect(() => { if (loading.search) { setMessage('searching') } }, [loading])
 
 
     const handleInputChange = e => {
@@ -74,31 +74,26 @@ function Search({ userData, search, setSearch }) {
                 }
                 userHighestScores.push(session) // if no matches were found above, add session data to high scores
             })
-            // loop through high scores songs, compare to search data
-            // when matching Id's are found, add the label data from search to the highscores objects
 
-            userHighestScores.map((highScore) => {
-                songs.map(song => {
-                    if (highScore) {
-                        if (song._id === highScore.songId) {
-                            highScore.artist = song.artist
+            if (userHighestScores.length > 1) { // if there are scores
+                userHighestScores.map((highScore) => {  // loop through each score data
+                    songs.map(song => { // loop through available songs
+                        if (song._id === highScore.songId) { // find the song the score belongs to
+                            highScore.artist = song.artist // add the artist and song name to score data
                             highScore.name = song.name
                         }
-                    }
+                    })
                 })
-            })
 
-            if (userHighestScores.length > 1) {
-                setHighScores({
-                    scores: userHighestScores,
-                    loaded: true
-                })
-            }
+                setHighScores({ scores: userHighestScores, available: true }) // set high score data
+                setLoading({ ...loading, highScores: false }) // turn off preloader
+
+            } else setLoading({ ...loading, highScores: false }) // turn off preloader
         }
     }
 
 
-    const handleLyrics = e => {
+    const handleCreateSession = e => {
         e.preventDefault()
         const newSessionObj = { host: userData.id, karaokeSong: formInputs.value }
         createNewSession(newSessionObj)
@@ -116,25 +111,28 @@ function Search({ userData, search, setSearch }) {
     return (
 
         <Container className="center-align">
+            { loading.search ? <Preloader /> : null}
 
-            <h5 className="search__title">{message}</h5>
+            <Row>
+                {loading.highScores
 
-            { loading ? <Preloader /> : null}
+                    ? <Preloader /> // display while scores attempt to load
+                    : highScores.available
+                        ? <UserHighScores  // display if scores are available
+                            highScores={highScores}
+                            search={search}
+                            userData={userData}
+                        />
 
-            {highScores.loaded
-                ? <UserHighScores
-                    highScores={highScores}
-                    search={search}
-                    userData={userData}
-                />
-                : null
-            }
+                        : <h5 className="search__title">{message}</h5> // display if no scores are available
+                }
 
+            </Row>
             <form className="search__container">
 
                 <span className="searchInput">
 
-                    <p>What do you want to sing next?</p>
+                    {highScores.available ? <h5>What do you want to sing next?</h5> : null}
 
                     <Select
                         onChange={handleInputChange}
@@ -157,7 +155,7 @@ function Search({ userData, search, setSearch }) {
                     {/* <Button onClick={getSongs} >refresh results</Button> */}
 
                     {formInputs.value
-                        ? <Button className="btn_purple" onClick={handleLyrics}>Get started!</Button>
+                        ? <Button className="btn_purple" onClick={handleCreateSession}>Get started!</Button>
                         : <Button className="btn_purple" disabled>Select a song</Button>
                     }
 
