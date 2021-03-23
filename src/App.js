@@ -98,10 +98,19 @@ function App() {
     })
   }
   useEffect(() => {
-    if (userData.highScores) {
-      console.log(userData.highScores)
-      console.log(search)
+    // if highscores have loaded & searchdata has loaded
+    // loop through high scores songs, compare to search data
+    // when matching Id's are found, add the label data from search to the highscores objects
+    if (userData.highScores && search) {
+
+      userData.highScores.map((highScore, idx) => {
+        search.forEach(song => {
+          if (song.value === highScore.songId) { highScore.label = song.label }
+        })
+      })
     }
+    console.log('something')
+
   }, [search, userData])
 
 

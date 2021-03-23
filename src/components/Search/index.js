@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import { Container, Button } from 'react-materialize';
+import { Container, Row, Col, Button } from 'react-materialize';
 import { Redirect } from 'react-router-dom';
 import AddSongModal from "../AddSongModal"
+import UserHighScores from "../UserHighScores"
 import Preloader from "../Preloader"
 import Select from 'react-select';
 import API from '../../utils/API';
@@ -65,20 +66,30 @@ function Search({ userData, search, setSearch }) {
 
         <Container className="center-align">
 
-            <h4 className="search__title">{message}</h4>
+            <h5 className="search__title">{message}</h5>
 
-            {loading
+            { loading
 
                 ? <Preloader />
                 : null
 
             }
 
+            { userData.highScores
+
+                ? <UserHighScores userData={userData} />
+                : <Preloader />
+            }
+
+
+
+
+
             <form className="search__container">
 
                 <span className="searchInput">
 
-                    <p>search for an existing karaoke track</p>
+                    <p>What do you want to sing next?</p>
 
                     <Select
 
