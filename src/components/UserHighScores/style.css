@@ -1,0 +1,11 @@
+p {
+    margin: 0;
+    padding: .5rem;
+    color: rgb(235, 115, 72) !important;
+
+}
+.score-row {
+    border: 1px solid rgba(211, 206, 194, 0.5);
+    border-radius: .5rem;
+    background-color: rgba(0, 0, 0, 0.63);
+}
