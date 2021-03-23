@@ -9,7 +9,7 @@ import moment from "moment";
 import "./style.css"
 
 
-function AudioPlayer({ sessionData, isPlaying, setIsPlaying, handleFinish, handlePlaySound, start, setStart, audio, pts, setPts, lyrics, hidePlayBtn }) {
+function AudioPlayer({ sessionData, setSessionData, isPlaying, setIsPlaying, handleFinish, handlePlaySound, start, setStart, audio, pts, setPts, lyrics, hidePlayBtn }) {
 
     const { curTime, duration, setClickedTime } = useAudioPlayer(isPlaying, setIsPlaying, audio);
     const [language, setLanguage] = useState('en-Us')
@@ -20,13 +20,10 @@ function AudioPlayer({ sessionData, isPlaying, setIsPlaying, handleFinish, handl
             .format("mm:ss", { trim: false });
     }
 
-    useEffect(() => {
-
-        console.log(pts.pts)
-
-    }, [])
+    useEffect(() => { console.log(pts.pts) }, [])
 
     const handlePlay = () => {
+        setSessionData({ ...sessionData, isActive: true })
         setIsPlaying(true)
     }
     const handleStop = () => {

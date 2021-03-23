@@ -115,6 +115,7 @@ export default function Session({ userData, setUserData, sessionData, setSession
                 setTimeout(() => {
                     audio.src = m.path
                     setIsPlaying(true)
+                    setSessionData({ ...sessionData, isActive: true }) // sjf added 3/23/2021 to track ready/finish button for audio player bottom
                     audio.play()
                 }, 5000)
             }
@@ -146,18 +147,19 @@ export default function Session({ userData, setUserData, sessionData, setSession
                     <Row className="content_row">
                         <Col s={12} m={6}>
                             <AudioPlayer
-                                isPlaying={isPlaying}
-                                setIsPlaying={setIsPlaying}
-                                sessionData={sessionData}
-                                userData={userData}
-                                handlePlaySound={handlePlaySound}
-                                handleFinish={handleFinish}
-                                start={start}
-                                setStart={setStart}
-                                lyrics={lyrics}
-                                audio={audio}
                                 pts={pts}
+                                audio={audio}
+                                start={start}
                                 setPts={setPts}
+                                lyrics={lyrics}
+                                setStart={setStart}
+                                userData={userData}
+                                isPlaying={isPlaying}
+                                sessionData={sessionData}
+                                handleFinish={handleFinish}
+                                setIsPlaying={setIsPlaying}
+                                setSessionData={setSessionData}
+                                handlePlaySound={handlePlaySound}
                                 hidePlayBtn={member.id !== sessionData.hostId ? "none" : "contents"}
                             />
                             <div className={countdown === "hide" ? "counter-layer hidden" : "counter-layer"}>
