@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import momentDurationFormatSetup from "moment-duration-format";
 import useAudioPlayer from "./useAudioPlayer";
+import { Container } from "react-materialize";
 import AudioBottom from "./AudioBottom";
 import KaraokeBox from "../KaraokeBox";
 import AudioTop from "./AudioTop";
@@ -20,8 +21,6 @@ function AudioPlayer({ sessionData, setSessionData, isPlaying, setIsPlaying, han
             .format("mm:ss", { trim: false });
     }
 
-    useEffect(() => { console.log(pts.pts) }, [])
-
     const handlePlay = () => {
         setSessionData({ ...sessionData, isActive: true })
         setIsPlaying(true)
@@ -31,7 +30,7 @@ function AudioPlayer({ sessionData, setSessionData, isPlaying, setIsPlaying, han
     }
 
     return (
-        <div className="container">
+        <Container className="center-align">
 
             <AudioTop
                 sessionData={sessionData}
@@ -45,7 +44,7 @@ function AudioPlayer({ sessionData, setSessionData, isPlaying, setIsPlaying, han
                 setPts={setPts}
                 curTime={curTime}
                 isPlaying={isPlaying}
-                handleStop={handleStop}
+                handleFinish={handleFinish}
                 duration={duration}
                 language={language}
                 sessionData={sessionData}
@@ -68,7 +67,7 @@ function AudioPlayer({ sessionData, setSessionData, isPlaying, setIsPlaying, han
                 hidePlayBtn={hidePlayBtn}
             />
 
-        </div>
+        </Container>
     );
 }
 

@@ -20,10 +20,11 @@ function AudioBottom({ pts, isPlaying, setIsPlaying, handleFinish, handlePlay, h
                 </Col>
 
                 <Col s={4}>
-                    {!sessionData.isActive
+                    {!sessionData.isActive && !start
 
                         ? <Button className="ready_button btn_purple" style={start ? { backgroundColor: "red" } : null} onClick={handleStart}>Ready</Button>
-                        : <Button className="finish_button btn_blue" onClick={handleFinish}>Finish</Button>
+                        : null
+                        //  <Button className="finish_button btn_blue" onClick={handleFinish}>Finish</Button>
 
                     }
                 </Col>
@@ -31,7 +32,7 @@ function AudioBottom({ pts, isPlaying, setIsPlaying, handleFinish, handlePlay, h
                 <Col s={4}>
                     {/* <span className="bar__time">{formatDuration(curTime)} / {formatDuration(duration)}</span> */}
 
-                    {!sessionData.isActive
+                    {!sessionData.isActive && start
                         ? <Play
                             handleClick={handlePlay}
                             handlePlaySound={handlePlaySound}

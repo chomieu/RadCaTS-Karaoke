@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, Redirect } from "react-router-dom";
 import AudioPlayer from "../components/AudioPlayer";
 import MemberCard from "../components/MemberCard";
-import { Button, Row, Col } from "react-materialize";
+import { Row, Col } from "react-materialize";
 import Header from "../components/Header";
 import API from "../utils/API";
 import "../App.css"
@@ -117,6 +117,8 @@ export default function Session({ userData, setUserData, sessionData, setSession
                     setIsPlaying(true)
                     setSessionData({ ...sessionData, isActive: true }) // sjf added 3/23/2021 to track ready/finish button for audio player bottom
                     audio.play()
+                        .then(data => console.log('audio started'))
+                        .catch(err => console.log('audio error', err)) // sjf added 3/23/2021 added to catch random play errors
                 }, 5000)
             }
         }
