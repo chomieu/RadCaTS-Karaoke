@@ -11,10 +11,7 @@ function Header({ audio, userData, setUserData, setIsPlaying }) {
 
   const handleHome = () => {
     setIsPlaying(false)
-    audio.src = ''
-    setRedirect(<Redirect to="/" />)
-    // window.location.reload()
-
+    window.location.href = "/"
   }
 
   return (
@@ -22,8 +19,7 @@ function Header({ audio, userData, setUserData, setIsPlaying }) {
       { userData.isLoggedIn
         ? <Row>
           <Col s={1}>
-            {/* <a onClick={handleHome} style={{ cursor: "pointer" }}><h6 >Radcats Karaoke</h6></a> */}
-            <a href="/" style={{ cursor: "pointer" }}><h6 >Radcats Karaoke</h6></a>
+            <a onClick={handleHome} style={{ cursor: "pointer" }}><h6 >Radcats Karaoke</h6></a>
           </Col>
           <Col className="right">
             <Logout userData={userData} setUserData={setUserData} setIsPlaying={setIsPlaying} />
@@ -32,7 +28,6 @@ function Header({ audio, userData, setUserData, setIsPlaying }) {
         </Row>
         : null
       }
-      {/* {redirect} */}
     </div>
   );
 }
