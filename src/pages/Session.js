@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, Redirect } from "react-router-dom";
 import AudioPlayer from "../components/AudioPlayer";
 import MemberCard from "../components/MemberCard";
-import { Button, Row, Col } from "react-materialize";
+import { Row, Col } from "react-materialize";
 import Header from "../components/Header";
 import API from "../utils/API";
 import "../App.css"
@@ -11,8 +11,8 @@ import "../App.css"
 import io from "socket.io-client"
 
 // Live Session Global Constants 
-// const socket = io.connect("http://localhost:3001")
-const socket = io.connect("http://radcats-karaoke-server.herokuapp.com")
+const socket = io.connect("http://localhost:3001")
+// const socket = io.connect("http://radcats-karaoke-server.herokuapp.com")
 const audio = new Audio()
 
 export default function Session({ userData, setUserData, sessionData, setSessionData, isPlaying, setIsPlaying }) {
@@ -115,7 +115,10 @@ export default function Session({ userData, setUserData, sessionData, setSession
                 setTimeout(() => {
                     audio.src = m.path
                     setIsPlaying(true)
+                    setSessionData({ ...sessionData, isActive: true }) // sjf added 3/23/2021 to track ready/finish button for audio player bottom
                     audio.play()
+                        .then(data => console.log('audio started'))
+                        .catch(err => console.log('audio error', err)) // sjf added 3/23/2021 added to catch random play errors
                 }, 5000)
             }
         }
@@ -146,18 +149,19 @@ export default function Session({ userData, setUserData, sessionData, setSession
                     <Row className="content_row">
                         <Col s={12} m={6}>
                             <AudioPlayer
-                                isPlaying={isPlaying}
-                                setIsPlaying={setIsPlaying}
-                                sessionData={sessionData}
-                                userData={userData}
-                                handlePlaySound={handlePlaySound}
-                                handleFinish={handleFinish}
-                                start={start}
-                                setStart={setStart}
-                                lyrics={lyrics}
-                                audio={audio}
                                 pts={pts}
+                                audio={audio}
+                                start={start}
                                 setPts={setPts}
+                                lyrics={lyrics}
+                                setStart={setStart}
+                                userData={userData}
+                                isPlaying={isPlaying}
+                                sessionData={sessionData}
+                                handleFinish={handleFinish}
+                                setIsPlaying={setIsPlaying}
+                                setSessionData={setSessionData}
+                                handlePlaySound={handlePlaySound}
                                 hidePlayBtn={member.id !== sessionData.hostId ? "none" : "contents"}
                             />
                             <div className={countdown === "hide" ? "counter-layer hidden" : "counter-layer"}>

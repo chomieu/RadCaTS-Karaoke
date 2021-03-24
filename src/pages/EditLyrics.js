@@ -161,6 +161,8 @@ export default function EditLyrics({ userData, setUserData, sessionData, setSess
 
     return (
         <Container className="pageContents lyrics">
+            {/* {userData.isLoggedIn ? <Redirect to="/" /> : null} */}
+
             <Header userData={userData} setUserData={setUserData} />
             {lyricsFile.len === 0 ?
                 <div>

@@ -4,7 +4,7 @@ import Play from "./Play";
 import { Row, Col, Button } from "react-materialize";
 import Pause from "./Pause";
 
-function AudioBottom({ pts, isPlaying, setIsPlaying, handleFinish, handlePlay, handlePlaySound, start, setStart, hidePlayBtn }) {
+function AudioBottom({ pts, isPlaying, setIsPlaying, handleFinish, handlePlay, handlePlaySound, start, setStart, hidePlayBtn, sessionData }) {
 
     const handleStart = () => {
         setStart(true);
@@ -13,29 +13,36 @@ function AudioBottom({ pts, isPlaying, setIsPlaying, handleFinish, handlePlay, h
     return (
         <>
             <Row className="player bottom">
-                <Col className="s4 points__container">
+                <Col s={4} className="points__container">
                     <h1 className="points">{pts.pts}</h1>
                     <div className="divider"></div>
                     <h3 className="points__label">score</h3>
                 </Col>
 
-                <Col className="s4" >
-                    {isPlaying ?
-                        <Button className="finish_button btn_blue" onClick={handleFinish}>Finish</Button>
-                        : <Button className="ready_button btn_purple" style={start ? { backgroundColor: "red" } : null} onClick={handleStart}>Ready</Button>
+                <Col s={4}>
+                    {!sessionData.isActive && !start
+
+                        ? <Button className="ready_button btn_purple" style={start ? { backgroundColor: "red" } : null} onClick={handleStart}>Ready</Button>
+                        : null
+                        //  <Button className="finish_button btn_blue" onClick={handleFinish}>Finish</Button>
+
                     }
                 </Col>
 
-                <Col className="s4">
+                <Col s={4}>
                     {/* <span className="bar__time">{formatDuration(curTime)} / {formatDuration(duration)}</span> */}
-                    <Play
-                        handleClick={handlePlay}
-                        handlePlaySound={handlePlaySound}
-                        setStart={setStart}
-                        isPlaying={isPlaying}
-                        setIsPlaying={setIsPlaying}
-                        hidePlayBtn={hidePlayBtn}
-                    />
+
+                    {!sessionData.isActive && start
+                        ? <Play
+                            handleClick={handlePlay}
+                            handlePlaySound={handlePlaySound}
+                            setStart={setStart}
+                            isPlaying={isPlaying}
+                            setIsPlaying={setIsPlaying}
+                            hidePlayBtn={hidePlayBtn}
+                        />
+                        : null
+                    }
                 </Col>
             </Row>
         </>

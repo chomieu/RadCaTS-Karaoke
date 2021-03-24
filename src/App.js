@@ -25,7 +25,7 @@ function App() {
   }
 
   const [userData, setUserData] = useState({ isLoggedIn: status, token, id, username, profilePicture, records })
-  const [sessionData, setSessionData] = useState([])
+  const [sessionData, setSessionData] = useState([{ isActive: false }])
   const [isPlaying, setIsPlaying] = useState(false)
   const [search, setSearch] = useState([''])
 

@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import momentDurationFormatSetup from "moment-duration-format";
 import useAudioPlayer from "./useAudioPlayer";
+import { Container } from "react-materialize";
 import AudioBottom from "./AudioBottom";
 import KaraokeBox from "../KaraokeBox";
 import AudioTop from "./AudioTop";
@@ -9,7 +10,7 @@ import moment from "moment";
 import "./style.css"
 
 
-function AudioPlayer({ sessionData, isPlaying, setIsPlaying, handleFinish, handlePlaySound, start, setStart, audio, pts, setPts, lyrics, hidePlayBtn }) {
+function AudioPlayer({ sessionData, setSessionData, isPlaying, setIsPlaying, handleFinish, handlePlaySound, start, setStart, audio, pts, setPts, lyrics, hidePlayBtn }) {
 
     const { curTime, duration, setClickedTime } = useAudioPlayer(isPlaying, setIsPlaying, audio);
     const [language, setLanguage] = useState('en-Us')
@@ -20,13 +21,8 @@ function AudioPlayer({ sessionData, isPlaying, setIsPlaying, handleFinish, handl
             .format("mm:ss", { trim: false });
     }
 
-    useEffect(() => {
-
-        console.log(pts.pts)
-
-    }, [])
-
     const handlePlay = () => {
+        setSessionData({ ...sessionData, isActive: true })
         setIsPlaying(true)
     }
     const handleStop = () => {
@@ -34,7 +30,7 @@ function AudioPlayer({ sessionData, isPlaying, setIsPlaying, handleFinish, handl
     }
 
     return (
-        <div className="container">
+        <Container className="center-align">
 
             <AudioTop
                 sessionData={sessionData}
@@ -48,7 +44,7 @@ function AudioPlayer({ sessionData, isPlaying, setIsPlaying, handleFinish, handl
                 setPts={setPts}
                 curTime={curTime}
                 isPlaying={isPlaying}
-                handleStop={handleStop}
+                handleFinish={handleFinish}
                 duration={duration}
                 language={language}
                 sessionData={sessionData}
@@ -71,7 +67,7 @@ function AudioPlayer({ sessionData, isPlaying, setIsPlaying, handleFinish, handl
                 hidePlayBtn={hidePlayBtn}
             />
 
-        </div>
+        </Container>
     );
 }
 
