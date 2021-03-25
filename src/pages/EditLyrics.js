@@ -163,7 +163,7 @@ export default function EditLyrics({ userData, setUserData, sessionData, setSess
         <Container className="pageContents lyrics">
             {/* {userData.isLoggedIn ? <Redirect to="/" /> : null} */}
 
-            <Header userData={userData} setUserData={setUserData} />
+            <Header userData={userData} setUserData={setUserData} setIsPlaying={setIsPlaying}/>
             {lyricsFile.len === 0 ?
                 <div>
                     <h1>Lyrics List</h1>
