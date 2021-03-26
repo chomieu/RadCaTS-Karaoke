@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
+import { Row, Col } from "react-materialize";
 import LyricsContainer from "../LyricsContainer/"
 import "./style.css"
 
 
-function KaraokeBox({ curTime, isPlaying, pts, setPts, language, sessionData, lyrics, duration, handleStop }) {
+function KaraokeBox({ curTime, isPlaying, pts, setPts, language, sessionData, lyrics, duration, handleFinish }) {
 
     // store user mic inputs here with timestamp
-    // Note: time is at time of printing, not time of recording start
+    // Note: time value is at time of printing, not time of recording start
     const [userInput, setUserInput] = useState([
         // {
         //     time: 0,
@@ -53,14 +54,13 @@ function KaraokeBox({ curTime, isPlaying, pts, setPts, language, sessionData, ly
     // Note: Browser support is limited with WebSpeechAPI.
     // if the browser is not supported, alert user.
     if (!SpeechRecognition.browserSupportsSpeechRecognition()) {
-        return (<h3>Your browser does not support speech recognition software! Sorry for the trouble, try Chrome desktop.</h3>)
+        return (<h6>Your browser does not support speech recognition software! Please use <a href="https://www.google.com/chrome/" target="about_blank">Google Chrome</a> (desktop version only) thanks!.</h6>)
 
     } else {
 
         return (
-            <div className="row player left-align">
-                <div className="col s12">
-
+            <Row className="player left-align">
+                <Col s={12}>
 
                     <LyricsContainer
                         pts={pts}
@@ -70,13 +70,12 @@ function KaraokeBox({ curTime, isPlaying, pts, setPts, language, sessionData, ly
                         duration={duration}
                         isPlaying={isPlaying}
                         userInput={userInput}
-                        handleStop={handleStop}
+                        handleFinish={handleFinish}
                         sessionData={sessionData}
                     />
 
-
-                </div>
-            </div>
+                </Col>
+            </Row>
         )
     }
 }

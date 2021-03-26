@@ -8,13 +8,12 @@ export default function Play({ handleClick, handlePlaySound, setStart, isPlaying
     const clickEvent = (e) => {
         handleClick()
         handlePlaySound()
-        console.log("clicked")
     }
 
     return (
         <div>
             <button
-                style={{display: hidePlayBtn}}
+                style={{ display: hidePlayBtn }}
                 className="player__button"
                 onClick={clickEvent}>
                 <PlayCircleFilled

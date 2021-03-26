@@ -1,47 +1,31 @@
 import React, { useEffect, useState } from "react"
-// import track from "../../utils/lyrics.json"
 import "./style.css"
 
 
+function LyricsContainer({ curTime, isPlaying, lyrics, pts, setPts, userInput, duration, handleFinish }) {
 
-function LyricsContainer({ curTime, isPlaying, lyrics, pts, setPts, userInput, duration, handleStop }) {
-
-    // track the index location of the current lyrics object
-    const [lrcIdx, setLrcIdx] = useState(0)
-    // // container for the previous lyric object to check for pts
-    const [lrcObj0, setLrcObj0] = useState({ time: 0, text: '' })
-    // container for the current index lyric object
-    const [lrcObj1, setLrcObj1] = useState({ time: 0, text: '' })
-
+    const [lrcIdx, setLrcIdx] = useState(0) // track the index location of the current lyrics object
+    const [lrcObj0, setLrcObj0] = useState({ time: 0, text: '' }) // container for the previous lyric object to check for pts
+    const [lrcObj1, setLrcObj1] = useState({ time: 0, text: '' }) // container for the current index lyric object
     const [displayLyrics, setDisplayLyrics] = useState([])
-
     const [ptsIdx, setPtsIdx] = useState({ idx: 1 })
 
-    useEffect(() => {
-
-        setDisplayLyrics(lyrics.lyrics)
-
-    }, [lyrics.isLoaded])
+    useEffect(() => { setDisplayLyrics(lyrics.lyrics) }, [lyrics.isLoaded])
 
     useEffect(() => {
-
-        if (Math.floor(curTime) === Math.floor(duration)) { handleStop() }
-
+        if (Math.floor(curTime) === Math.floor(duration) && isPlaying) { handleFinish() }
         if (lyrics.isLoaded && curTime && displayLyrics) {
 
-            // if session is active and curTime is 0, start the first set of lyrics
-            if (curTime === 0) {
+            if (curTime === 0) { // if session is active and curTime is 0, start the first set of lyrics
 
                 setLrcObj0(displayLyrics[lrcIdx])
                 setLrcObj1(displayLyrics[lrcIdx + 1])
 
                 // if session is active & curTime matches the time of the next object, access the nested conditional.
             } else if (Math.floor(curTime) === Math.floor(lrcObj1.time)) {
-
                 setLrcObj0(displayLyrics[lrcIdx])
                 setLrcObj1(displayLyrics[lrcIdx + 1])
                 setLrcIdx(lrcIdx + 1)
-                // setLrcObj2(displayLyrics[lrcIdx + 3])
             }
 
             if (lrcIdx === displayLyrics.length - 1) {
@@ -114,7 +98,7 @@ function LyricsContainer({ curTime, isPlaying, lyrics, pts, setPts, userInput, d
         <div className="center-align">
 
             <div className="row">
-                <h4>{displayLyrics ? lrcObj0.text : 'Have fun!'}</h4>
+                <h4 className="center-align">{displayLyrics ? lrcObj0.text : 'Have fun!'}</h4>
             </div>
 
             <div className="divider"></div>

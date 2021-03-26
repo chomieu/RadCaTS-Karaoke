@@ -11,10 +11,7 @@ function Header({ audio, userData, setUserData, setIsPlaying }) {
 
   const handleHome = () => {
     setIsPlaying(false)
-    audio.src = ''
-    setRedirect(<Redirect to="/" />)
-    // window.location.reload()
-
+    window.location.href = "/"
   }
 
   return (
@@ -31,7 +28,6 @@ function Header({ audio, userData, setUserData, setIsPlaying }) {
         </Row>
         : null
       }
-      {redirect}
     </div>
   );
 }
