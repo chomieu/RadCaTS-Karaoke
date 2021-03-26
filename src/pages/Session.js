@@ -85,14 +85,16 @@ export default function Session({ userData, setUserData, sessionData, setSession
     }
 
     useEffect(() => {
-        socket.emit("joinSession",
-            id,
-            member.id,
-            member.username,
-            member.profilePicture,
-            pts,
-            (users) => handlePts(users)
-        )
+        if (userData.isLoggedIn) {
+            socket.emit("joinSession",
+                id,
+                member.id,
+                member.username,
+                member.profilePicture,
+                pts,
+                (users) => handlePts(users)
+            )
+        }
     }, [userData])
 
     useEffect(() => {
