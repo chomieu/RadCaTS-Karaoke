@@ -70,11 +70,11 @@ Finally, the user moves to the actual session where the play button controls mus
 Other users can join this session by entering the session URL, and the site provides functionality to share URLs with other users through email.
 
 ## Deployed
-- [Frontend (user) site](https://radcats-karaoke.herokuapp.com) 
+- [Frontend (user) site](https://radcatskaraoke.herokuapp.com) 
 - * username: radcat
 - * password: password
-- [Backend API routes](https://radcats-karaoke-api.herokuapp.com)
-- [Socket.io server](http://radcats-karaoke-server.herokuapp.com/)
+- [Backend API routes](https://radcatskaraokeapi.herokuapp.com)
+- [Socket.io server](https://radcatskaraokeserver.herokuapp.com)
 
 ## Contributing
 Fork our git, and contact the repository owner about pull requests.
