@@ -1,7 +1,7 @@
 const axios = require("axios")
 
 
-const URL_PREFIX = 'https://radcats-karaoke-api.herokuapp.com' // radcats heroku
+const URL_PREFIX = 'https://radcatskaraokeapi.herokuapp.com' // radcats heroku
 // const URL_PREFIX = 'https://radcats-karaoke-api.herokuapp.com' // chomie heroku
 // const URL_PREFIX = 'https://radcats-karaoke-backend.herokuapp.com' // rita heroku
 // const URL_PREFIX = 'http://localhost:8080';
