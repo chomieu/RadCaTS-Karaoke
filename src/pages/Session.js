@@ -11,8 +11,9 @@ import "../App.css"
 import io from "socket.io-client"
 
 // Live Session Global Constants 
+const socket = io.connect("https://radcatskaraokeserver.herokuapp.com/") // radcats heroku
+// const socket = io.connect("http://radcats-karaoke-server.herokuapp.com")
 // const socket = io.connect("http://localhost:3001")
-const socket = io.connect("https://radcatskaraokeserver.herokuapp.com/")
 const audio = new Audio()
 
 export default function Session({ userData, setUserData, sessionData, setSessionData, isPlaying, setIsPlaying }) {
@@ -85,16 +86,14 @@ export default function Session({ userData, setUserData, sessionData, setSession
     }
 
     useEffect(() => {
-        if (userData.isLoggedIn) {
-            socket.emit("joinSession",
-                id,
-                member.id,
-                member.username,
-                member.profilePicture,
-                pts,
-                (users) => handlePts(users)
-            )
-        }
+        socket.emit("joinSession",
+            id,
+            member.id,
+            member.username,
+            member.profilePicture,
+            pts,
+            (users) => handlePts(users)
+        )
     }, [userData])
 
     useEffect(() => {
