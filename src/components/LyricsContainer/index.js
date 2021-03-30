@@ -1,46 +1,40 @@
 import React, { useEffect, useState } from "react"
-import track from "../../utils/lyrics.json"
 import "./style.css"
 
 
+function LyricsContainer({ curTime, isPlaying, lyrics, pts, setPts, userInput, duration, handleFinish }) {
 
-function LyricsContainer({ curTime, playing, userInput, pts, setPts }) {
-
-    // track the index location of the current lyrics object
-    const [lrcIdx, setLrcIdx] = useState({ idx: 1 })
-    // // container for the previous lyric object to check for pts
-    const [lrcObj0, setLrcObj0] = useState({ time: 0, lyrics: '' })
-    // container for the current index lyric object
-    const [lrcObj1, setLrcObj1] = useState({ time: 0, lyrics: '' })
-    // container for the next index lyric object 
-    const [lrcObj2, setLrcObj2] = useState({ time: 0, lyrics: '' })
-
-
+    const [lrcIdx, setLrcIdx] = useState(0) // track the index location of the current lyrics object
+    const [lrcObj0, setLrcObj0] = useState({ time: 0, text: '' }) // container for the previous lyric object to check for pts
+    const [lrcObj1, setLrcObj1] = useState({ time: 0, text: '' }) // container for the current index lyric object
+    const [displayLyrics, setDisplayLyrics] = useState([])
     const [ptsIdx, setPtsIdx] = useState({ idx: 1 })
 
-
+    useEffect(() => { setDisplayLyrics(lyrics.lyrics) }, [lyrics.isLoaded])
 
     useEffect(() => {
+        if (Math.floor(curTime) === Math.floor(duration) && isPlaying) { handleFinish() }
+        if (lyrics.isLoaded && curTime && displayLyrics) {
 
-        // if session is active and curTime is 0, start the first set of lyrics
-        if (playing && curTime === 0) {
-            setLrcObj1(track[lrcIdx.idx])
-            setLrcObj2(track[lrcIdx.idx + 1])
+            if (curTime === 0) { // if session is active and curTime is 0, start the first set of lyrics
 
-            // if session is active & curTime matches the time of the next object, access the nested conditional.
-        } else if (playing && Math.floor(curTime) === lrcObj2.time) {
-            // Note: the last set of lyrics are set to null.
-            // if there are lyrics, load them.
-            if (lrcObj2.lyrics) {
-                let x = lrcIdx.idx + 1
-                setLrcObj0(track[x - 1])
-                setLrcObj1(track[x])
-                setLrcObj2(track[x + 1])
-                setLrcIdx({ idx: x })
+                setLrcObj0(displayLyrics[lrcIdx])
+                setLrcObj1(displayLyrics[lrcIdx + 1])
+
+                // if session is active & curTime matches the time of the next object, access the nested conditional.
+            } else if (Math.floor(curTime) === Math.floor(lrcObj1.time)) {
+                setLrcObj0(displayLyrics[lrcIdx])
+                setLrcObj1(displayLyrics[lrcIdx + 1])
+                setLrcIdx(lrcIdx + 1)
+            }
+
+            if (lrcIdx === displayLyrics.length - 1) {
+                setLrcObj0({ text: 'Thanks for playin\'' })
+                setLrcObj1({ text: 'End lyrics' })
             }
         }
 
-    }, [playing, curTime])
+    }, [isPlaying, curTime])
 
 
     // update points based on new user input
@@ -50,18 +44,18 @@ function LyricsContainer({ curTime, playing, userInput, pts, setPts }) {
 
     useEffect(() => {
 
-        if (userInput.length > 1) {
 
-            const lastMicInputTime = userInput[userInput.length - 2].time
-            const microphoneInput = userInput[userInput.length - 2].vocals.split(' ')
+        if (userInput.length > 1 && displayLyrics) {
+
+
+            const microphoneInput = userInput[userInput.length - 2].text.split(' ')
             const micInputEndTime = userInput[userInput.length - 1].time
-            var points = pts
+            var points = pts.pts
 
             var possibleLyrics = []
             var idxIncrement = 0
-            console.log(micInputEndTime)
 
-            track.map((line, idx) => {
+            displayLyrics.map((line, idx) => {
 
                 // where to start looking for lyrics
                 if (idx >= ptsIdx.idx) {
@@ -69,22 +63,26 @@ function LyricsContainer({ curTime, playing, userInput, pts, setPts }) {
                     // where to stop looking
                     if (line.time < micInputEndTime) {
                         idxIncrement++
-                        let words = line.lyrics.split(' ')
+                        let words = line.text.split(' ')
                         words.map(x => { possibleLyrics.push(x) })
                     }
                 }
             })
 
             setPtsIdx({ idx: idxIncrement })
+
             console.log(possibleLyrics)
             console.log(microphoneInput)
 
+            // Possible solution to "cheat" issue with repeated words racking up points.
+            // Test when Chomie and Rita have sessions working.
             possibleLyrics.map(word => {
-                microphoneInput.map(input => {
-                    if (word === input) {
-                        points++
-                    }
-                })
+                let index = microphoneInput.indexOf(word);
+                if (index > -1) {
+                    console.log(`Matched: ${word} === ${microphoneInput[index]} || Points: ${points + 1}`)
+                    microphoneInput.splice(index, 1);
+                    points++;
+                }
             })
 
 
@@ -100,13 +98,13 @@ function LyricsContainer({ curTime, playing, userInput, pts, setPts }) {
         <div className="center-align">
 
             <div className="row">
-                <h4>{playing ? lrcObj1.lyrics : '-'}</h4>
+                <h4 className="center-align">{displayLyrics ? lrcObj0.text : 'Have fun!'}</h4>
             </div>
 
             <div className="divider"></div>
 
             <div className="row">
-                <h6 className="muted">{playing ? lrcObj2.lyrics : '-'}</h6>
+                <h6 className="muted">{displayLyrics ? lrcObj1.text : '🎤 earn points by adding lyrics 🎤'}</h6>
             </div>
 
         </div>

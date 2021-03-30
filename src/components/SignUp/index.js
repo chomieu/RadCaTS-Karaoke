@@ -6,7 +6,7 @@ import "./style.css";
 
 function SignUp({ loginSuccess }) {
 
-    const trigger = <Button>Sign Up</Button>;
+    const trigger = <Button className="btn_purple">Sign Up</Button>;
     const [formInputs, setFormInputs] = useState({
         username: "",
         password: "",
@@ -88,14 +88,14 @@ function SignUp({ loginSuccess }) {
 
                 {formInputs.valid
                     ? <Button
-                        className="login__btn"
+                        className="btn_purple login__btn"
                         type="submit"
                         modal="close"
                         onClick={handleInputSubmit}
                     >Submit</Button>
                     : <Button
                         disabled
-                        className="login__btn"
+                        className="btn_purple login__btn"
                     >Submit</Button>
                 }
             </form>

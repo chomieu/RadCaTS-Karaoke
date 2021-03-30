@@ -1,0 +1,9 @@
+canvas {
+    position: relative;
+    top: 0;
+    left: 0;
+    width: auto !important;
+    height: 100vh !important;
+    background: url('assets/tronbg.png') no-repeat center center;
+    background-size: cover;
+}

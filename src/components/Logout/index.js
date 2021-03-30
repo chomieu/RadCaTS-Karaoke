@@ -1,7 +1,8 @@
 import React from 'react'
 import { Modal, Button } from 'react-materialize';
+import "./style.css";
 
-const trigger = <Button>logout</Button>;
+const trigger = <Button className="logout_button btn_purple"><i className="material-icons">exit_to_app</i></Button>;
 
 export default function logout({ userData, setUserData }) {
 
@@ -9,8 +10,8 @@ export default function logout({ userData, setUserData }) {
     // remove token from local storage
     // reset userData
     const logoutUser = () => {
-        localStorage.removeItem("token");
-        setUserData({ isLoggedIn: false, email: '', token: '', id: '' })
+        localStorage.removeItem("radcatsInfo");
+        setUserData({})
     }
 
     return (
@@ -20,9 +21,10 @@ export default function logout({ userData, setUserData }) {
             header={`logout ${userData.username}?`}
         >
             <Button
+                className="btn_purple"
                 modal="close"
                 onClick={logoutUser}
-            >Logout</Button>
+            >logout</Button>
 
         </Modal >
 

@@ -3,11 +3,12 @@ import { Modal, Button } from 'react-materialize';
 import Preloader from "../Preloader"
 import API from "../../utils/API"
 import "./style.css";
+import { Message } from '@material-ui/icons';
 
 
-export default function AddSongModal({ setLoading, setMessage, userData, createNewSession }) {
+export default function AddSongModal({ setLoading, loading, setMessage, message, userData, createNewSession }) {
 
-    const trigger = <Button>can't find your song?</Button>
+    const trigger = <Button className="btn_purple">can't find your song?</Button>
     const [inputs, setInputs] = useState({ title: '' })
 
     // control form inputs for search
@@ -20,7 +21,8 @@ export default function AddSongModal({ setLoading, setMessage, userData, createN
     // activate loading visual to await api response
     const handleInputSubmit = e => {
         e.preventDefault();
-        setLoading(true)
+        setLoading({ ...loading, search: true })
+        setMessage({ ...message, search: 'Searching. . .' })
 
         // send title and artist search as one string with the key of name
         let data = { name: inputs.title }
@@ -37,7 +39,7 @@ export default function AddSongModal({ setLoading, setMessage, userData, createN
             .catch(err => {
 
                 setInputs({ title: "" })
-                setMessage('Song is not available yet, please try another song')
+                setMessage({ ...message, search: 'Song is not available yet, please try another song' })
                 setLoading(false)
                 console.log(err)
             })
@@ -67,7 +69,7 @@ export default function AddSongModal({ setLoading, setMessage, userData, createN
 
                     ? <Button
                         onClick={handleInputSubmit}
-                        className="login__btn"
+                        className="login__btn btn_purple"
                         type="submit"
                         modal="close"
                     >Search

@@ -7,19 +7,11 @@ import SongInfo from "./SongInfo"
 function AudioTop({ sessionData }) {
 
     return (
-
         <div className="row player top">
             <div className="col s12">
-                <audio id="audio">
-                    {/* <source src={song.file} /> */}
-                    <source src={sessionData.mixed} />
-                    <p>Your browser does not support the <code>audio</code> element.</p>
-                </audio>
-
-                <SongInfo songName={sessionData.name} songArtist={sessionData.artist} />
+                <SongInfo songName={sessionData.songName} songArtist={sessionData.artist} />
             </div>
         </div>
-
     );
 }
 

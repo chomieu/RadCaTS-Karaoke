@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
+import { Row, Col } from "react-materialize";
 import LyricsContainer from "../LyricsContainer/"
 import "./style.css"
 
 
-function KaraokeBox({ curTime, playing, pts, setPts, language, sessionData }) {
+function KaraokeBox({ curTime, isPlaying, pts, setPts, language, sessionData, lyrics, duration, handleFinish }) {
 
     // store user mic inputs here with timestamp
-    // Note: time is at time of printing, not time of recording start
+    // Note: time value is at time of printing, not time of recording start
     const [userInput, setUserInput] = useState([
         // {
         //     time: 0,
@@ -27,9 +28,9 @@ function KaraokeBox({ curTime, playing, pts, setPts, language, sessionData }) {
 
     // activate / deactivate mic when play/pause is clicked
     useEffect(() => {
-        if (playing) { activateMic(language) }
+        if (isPlaying) { activateMic(language) }
         else { SpeechRecognition.stopListening() }
-    }, [playing])
+    }, [isPlaying])
 
 
     useEffect(() => {
@@ -39,9 +40,9 @@ function KaraokeBox({ curTime, playing, pts, setPts, language, sessionData }) {
             // make copy of 'userInput', collect new data object and add to copy.
             var copy = [...userInput]
             var thisInput = {}
-            copy[copy.length - 1].vocals = finalTranscript
+            copy[copy.length - 1].text = finalTranscript
             thisInput.time = Math.floor(curTime)
-            thisInput.vocals = null
+            thisInput.text = null
             copy.push(thisInput)
             // set updated copy as new state
             setUserInput(copy)
@@ -53,24 +54,28 @@ function KaraokeBox({ curTime, playing, pts, setPts, language, sessionData }) {
     // Note: Browser support is limited with WebSpeechAPI.
     // if the browser is not supported, alert user.
     if (!SpeechRecognition.browserSupportsSpeechRecognition()) {
-        return (<h3>Your browser does not support speech recognition software! Sorry for the trouble, try Chrome desktop.</h3>)
+        return (<h6>Your browser does not support speech recognition software! Please use <a href="https://www.google.com/chrome/" target="about_blank">Google Chrome</a> (desktop version only) thanks!.</h6>)
 
     } else {
 
         return (
-            <div className="row player left-align">
-                <div className="col s12">
+            <Row className="player left-align">
+                <Col s={12}>
 
                     <LyricsContainer
-                        pts={pts.pts}
+                        pts={pts}
                         setPts={setPts}
+                        lyrics={lyrics}
                         curTime={curTime}
-                        playing={playing}
+                        duration={duration}
+                        isPlaying={isPlaying}
                         userInput={userInput}
+                        handleFinish={handleFinish}
+                        sessionData={sessionData}
                     />
 
-                </div>
-            </div>
+                </Col>
+            </Row>
         )
     }
 }

@@ -4,15 +4,18 @@ import Search from "../components/Search";
 import Header from "../components/Header";
 import "../App.css"
 
-export default function SearchPage({ userData, setUserData }) {
+export default function SearchPage({ userData, setUserData, setIsPlaying, search, setSearch }) {
 
     return (
-        <>
-            {!userData.isLoggedIn ? <Redirect to="/" /> : null}
-
-            <Header userData={userData} setUserData={setUserData} />
-
-            <Search userData={userData} />
-        </>
+        <div className="pageContents">
+            {
+                userData.isLoggedIn ?
+                    <>
+                        <Header userData={userData} setUserData={setUserData} setIsPlaying={setIsPlaying} />
+                        <Search userData={userData} search={search} setSearch={setSearch} />
+                    </>
+                    : <Redirect to="/" />
+            }
+        </div>
     )
 }
